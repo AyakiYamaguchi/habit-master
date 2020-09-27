@@ -1,10 +1,15 @@
 import React from 'react';
+import {BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import HabitList from './pages/HabitList';
+
 
 function App() {
   return (
-    <div className="App">
-      
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/" component={HabitList} />
+      </Switch>
+    </Router>
   );
 }
 
