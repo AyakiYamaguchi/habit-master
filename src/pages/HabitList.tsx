@@ -1,5 +1,5 @@
 import React , { FC } from 'react'
-import Header from '../component/Header/Header'
+import Header from '../components/Header/Header'
 
 const HabitList:FC = () => {
   return (
