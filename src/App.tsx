@@ -7,7 +7,7 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/" component={HabitList} />
+        <Route exact path="/list" component={HabitList} />
       </Switch>
     </Router>
   );
