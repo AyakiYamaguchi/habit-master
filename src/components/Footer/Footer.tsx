@@ -14,7 +14,7 @@ type Props = {
 const Footer:FC<Props> = (Props) => {
   const menuIcons = [
     {
-      text: 'LIST',
+      text: 'List',
       pathname: 'list',
       selectedIcon: SelectedListIcon,
       unselectedIcon: UnselectedListIcon,
@@ -42,15 +42,15 @@ const Footer:FC<Props> = (Props) => {
               return(
                 <li className={Style.menu_item}>
                   { Props.selectedMenu === menuItem.pathname ? (
-                    <div>
+                    <>
                       <img src={menuItem.selectedIcon} className={Style.icon}/>
                       <p className={Style.selected_text}>{menuItem.text}</p>
-                    </div>
+                    </>
                   ) : (
-                    <div>
+                    <>
                       <img src={menuItem.unselectedIcon} className={Style.icon}/>
                       <p className={Style.unselected_text}>{menuItem.text}</p>
-                    </div>
+                    </>
                   )}
                 </li>
               )
