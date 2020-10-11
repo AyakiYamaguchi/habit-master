@@ -3,13 +3,17 @@ import ReactDOM from 'react-dom';
 import 'fontsource-lato'
 import './styles/reset.scss'
 import './index.css';
+import './styles/globalStyles.scss'
 import 'normalize.css'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { StoreProvider } from './store/index'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <StoreProvider>
+      <App />
+    </StoreProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

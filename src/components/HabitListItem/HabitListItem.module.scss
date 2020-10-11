@@ -1,0 +1,40 @@
+@import '../../styles/variables' ;
+
+.list_wrapper {
+  display: flex;
+  align-items: center;
+  height: 70px;
+  padding-left: 5%;
+  padding-right: 5%;
+  border-bottom: 1px solid $baseColorGrayMedium;
+}
+
+.checked {
+  height: 34px;
+  width: 34px;
+  border-radius: 50%;
+  margin-right: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $keyColorHeavy;
+
+  img {
+    width: 24px;
+    height: auto;
+  }
+}
+
+.unchecked {
+  height: 34px;
+  width: 34px;
+  border-radius: 50%;
+  margin-right: 15px;
+  background-color: $baseColorGrayMedium;
+}
+
+.list_title {
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+

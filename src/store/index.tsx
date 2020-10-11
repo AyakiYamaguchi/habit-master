@@ -1,9 +1,10 @@
 import React, { createContext, useReducer, FC } from 'react'
+import HabitLists from '../components/HabitLists/HabitLists'
 
 export type HabitList = {
   id: string;
-  habitName: string;
-  checked: boolean;
+  title: string;
+  finished: boolean;
   scheduled_date: Date;
 }
 
@@ -12,7 +13,7 @@ type State = {
 }
 
 type Action =
-{ type: 'SET_HABIT_LIST' , payload: { habitLists: [] }} |
+{ type: 'SET_HABIT_LIST' , payload: {habitLists: HabitList[]} } |
 { type: 'ADD_HABIT_STATUS' }
 
 const initialState:State = {
