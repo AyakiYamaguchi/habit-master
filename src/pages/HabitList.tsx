@@ -3,8 +3,6 @@ import Header from '../components/Header/Header'
 import Footer from '../components/Footer/Footer'
 import { Store } from '../store/index'
 import HabitListItem from '../components/HabitListItem/HabitListItem'
-import { title } from 'process'
-
 
 const HabitList:FC = () => {
   const { globalState, setGlobalState } = useContext(Store)
