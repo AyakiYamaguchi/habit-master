@@ -1,12 +1,18 @@
-import React, { FC } from 'react'
+import React, { FC, useContext } from 'react'
 import checkIcon from '../../images/check-line_icon.png'
 import Style from './HabitListItem.module.scss'
 import { HabitList } from '../../store/index'
+import { Store } from '../../store/index'
 
 const HabitListItem:FC<HabitList> = ( habitList ) => {
-  const { title , finished } = habitList
+  const { globalState, setGlobalState } = useContext(Store)
+  const { id, title , finished } = habitList
+  const editHabitStatus = (id: string) => {
+    setGlobalState({type: 'EDIT_HABIT_STATUS', payload: {id: id}})
+    console.log('onClick')
+  }
   return (
-    <div className={Style.list_wrapper}>
+    <div className={Style.list_wrapper} key={id} onClick={() => editHabitStatus(id)}>
       {
         finished ? (
           <div className={Style.checked}>

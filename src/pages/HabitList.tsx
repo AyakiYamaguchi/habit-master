@@ -3,6 +3,7 @@ import Header from '../components/Header/Header'
 import Footer from '../components/Footer/Footer'
 import { Store } from '../store/index'
 import HabitListItem from '../components/HabitListItem/HabitListItem'
+import { listenerCount } from 'process'
 
 const HabitList:FC = () => {
   const { globalState, setGlobalState } = useContext(Store)
@@ -32,7 +33,6 @@ const HabitList:FC = () => {
     setGlobalState({ type: 'SET_HABIT_LIST' , payload: {habitLists: habitLists}})
   }
 
-  // useEffect で要素更新時に習慣リスト取得関数を実行
   useEffect(()=> {
     setHabitList()
   },[])

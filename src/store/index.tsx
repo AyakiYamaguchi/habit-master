@@ -13,7 +13,7 @@ type State = {
 
 type Action =
 { type: 'SET_HABIT_LIST' , payload: {habitLists: HabitList[]} } |
-{ type: 'EDIT_HABIT_STATUS' , payload: {id: string} }
+{ type: 'EDIT_HABIT_STATUS' , payload: {id: string } }
 
 const initialState:State = {
   habitLists: []
@@ -25,12 +25,10 @@ const reducer = (state: State, action: Action) => {
       return { ...state , habitLists: action.payload.habitLists }
     case 'EDIT_HABIT_STATUS':
       const id = action.payload.id
-      return { ...state, habitLists: state.habitLists.map((list)=> {
-        list.id === id && (
-          list.finished === true ? (list.finished = false) : (list.finished = true)
-          )
-        })
-      }
+      return {...state, habitLists: state.habitLists.map((list)=> {
+        list.id === id && (list.finished = !list.finished)
+        return list
+      })}
     default:
       return state
   }
