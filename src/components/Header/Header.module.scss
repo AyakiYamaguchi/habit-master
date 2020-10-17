@@ -6,7 +6,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid $baseColorGrayMedium;
+  border-bottom: 2px solid $baseColorGrayMedium;
   background-color: $baseColorWhite;
   font-size: 1.4rem;
+  font-weight: bold;
 }

@@ -1,4 +1,6 @@
 import React, { createContext, useReducer, FC } from 'react'
+import { title } from 'process'
+import { finished } from 'stream'
 
 export type HabitList = {
   id: string;
@@ -13,7 +15,8 @@ type State = {
 
 type Action =
 { type: 'SET_HABIT_LIST' , payload: {habitLists: HabitList[]} } |
-{ type: 'EDIT_HABIT_STATUS' , payload: {id: string } }
+{ type: 'EDIT_HABIT_STATUS' , payload: {id: string } } |
+{ type: 'CREATE_HABIT_LIST', payload: {title: string}}
 
 const initialState:State = {
   habitLists: []
@@ -31,6 +34,14 @@ const reducer = (state: State, action: Action) => {
         }
         return list
       })}
+    case 'CREATE_HABIT_LIST':
+      const nextId = String(state.habitLists.length +1)
+      return { ...state , habitLists: [...state.habitLists, {
+        id: nextId,
+        title: action.payload.title,
+        finished: false,
+        scheduled_date: new Date()
+      }]}
     default:
       return state
   }

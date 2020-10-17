@@ -4,6 +4,7 @@ import Footer from '../components/Footer/Footer'
 import { Store } from '../store/index'
 import HabitListItem from '../components/HabitListItem/HabitListItem'
 import { listenerCount } from 'process'
+import CreateListModal from '../components/CreateListModal/CreateListModal'
 
 const HabitList:FC = () => {
   const { globalState, setGlobalState } = useContext(Store)
@@ -52,6 +53,7 @@ const HabitList:FC = () => {
           )
         })
       }
+      <CreateListModal />
       <Footer selectedMenu="list"/>
     </div>
   )
