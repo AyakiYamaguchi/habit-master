@@ -9,7 +9,6 @@ const HabitListItem:FC<HabitList> = ( habitList ) => {
   const { id, title , finished } = habitList
   const editHabitStatus = (id: string) => {
     setGlobalState({type: 'EDIT_HABIT_STATUS', payload: {id: id}})
-    console.log('onClick')
   }
   return (
     <div className={Style.list_wrapper} key={id} onClick={() => editHabitStatus(id)}>

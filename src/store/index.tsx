@@ -26,7 +26,9 @@ const reducer = (state: State, action: Action) => {
     case 'EDIT_HABIT_STATUS':
       const id = action.payload.id
       return {...state, habitLists: state.habitLists.map((list)=> {
-        list.id === id && (list.finished = !list.finished)
+        if( list.id === id ){
+          return { ...list, finished: !list.finished }
+        }
         return list
       })}
     default:

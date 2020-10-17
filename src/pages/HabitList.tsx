@@ -14,7 +14,7 @@ const HabitList:FC = () => {
       {
         id: '1',
         title: 'programing',
-        finished: true,
+        finished: false,
         scheduled_date: today,
       },
       {
@@ -26,7 +26,7 @@ const HabitList:FC = () => {
       {
         id: '3',
         title: '読書',
-        finished: true,
+        finished: false,
         scheduled_date: today,
       }
     ]
