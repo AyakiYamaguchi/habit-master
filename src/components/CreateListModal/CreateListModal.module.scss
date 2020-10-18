@@ -1,6 +1,29 @@
 @import '../../styles/variables.scss' ;
 
+@keyframes SlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(64px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes SlideDown {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(64px);
+  }
+}
+
 .wrapper {
+  display: none;
   background-color: $baseColorWhite;
   min-height: 350px;
   width: 100%;
@@ -11,6 +34,17 @@
   position: fixed;
   bottom: 0;
   z-index: 10000;
+}
+
+.open_modal {
+  display: block;
+  animation: SlideIn 0.3s;
+}
+
+.close_modal {
+  display: none;
+  transform: translateY(0);
+  animation: SlideDown 0.3s;
 }
 
 .toggle_btn {
@@ -72,3 +106,15 @@
   font-weight: bold;
   box-shadow: 0px 3px 5px rgba(0,0,0,0.10);
 }
+
+.error_message {
+  color: $errorColorMedium;
+  font-size: 1.2rem;
+}
+
+.error_input_area {
+  border: 1px solid $errorColorMedium;
+  background-color: $errorColorLight;
+  color : $errorColorMedium;
+}
+
