@@ -1,0 +1,71 @@
+@import '../../styles/variables' ;
+
+.wrapper {
+  height: 100vh;
+  width: 100vw;
+  text-align: center;
+  background-image: url("../../images/top_background_image.jpg");
+  background-size: cover;
+  background-position: 50%;
+}
+
+.background {
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(77,77,77,0.8);
+}
+
+.service_logo {
+  margin-top: 60px;
+}
+
+.logo_img {
+  width: 100px;
+  height: auto;
+}
+
+.top_message {
+  color: $baseColorWhite;
+  font-size: 35px;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+.signup_btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 55px;
+  width: 80%;
+  margin: 0 auto;
+  border-radius: 30px;
+  font-size: 1.6rem;
+  font-weight: bold;
+  background-color: $baseColorWhite;
+  color: $keyColorHeavy;
+  box-shadow: 0px 3px 5px rgba(0,0,0,0.16);
+}
+
+.btn_between {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: $baseColorWhite;
+}
+
+
+.login_text {
+  display: block;
+  margin-top: 30px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: $baseColorWhite;
+}
