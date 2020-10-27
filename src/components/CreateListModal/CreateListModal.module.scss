@@ -3,7 +3,8 @@
 @keyframes SlideIn {
   0% {
     opacity: 0;
-    transform: translateY(64px);
+    min-height: 350px;
+    padding-top: 30px;
   }
   100% {
     opacity: 1;

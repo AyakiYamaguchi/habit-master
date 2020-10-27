@@ -1,8 +1,8 @@
 import React, { FC, useContext } from 'react'
-import checkIcon from '../../images/check-line_icon.png'
+import checkIcon from '../../../images/check-line_icon.png'
 import Style from './HabitListItem.module.scss'
-import { HabitList } from '../../store/index'
-import { Store } from '../../store/index'
+import { HabitList } from '../../../store/index'
+import { Store } from '../../../store/index'
 
 const HabitListItem:FC<HabitList> = ( habitList ) => {
   const { globalState, setGlobalState } = useContext(Store)

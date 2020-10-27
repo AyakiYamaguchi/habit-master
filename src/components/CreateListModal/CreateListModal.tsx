@@ -1,6 +1,7 @@
-import React, { FC, useContext, useState } from 'react'
+import React, { FC, useContext, useState , useCallback } from 'react'
 import { Store } from '../../store/index'
 import Style from './CreateListModal.module.scss'
+import { CHANGE_MODAL_STATUS } from '../../store/index'
 
 const CreateListModal:FC = () => {
   const { globalState , setGlobalState } = useContext(Store)
@@ -13,6 +14,9 @@ const CreateListModal:FC = () => {
     setListTitle('')
     setShowing(false)
   }
+  const setShowStatus = useCallback(() => {
+    setShowing(!showing)
+  },[showing])
   const validate = (inputValue: string) => {
     setListTitle(inputValue)
 
@@ -32,7 +36,7 @@ const CreateListModal:FC = () => {
       { !showing &&
         <div
           className={Style.toggle_btn}
-          onClick={()=>setShowing(true)}
+          onClick={setShowStatus}
         >+</div>
       }
       {
@@ -49,7 +53,7 @@ const CreateListModal:FC = () => {
             ></input>
             <div className={Style.btn_wrapper}>
               <button className={Style.submit_btn} onClick={() => updateList(listTitle)}>登録する</button>
-              <button onClick={()=>setShowing(false)} className={Style.cancel_btn}>キャンセル</button>
+              <button onClick={setShowStatus} className={Style.cancel_btn}>キャンセル</button>
             </div>
           </div>
       }

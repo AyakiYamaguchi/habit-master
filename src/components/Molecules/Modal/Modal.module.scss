@@ -1,0 +1,48 @@
+@import '../../../styles/variables';
+
+@keyframes SlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(64px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes SlideDown {
+  0% {
+    opacity: 1;
+    transform: translateY(64px);
+  }
+  100% {
+    opacity: 0;
+    display: none;
+    transform: translateY(0);
+  }
+}
+
+.ModalWrap {
+  display: none;
+  background-color: $baseColorWhite;
+  min-height: 350px;
+  padding-top: 30px;
+  width: 100%;
+  padding-right: 5%;
+  padding-left: 5%;
+  box-shadow: 5px 0 5px 0 rgba($color: #000000, $alpha: 0.16);
+  position: fixed;
+  bottom: 0;
+  z-index: 10000;
+}
+
+.openModal {
+  display: block;
+  animation: SlideIn 0.3s;
+}
+
+.closeModal {
+  transform: translateY(0);
+  animation: SlideDown 0.3s;
+}

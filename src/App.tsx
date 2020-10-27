@@ -1,7 +1,7 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import HabitList from './pages/HabitList';
-import TopPage from './pages/TopPage/TopPage'
+import HabitList from './components/Pages/HabitList/HabitList';
+import TopPage from './components/Pages/TopPage/TopPage'
 
 function App() {
   return (

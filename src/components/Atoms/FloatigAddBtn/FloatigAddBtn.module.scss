@@ -1,0 +1,14 @@
+@import '../../../styles/variables';
+
+.btn {
+  display: inline-block;
+  height: 50px;
+  width: 50px;
+  background-color: $keyColorHeavy;
+  color: $baseColorWhite;
+  font-size: 4.0rem;
+  border-radius: 50%;
+  line-height: 5.0rem;
+  text-align: center;
+  box-shadow: 4px 4px 6px rgba(0,0,0,0.16);
+}

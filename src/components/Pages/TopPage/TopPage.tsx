@@ -1,6 +1,6 @@
 import React , { FC } from 'react'
 import Style from './TopPage.module.scss'
-import Logo from '../../images/logo.png'
+import Logo from '../../../images/logo.png'
 
 const TopPage:FC = () => {
   return(
