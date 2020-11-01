@@ -1,0 +1,31 @@
+@import '../../../styles/variables';
+
+.dateWrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dateItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.4rem;
+  font-weight: bold;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+}
+
+.none {
+  display: none;
+}
+
+.finished {
+  color: #fff;
+  background-color: $keyColorHeavy;
+}
+
+.unfinished {
+  border: 2px solid $keyColorHeavy;
+}

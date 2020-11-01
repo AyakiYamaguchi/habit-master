@@ -1,0 +1,51 @@
+@import '../../../styles/variables';
+
+.calendarHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  color: $fontColorBlack;
+
+  &__title {
+    font-size: 2.0rem;
+    margin: 0;
+  }
+
+  &__button{
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: $keyColorHeavy;
+    margin: 0 15px;
+    padding: 5px 5px;
+    border: 1px solid $keyColorMedium;
+    border-radius: 5px;
+  }
+}
+
+.table {
+  width: 100%;
+  text-align: center;
+}
+
+.tableHeader {
+  tr {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  th {
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    font-size: 1.4rem;
+    color: $fontColorBlack;
+  }
+}
+
+.dateItem {
+  padding: 10px 0;
+  text-align: center;
+}

@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import Style from './Footer.module.scss'
 import SelectedListIcon from '../../../images/selected_list_icon.png';
 import UnselectedListIcon from '../../../images/unselected_list_icon.png';
-import SelectedReportIcon from '../../../images/unselected_report_icon.png';
+import SelectedReportIcon from '../../../images/selected_report_icon.png';
 import UnselectedReportIcon from '../../../images/unselected_report_icon.png'
 import SelectedSettingIcon from '../../../images/selected_setting_icon.png'
 import UnselectedSettingIcon from '../../../images/unselected_setting_icon.png'
