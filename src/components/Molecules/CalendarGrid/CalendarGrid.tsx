@@ -1,6 +1,5 @@
 import React, { FC , useEffect , useState } from 'react'
 import Style from './CalendarGrid.module.scss'
-import moment from 'moment'
 import CalendarDate from '../../Atoms/CalendarDate/CalendarDate'
 
 
@@ -59,10 +58,10 @@ const CalendarGrid:FC = () => {
               return(
                 <tr>
                   {
-                    week.map((day,index) => {
+                    week.map((date,index) => {
                       return(
                         <td className={Style.dateItem}>
-                          <CalendarDate date={day} finished={false}/>
+                          <CalendarDate year={year} month={month} date={date}/>
                         </td>
                       )
                     })
@@ -72,6 +71,12 @@ const CalendarGrid:FC = () => {
             })
           }
         </table>
+      </div>
+      <div className={Style.statusDescription__wrap}>
+        <span className={Style.statusDescription__finishedCircle}></span>
+        <p className={Style.statusDescription__text}>すべて完了</p>
+        <span className={Style.statusDescription__unFinishedCircle}></span>
+        <p className={Style.statusDescription__text}>一部完了</p>
       </div>
     </div>
   )

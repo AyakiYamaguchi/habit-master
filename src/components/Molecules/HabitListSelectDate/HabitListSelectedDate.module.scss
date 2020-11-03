@@ -5,7 +5,6 @@
   display: flex;
   padding-top: 10px;
   padding-bottom: 15px;
-  padding-right: 5%;
   background-color: $baseColorGrayLight;
   overflow-x: auto;
   white-space: nowrap;
@@ -41,4 +40,8 @@ li {
   background-color: $keyColorHeavy;
   color: white;
   font-weight: bold;
+}
+
+.dateArea__margin {
+  padding-right: 3px;
 }

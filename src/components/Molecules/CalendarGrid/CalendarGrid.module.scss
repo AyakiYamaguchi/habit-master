@@ -49,3 +49,34 @@
   padding: 10px 0;
   text-align: center;
 }
+
+.statusDescription {
+
+  &__wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+  }
+  &__finishedCircle {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: $keyColorHeavy;
+    margin-right: 5px;
+  }
+
+  &__unFinishedCircle {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 2px solid $keyColorHeavy;
+    margin-right: 5px;
+  }
+
+  &__text {
+    font-size: 1.2rem;
+    margin-right: 10px;
+  }
+}

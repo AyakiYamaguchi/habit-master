@@ -7,7 +7,7 @@ const Report = () => {
   return (
     <div>
       <Header title={'レポート'}/>
-      <Calendar />
+        <Calendar />
       <Footer selectedMenu={'report'}/>
     </div>)
 }

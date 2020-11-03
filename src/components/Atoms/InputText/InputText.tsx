@@ -4,7 +4,7 @@ import Style from './InputText.module.scss';
 type Props = {
   placeholder?: string;
   state: string;
-  handleChange?: Function;
+  handleChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const InputText:FC<Props> = ({placeholder , state , handleChange}) => {
@@ -15,7 +15,7 @@ const InputText:FC<Props> = ({placeholder , state , handleChange}) => {
         type="text"
         placeholder={placeholder}
         value={state}
-        onChange={(e) => handleChange}
+        onChange={handleChange}
       ></input>
     </div>
   )

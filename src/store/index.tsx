@@ -1,6 +1,4 @@
 import React, { createContext, useReducer, FC } from 'react'
-import { title } from 'process'
-import { finished } from 'stream'
 
 export const SET_HABIT_LIST = 'SET_HABIT_LIST'
 export const EDIT_HABIT_STATUS = 'EDIT_HABIT_STATUS'
@@ -12,7 +10,10 @@ export type HabitList = {
   id: string;
   title: string;
   finished: boolean;
-  scheduledDate: Date;
+  scheduled: Date;
+  scheduledYear: number;
+  scheduledMonth: number;
+  scheduledDate: number;
 }
 
 type State = {
@@ -48,11 +49,15 @@ const reducer = (state: State, action: Action) => {
       })}
     case CREATE_HABIT_LIST:
       const nextId = String(state.habitLists.length +1)
+      const today = new Date()
       return { ...state , habitLists: [...state.habitLists, {
         id: nextId,
         title: action.payload.title,
         finished: false,
-        scheduledDate: new Date()
+        scheduled: today,
+        scheduledYear: today.getFullYear(),
+        scheduledMonth: today.getMonth() + 1,
+        scheduledDate: today.getDate(),
       }]}
     case SET_SELECTED_HABIT_LIST_DATE:
       return { ...state, selectedDate: action.payload.selectedDate}

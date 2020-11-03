@@ -1,4 +1,4 @@
-import React, { FC ,useContext } from 'react';
+import React, { FC ,useContext, useEffect, useCallback } from 'react';
 import Style from './HabitListSelectedDate.module.scss';
 import { Store } from '../../../store/index'
 import { SET_SELECTED_HABIT_LIST_DATE } from '../../../store/index'
@@ -23,8 +23,22 @@ const HabitListSelectDate:FC = () => {
     setGlobalState({type: SET_SELECTED_HABIT_LIST_DATE, payload: {selectedDate: selectedDate}})
   }
   const currentSelectedDate = globalState.selectedDate.getDate()
+
+  // 最新のスクロールへ自動スクロールさせる設定
+  const ref = React.createRef<HTMLDivElement>()
+  const scrollDateList = useCallback(() => {
+      ref!.current!.scrollIntoView({
+        behavior: 'auto',
+        block: 'nearest',
+      })
+    },[ ref ],)
+
+  useEffect(() => {
+      scrollDateList()
+  }, [])
   return (
     <div className={Style.dateAreaWrap}>
+      <div className={Style.dateArea__margin}></div>
       {
         dateList.map((item) => {
           return(
@@ -35,6 +49,7 @@ const HabitListSelectDate:FC = () => {
           )
         })
       }
+      <div className={Style.dateArea__margin} ref={ref}></div>
     </div>
   )
 }

@@ -13,12 +13,13 @@ const CreateHabitListForm = () => {
   const handleChangeListTitle = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const listTitle = e.target.value;
     setHabitListTitle(listTitle);
-    console.log(e.target.value)
-  },[])
+  },[habitListTitle])
 
-  const onCreateHabitList = useCallback(() => {
+  const onCreateHabitList = () => {
     setGlobalState({type: CREATE_HABIT_LIST, payload: {title: habitListTitle}})
-  },[])
+    setHabitListTitle('')
+    setGlobalState({type: CHANGE_MODAL_STATUS, payload: {isModalOpen: !globalState.isModalOpen}})
+  }
   const changeModalStatus = () => {
     setGlobalState({type: CHANGE_MODAL_STATUS, payload: {isModalOpen: !globalState.isModalOpen}})
   }

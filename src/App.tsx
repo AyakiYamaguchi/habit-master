@@ -8,9 +8,15 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/" component={TopPage} />
-        <Route exact path="/list" component={HabitList} />
-        <Route exact path="/report" component={Report} />
+        <Route exact path="/">
+          <TopPage />
+        </Route>
+        <Route exact path="/list">
+          <HabitList />
+        </Route>
+        <Route exact path="/report">
+          <Report />
+        </Route>
       </Switch>
     </Router>
   );
