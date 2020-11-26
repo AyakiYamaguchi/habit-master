@@ -1,5 +1,5 @@
 import React , { FC } from 'react'
-import Style from './FloatigAddBtn.module.scss'
+import Style from './FloatingAddBtn.module.scss'
 
 type Props = {
   handleClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>)=> void;

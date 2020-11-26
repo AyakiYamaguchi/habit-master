@@ -7,7 +7,7 @@ import HabitListItem from '../../Molecules/HabitListItem/HabitListItem'
 import Modal from '../../Molecules/Modal/Modal'
 import CreateHabitListForm from '../../Molecules/CreateHabitListForm/CreateHabitListForm'
 import HabitListSelectDate from '../../Molecules/HabitListSelectDate/HabitListSelectDate'
-import FloatigAddBtn from '../../Atoms/FloatigAddBtn/FloatigAddBtn'
+import FloatingAddBtn from '../../Atoms/FloatingAddBtn/FloatingAddBtn'
 import { CHANGE_MODAL_STATUS } from '../../../store/index'
 
 const today = new Date()
@@ -79,7 +79,7 @@ const HabitList:FC = () => {
         })
       }
       <div className={`${Style.addBtnWrap} ${selectedDate != today.getDate() && Style.btnHide}`} >
-        <FloatigAddBtn handleClick={changeModalStatus}/>
+        <FloatingAddBtn handleClick={changeModalStatus}/>
       </div>
       <Modal>
         <CreateHabitListForm />

@@ -1,21 +1,25 @@
-import React from 'react';
-import {BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import React, { FC , useEffect , useContext } from 'react';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import HabitList from './components/Pages/HabitList/HabitList';
-import TopPage from './components/Pages/TopPage/TopPage';
+import Login from './components/Pages/Login/Login';
 import Report from './components/Pages/Report/Report';
+import Settings from './components/Pages/Settings/Settings'
 
-function App() {
+const App:FC = () => {
   return (
     <Router>
       <Switch>
-        <Route exact path="/">
-          <TopPage />
+        <Route exact path="/login">
+          <Login />
         </Route>
         <Route exact path="/list">
           <HabitList />
         </Route>
         <Route exact path="/report">
           <Report />
+        </Route>
+        <Route exact path="/settings">
+          <Settings />
         </Route>
       </Switch>
     </Router>

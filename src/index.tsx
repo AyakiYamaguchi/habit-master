@@ -7,13 +7,19 @@ import './styles/globalStyles.scss'
 import 'normalize.css'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { AuthProvider } from './store/Auth'
+import PrivateRoute from './PrivateRoute'
 import { StoreProvider } from './store/index'
 
 ReactDOM.render(
   <React.StrictMode>
-    <StoreProvider>
-      <App />
-    </StoreProvider>
+    <AuthProvider>
+      <PrivateRoute>
+        <StoreProvider>
+          <App />
+        </StoreProvider>
+      </PrivateRoute>
+    </AuthProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
