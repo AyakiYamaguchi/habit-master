@@ -1,4 +1,4 @@
-import React , { FC , useContext } from 'react';
+import React , { FC , useContext, useEffect } from 'react';
 import { BrowserRouter as Router , Redirect, useHistory } from 'react-router-dom';
 import Style from './Login.module.scss';
 import Logo from '../../../images/logo.png';
@@ -11,7 +11,7 @@ const Login:FC = () => {
   const {AuthState, setAuthState} = useContext(AuthContext)
   // React Router の history API が React Hooks の一種として使える
   const history = useHistory()
-  let currentUser = AuthState.user
+  let currentUser
   const ClickFacebookLogin = async() => {
     await FacebookLogin().then((result)=>{
       const user = {
@@ -25,6 +25,9 @@ const Login:FC = () => {
       console.log(error)
     })
   };
+  useEffect(() => {
+    currentUser = AuthState.user
+  }, [])
   return(
     <>
     {
