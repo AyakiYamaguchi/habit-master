@@ -1,18 +1,17 @@
 import React , { FC , useContext } from 'react';
-import { Redirect, useHistory } from 'react-router-dom';
+import { BrowserRouter as Router , Redirect, useHistory } from 'react-router-dom';
 import Style from './Login.module.scss';
 import Logo from '../../../images/logo.png';
 import { FacebookLogin } from '../../../apis/FacebookAuth';
-import { getCurrentUser } from '../../../apis/FacebookAuth';
 import { AuthContext } from '../../../store/Auth';
 import { SET_USER } from '../../../store/Auth';
-import firebase from 'firebase';
 
 
 const Login:FC = () => {
   const {AuthState, setAuthState} = useContext(AuthContext)
   // React Router の history API が React Hooks の一種として使える
   const history = useHistory()
+  let currentUser = AuthState.user
   const ClickFacebookLogin = async() => {
     await FacebookLogin().then((result)=>{
       const user = {
@@ -20,6 +19,7 @@ const Login:FC = () => {
         userName: result.displayName
       }
       setAuthState({ type: SET_USER , payload: { user: user }})
+      currentUser = user
       history.push('/list')
     }).catch((error)=> {
       console.log(error)
@@ -28,7 +28,7 @@ const Login:FC = () => {
   return(
     <>
     {
-      !AuthState.user ? (
+      !currentUser ? (
         <div className={Style.wrapper}>
           <div className={Style.background}>
             <h1 className={Style.service_logo}><img src={Logo} className={Style.logo_img}/></h1>
@@ -42,7 +42,9 @@ const Login:FC = () => {
           </div>
         </div>
       ) : (
-        <Redirect to='/list'/>
+        <Router>
+          <Redirect to='/list'/>
+        </Router>
       )
     }
     </>

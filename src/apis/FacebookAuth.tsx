@@ -24,12 +24,11 @@ export const FacebookLogin = async() => {
 export const getCurrentUser = async() => {
   const user = await firebase.auth().currentUser;
   return user
-  // return 'test'
 }
 
 export const SignOut = async() => {
   return await firebase.auth().signOut().then(()=>{
-    return 'サインアウト成功しました'
+    return 'サインアウトに成功しました'
   }).catch((error)=>{
     return error
   })

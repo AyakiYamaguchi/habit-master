@@ -15,12 +15,13 @@ const PrivateRoute:FC = ({children}) => {
           userName: result.displayName
         }
         setAuthState({type: SET_USER, payload: {user: user}})
+        currentUser = user
       }
     })
   }
   useEffect(() => {
     LoginCheck()
-  },[AuthState.user])
+  },[])
   return (
     <>
       { !currentUser ?
