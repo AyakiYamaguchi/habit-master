@@ -22,8 +22,22 @@ export const FacebookLogin = async() => {
 }
 
 export const getCurrentUser = async() => {
-  const user = await firebase.auth().currentUser;
-  return user
+  let currentUser
+  await firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      currentUser = user
+      return currentUser
+    }
+  });
+  // const user = await firebase.auth().currentUser;
+  // return user
+  // return await firebase.auth().onAuthStateChanged((user)=>{
+  //   if(user){
+  //     return user
+  //   }else {
+  //     return null
+  //   }
+  // })
 }
 
 export const SignOut = async() => {

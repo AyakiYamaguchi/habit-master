@@ -4,10 +4,12 @@ import HabitList from './components/Pages/HabitList/HabitList';
 import Login from './components/Pages/Login/Login';
 import Report from './components/Pages/Report/Report';
 import Settings from './components/Pages/Settings/Settings'
+import PrivateRoute from './components/PrivateRoute'
 
 const App:FC = () => {
   return (
     <Router>
+      <PrivateRoute />
       <Switch>
         <Route exact path="/login">
           <Login />

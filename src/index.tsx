@@ -8,17 +8,14 @@ import 'normalize.css'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { AuthProvider } from './store/Auth'
-import PrivateRoute from './components/PrivateRoute'
 import { StoreProvider } from './store/index'
 
 ReactDOM.render(
   <React.StrictMode>
     <AuthProvider>
-      <PrivateRoute>
         <StoreProvider>
           <App />
         </StoreProvider>
-      </PrivateRoute>
     </AuthProvider>
   </React.StrictMode>,
   document.getElementById('root')
