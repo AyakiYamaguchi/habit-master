@@ -1,8 +1,10 @@
-import React, { FC, useContext , useEffect , useState } from 'react'
+import React, { FC, useContext , useEffect , useState } from 'react';
 import { BrowserRouter as Router, Redirect } from 'react-router-dom';
-import firebase from '../apis/FirebaseConf'
-import { AuthContext } from '../store/Auth'
-import { SET_USER } from '../store/Auth'
+import firebase from '../apis/FirebaseConf';
+import { AuthContext } from '../store/Auth';
+import { SET_USER } from '../store/Auth';
+import Loading from '../components/Templates/Loading/Loading'
+
 
 
 const PrivateRoute:FC = () => {
@@ -33,7 +35,9 @@ const PrivateRoute:FC = () => {
         (!currentUser ?
           <Redirect to='/login' /> : <></>
         ) : (
-          <div>Now Loading</div>
+          <div>
+            <Loading />
+          </div>
         )
       }
     </>

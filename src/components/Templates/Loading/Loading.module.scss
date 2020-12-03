@@ -1,0 +1,12 @@
+@import '../../../styles/variables';
+
+.loadingWrap {
+  position:relative;
+  z-index: 1000;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+}
