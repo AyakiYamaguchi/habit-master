@@ -1,5 +1,6 @@
 import React, { createContext, useReducer, FC } from 'react'
 
+export const SET_GOAL = 'SET_GOAL'
 export const SET_HABIT_LIST = 'SET_HABIT_LIST'
 export const EDIT_HABIT_STATUS = 'EDIT_HABIT_STATUS'
 export const CREATE_HABIT_LIST = 'CREATE_HABIT_LIST'
@@ -18,11 +19,13 @@ export type HabitList = {
 
 type State = {
   habitLists: HabitList[];
+  goal: string;
   selectedDate: Date;
   isModalOpen: boolean;
 }
 
 type Action =
+{ type: 'SET_GOAL' , payload: { goal: string }} |
 { type: 'SET_HABIT_LIST' , payload: {habitLists: HabitList[]} } |
 { type: 'EDIT_HABIT_STATUS' , payload: {id: string } } |
 { type: 'CREATE_HABIT_LIST', payload: {title: string}} |
@@ -31,12 +34,15 @@ type Action =
 
 const initialState:State = {
   habitLists: [],
+  goal: '',
   selectedDate: new Date(),
   isModalOpen: false,
 }
 
 const reducer = (state: State, action: Action) => {
   switch(action.type) {
+    case SET_GOAL:
+      return { ...state, goal: action.payload.goal }
     case SET_HABIT_LIST:
       return { ...state , habitLists: action.payload.habitLists }
     case EDIT_HABIT_STATUS:

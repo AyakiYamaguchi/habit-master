@@ -1,0 +1,28 @@
+@import '../../../styles/variables';
+
+.stepWrap {
+  display: flex;
+  justify-content: center;
+}
+.stepItem {
+  font-size: 1.6rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 15px;
+  margin-left: 15px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid $keyColorHeavy;
+}
+
+.selected {
+  background-color: $keyColorHeavy;
+  color: #fff;
+}
+
+.unselected {
+  color: $keyColorHeavy;
+}

@@ -5,8 +5,6 @@ import { AuthContext } from '../store/Auth';
 import { SET_USER } from '../store/Auth';
 import Loading from '../components/Templates/Loading/Loading'
 
-
-
 const PrivateRoute:FC = () => {
   const { AuthState, setAuthState } = useContext(AuthContext)
   const [loading, setLoading] = useState(true)

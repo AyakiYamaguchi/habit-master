@@ -5,6 +5,7 @@ import Login from './components/Pages/Login/Login';
 import Report from './components/Pages/Report/Report';
 import Settings from './components/Pages/Settings/Settings'
 import PrivateRoute from './components/PrivateRoute'
+import SetGoal from './components/Pages/SetGoal/SetGoal'
 
 const App:FC = () => {
   return (
@@ -13,6 +14,9 @@ const App:FC = () => {
       <Switch>
         <Route exact path="/login">
           <Login />
+        </Route>
+        <Route exact path="/set_goal">
+          <SetGoal />
         </Route>
         <Route exact path="/list">
           <HabitList />

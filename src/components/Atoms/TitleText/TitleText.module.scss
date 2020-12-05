@@ -1,0 +1,15 @@
+@import '../../../styles/variables';
+
+.titleWrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.titleText {
+  font-size: 1.8rem;
+  color: $keyColorHeavy;
+  font-weight: bold;
+  margin: 0;
+}
