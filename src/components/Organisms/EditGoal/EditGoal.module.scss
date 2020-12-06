@@ -1,0 +1,19 @@
+.wrap {
+  text-align: center;
+  background-color: #F4F7FF;
+  height: 100%;
+  box-sizing: border-box;
+  padding-bottom: 35px;
+}
+
+.textArea {
+  text-align: left;
+  resize: none;
+  width: 80%;
+  background-color: #fff;
+  min-height: 130px;
+  padding: 10px 15px;
+  border-radius: 3px;
+  font-size: 1.4rem;
+  line-height: 1.5;
+}
