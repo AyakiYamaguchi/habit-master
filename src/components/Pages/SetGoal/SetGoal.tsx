@@ -1,13 +1,16 @@
-import React , { useState } from 'react';
+import React , { useState, useContext } from 'react';
 import InputStep from '../../Molecules/InputStep/InputStep';
 import TitleText from '../../Atoms/TitleText/TitleText';
 import EditGoal from '../../Organisms/EditGoal/EditGoal';
 import Style from './SetGoal.module.scss';
-import SubmitBtn from '../../Atoms/SubmitBtn/SubmitBtn'
-import CancelBtn from '../../Atoms/CancelBtn/CancelBtn'
+import SubmitBtn from '../../Atoms/SubmitBtn/SubmitBtn';
+import CancelBtn from '../../Atoms/CancelBtn/CancelBtn';
 import { validateRequired } from '../../Validate/Validate';
+import {Store} from '../../../store/index';
+import { SET_GOAL } from '../../../store/index';
 
 const SetGoal = () => {
+  const { globalState, setGlobalState } = useContext(Store)
   const [goal, setGoal] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const handleChangeGoal = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -16,10 +19,11 @@ const SetGoal = () => {
     setErrorMessage('');
   }
   const handleClickSubmit = () => {
-    console.log('submit ボタン')
     const errorInfo = validateRequired(goal, '目標が入力されていません')
     if (errorInfo) {
       setErrorMessage(errorInfo)
+    } else {
+      setGlobalState({ type: SET_GOAL , payload: { goal: goal }})
     }
   }
   const handleClickCancel = () => {

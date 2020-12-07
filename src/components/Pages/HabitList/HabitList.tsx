@@ -1,14 +1,15 @@
-import React , { FC, useContext, useEffect } from 'react'
-import Style from './HabitList.module.scss'
-import Header from '../../Organisms/Header/Header'
-import Footer from '../../Organisms/Footer/Footer'
-import { Store } from '../../../store/index'
-import HabitListItem from '../../Molecules/HabitListItem/HabitListItem'
-import Modal from '../../Molecules/Modal/Modal'
-import CreateHabitListForm from '../../Molecules/CreateHabitListForm/CreateHabitListForm'
-import HabitListSelectDate from '../../Molecules/HabitListSelectDate/HabitListSelectDate'
-import FloatingAddBtn from '../../Atoms/FloatingAddBtn/FloatingAddBtn'
-import { CHANGE_MODAL_STATUS } from '../../../store/index'
+import React , { FC, useContext, useEffect } from 'react';
+import Style from './HabitList.module.scss';
+import Header from '../../Organisms/Header/Header';
+import Footer from '../../Organisms/Footer/Footer';
+import { Store } from '../../../store/index';
+import HabitListItem from '../../Molecules/HabitListItem/HabitListItem';
+import Modal from '../../Molecules/Modal/Modal';
+import CreateHabitListForm from '../../Molecules/CreateHabitListForm/CreateHabitListForm';
+import HabitListSelectDate from '../../Molecules/HabitListSelectDate/HabitListSelectDate';
+import FloatingAddBtn from '../../Atoms/FloatingAddBtn/FloatingAddBtn';
+import { CHANGE_MODAL_STATUS } from '../../../store/index';
+import { SET_HABIT_LIST } from '../../../store/index';
 
 const today = new Date()
 const habitLists = [
@@ -45,7 +46,7 @@ const HabitList:FC = () => {
   const { globalState, setGlobalState } = useContext(Store)
   // 週間リスト取得処理
   const setHabitList = () => {
-    setGlobalState({ type: 'SET_HABIT_LIST' , payload: {habitLists: habitLists}})
+    setGlobalState({ type: SET_HABIT_LIST , payload: {habitLists: habitLists}})
   }
   const selectedDate = globalState.selectedDate.getDate()
   const filteredHabitList = globalState.habitLists.filter((list) => {
