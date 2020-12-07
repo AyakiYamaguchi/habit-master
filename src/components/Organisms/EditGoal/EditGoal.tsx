@@ -4,14 +4,21 @@ import Style from './EditGoal.module.scss'
 
 type Props = {
   goal?: string;
+  errorMessage?: string;
   handleChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
-const EditGoal:FC<Props> = ({goal , handleChange}) => {
+const EditGoal:FC<Props> = ({goal, errorMessage, handleChange}) => {
   return (
     <div className={Style.wrap}>
       <TitleText title="わたしの目標" />
-      <textarea className={Style.textArea} onChange={handleChange}>{goal}</textarea>
+      <div className={Style.textAreaWrap}>
+        { errorMessage && <p className={Style.errorMessage}>{errorMessage}</p>}
+        <textarea
+          className={`${Style.textArea} ${errorMessage && Style.error}`}
+          onChange={handleChange}
+        >{goal}</textarea>
+      </div>
     </div>
   )
 }

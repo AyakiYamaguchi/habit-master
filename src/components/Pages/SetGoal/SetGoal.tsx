@@ -5,19 +5,27 @@ import EditGoal from '../../Organisms/EditGoal/EditGoal';
 import Style from './SetGoal.module.scss';
 import SubmitBtn from '../../Atoms/SubmitBtn/SubmitBtn'
 import CancelBtn from '../../Atoms/CancelBtn/CancelBtn'
+import { validateRequired } from '../../Validate/Validate';
 
 const SetGoal = () => {
   const [goal, setGoal] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
   const handleChangeGoal = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const goal = e.target.value;
     setGoal(goal);
+    setErrorMessage('');
   }
   const handleClickSubmit = () => {
     console.log('submit ボタン')
+    const errorInfo = validateRequired(goal, '目標が入力されていません')
+    if (errorInfo) {
+      setErrorMessage(errorInfo)
+    }
   }
   const handleClickCancel = () => {
     console.log('キャンセルボタン')
   }
+
   return (
     <div className={Style.wrap}>
       <InputStep stepNum={3} currentStep={1} />
@@ -27,7 +35,7 @@ const SetGoal = () => {
         想像した未来の自分の姿を目標に書いてみてください。
         目標が具体的であると、より効果的です。
       </p>
-      <EditGoal goal={goal} handleChange={handleChangeGoal}/>
+      <EditGoal goal={goal} handleChange={handleChangeGoal} errorMessage={errorMessage}/>
       <div className={Style.btnWrap}>
         <SubmitBtn btnText="この目標ではじめる" handleClick={handleClickSubmit}/>
         <CancelBtn btnText="あとで目標を設定する" handleClick={handleClickCancel}/>
