@@ -9,60 +9,94 @@ import CreateHabitListForm from '../../Molecules/CreateHabitListForm/CreateHabit
 import HabitListSelectDate from '../../Molecules/HabitListSelectDate/HabitListSelectDate';
 import FloatingAddBtn from '../../Atoms/FloatingAddBtn/FloatingAddBtn';
 import { CHANGE_MODAL_STATUS } from '../../../store/index';
-import { SET_HABIT_LIST } from '../../../store/index';
+import { SET_HABIT_RESULT_LIST } from '../../../store/index';
+import { SET_HABIT_LISTS } from '../../../store/index';
 
 const today = new Date()
-const habitLists = [
+const habitResultLists = [
   {
     id: '1',
-    title: 'programing',
     finished: false,
-    scheduled: today,
-    scheduledYear: today.getFullYear(),
-    scheduledMonth: today.getMonth(),
-    scheduledDate: today.getDate(),
+    finishedDateTime: today,
+    finishedYear: today.getFullYear(),
+    finishedMonth: today.getMonth(),
+    finishedDate: today.getDate(),
+    finishedHour: today.getHours(),
+    finishedMin: today.getMinutes(),
   },
   {
     id: '2',
-    title: '筋トレ',
     finished: false,
-    scheduled: today,
-    scheduledYear: today.getFullYear(),
-    scheduledMonth: today.getMonth(),
-    scheduledDate: today.getDate(),
+    finishedDateTime: today,
+    finishedYear: today.getFullYear(),
+    finishedMonth: today.getMonth(),
+    finishedDate: today.getDate(),
+    finishedHour: today.getHours(),
+    finishedMin: today.getMinutes(),
   },
   {
     id: '3',
-    title: '読書',
     finished: false,
-    scheduled: today,
-    scheduledYear: today.getFullYear(),
-    scheduledMonth: today.getMonth(),
-    scheduledDate: today.getDate(),
+    finishedDateTime: today,
+    finishedYear: today.getFullYear(),
+    finishedMonth: today.getMonth(),
+    finishedDate: today.getDate(),
+    finishedHour: today.getHours(),
+    finishedMin: today.getMinutes(),
+  }
+]
+
+const habitLists = [
+  {
+    id: '1',
+    habitName: 'コードを一行書く',
+    trigger: '夕食を食べた後',
+    weeklySch: {},
+    remindHour: today.getHours(),
+    remindMinutes: today.getMinutes(),
+  },
+  {
+    id: '2',
+    habitName: '1ページ読書をする',
+    trigger: 'お風呂に入ったとき',
+    weeklySch: {},
+    remindHour: today.getHours(),
+    remindMinutes: today.getMinutes(),
+  },
+  {
+    id: '3',
+    habitName: 'ストレッチをする',
+    trigger: '寝る前',
+    weeklySch: {},
+    remindHour: today.getHours(),
+    remindMinutes: today.getMinutes(),
   }
 ]
 
 const HabitList:FC = () => {
   const { globalState, setGlobalState } = useContext(Store)
   // 週間リスト取得処理
-  const setHabitList = () => {
-    setGlobalState({ type: SET_HABIT_LIST , payload: {habitLists: habitLists}})
+  const setHabitResultList = () => {
+    setGlobalState({ type: SET_HABIT_RESULT_LIST , payload: {habitResultLists: habitResultLists}})
+  }
+  const setHabitLists = () => {
+    setGlobalState({ type: SET_HABIT_LISTS , payload: {habitLists: habitLists}})
   }
   const selectedDate = globalState.selectedDate.getDate()
-  const filteredHabitList = globalState.habitLists.filter((list) => {
-    return list.scheduledDate === selectedDate
+  const filteredHabitList = globalState.habitResultLists.filter((list) => {
+    return list.finishedDate === selectedDate
   })
   const changeModalStatus = () => {
     setGlobalState({ type: CHANGE_MODAL_STATUS, payload: {isModalOpen: !globalState.isModalOpen}})
   }
 
   useEffect(()=> {
-    setHabitList()
+    setHabitResultList()
   },[])
 
   return (
     <div>
-      <Header title="あなたの習慣"/>
+      <Header title="習慣化チャレンジリスト"/>
       <HabitListSelectDate />
       {
         filteredHabitList.map((list) => {
@@ -71,10 +105,10 @@ const HabitList:FC = () => {
               id={list.id}
               title={list.title}
               finished={list.finished}
-              scheduled={list.scheduled}
-              scheduledYear={list.scheduledYear}
-              scheduledMonth={list.scheduledMonth}
-              scheduledDate={list.scheduledDate}
+              finished={list.finished}
+              finishedYear={list.finishedYear}
+              finishedMonth={list.finishedMonth}
+              finishedDate={list.finishedDate}
             />
           )
         })
