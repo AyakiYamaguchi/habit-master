@@ -11,7 +11,7 @@ type Props = {
 
 const CalendarDate:FC<Props> = ({year, month, date}) => {
   const { globalState, setGlobalState } = useContext(Store)
-  const dailyHabitLists = globalState.habitLists.filter((list)=> {
+  const dailyHabitLists = globalState.habitResultLists.filter((list)=> {
     return year === list.scheduledYear && month === list.scheduledMonth +1 && date === list.scheduledDate
   })
   const finishedLists = dailyHabitLists.filter((list) => {

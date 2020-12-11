@@ -19,13 +19,12 @@ export type HabitList = {
 
 export type HabitResultList = {
   id: string;
+  scheduledDateTime: Date;
+  scheduledYear: number;
+  scheduledMonth: number;
+  scheduledDate: number;
   finished: boolean;
   finishedDateTime: Date;
-  finishedYear: number;
-  finishedMonth: number;
-  finishedDate: number;
-  finishedHour: number;
-  finishedMin: number;
 }
 
 type State = {
@@ -72,7 +71,7 @@ const reducer = (state: State, action: Action) => {
     case CREATE_HABIT_LIST:
       const nextId = String(state.habitLists.length +1)
       const today = new Date()
-      return { ...state , habitLists: [...state.habitResultLists, {
+      return { ...state , habitLists: [...state.habitLists, {
         id: nextId,
         habitName: 'test',
         trigger: 'test',

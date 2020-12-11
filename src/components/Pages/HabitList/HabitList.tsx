@@ -17,32 +17,29 @@ const habitResultLists = [
   {
     id: '1',
     finished: false,
+    scheduledDateTime: today,
+    scheduledYear: today.getFullYear(),
+    scheduledMonth: today.getMonth(),
+    scheduledDate: today.getDate(),
     finishedDateTime: today,
-    finishedYear: today.getFullYear(),
-    finishedMonth: today.getMonth(),
-    finishedDate: today.getDate(),
-    finishedHour: today.getHours(),
-    finishedMin: today.getMinutes(),
   },
   {
     id: '2',
     finished: false,
+    scheduledDateTime: today,
+    scheduledYear: today.getFullYear(),
+    scheduledMonth: today.getMonth(),
+    scheduledDate: today.getDate(),
     finishedDateTime: today,
-    finishedYear: today.getFullYear(),
-    finishedMonth: today.getMonth(),
-    finishedDate: today.getDate(),
-    finishedHour: today.getHours(),
-    finishedMin: today.getMinutes(),
   },
   {
     id: '3',
     finished: false,
+    scheduledDateTime: today,
+    scheduledYear: today.getFullYear(),
+    scheduledMonth: today.getMonth(),
+    scheduledDate: today.getDate(),
     finishedDateTime: today,
-    finishedYear: today.getFullYear(),
-    finishedMonth: today.getMonth(),
-    finishedDate: today.getDate(),
-    finishedHour: today.getHours(),
-    finishedMin: today.getMinutes(),
   }
 ]
 
@@ -75,22 +72,46 @@ const habitLists = [
 
 const HabitList:FC = () => {
   const { globalState, setGlobalState } = useContext(Store)
-  // 週間リスト取得処理
+
+  // 習慣結果リスト取得
   const setHabitResultList = () => {
     setGlobalState({ type: SET_HABIT_RESULT_LIST , payload: {habitResultLists: habitResultLists}})
   }
+  // 習慣リストマスタ取得
   const setHabitLists = () => {
     setGlobalState({ type: SET_HABIT_LISTS , payload: {habitLists: habitLists}})
   }
-  const selectedDate = globalState.selectedDate.getDate()
+
+  // 日付をYYYYMMDD形式の文字列に変換
+  const getYMDStr = (date: Date) => {
+    const Y = date.getFullYear()
+    const M = ("00" + (date.getMonth()+1)).slice(-2)
+    const D = ("00" + date.getDate()).slice(-2)
+
+    return Y + M + D
+  }
+
+  // 現在選択されている日付を取得
+  const selectedDate = globalState.selectedDate
+  const selectedDateStr = getYMDStr(selectedDate)
+
+  // 選択している日付で、習慣ステータスが完了しているリストのみを取得
   const filteredHabitList = globalState.habitResultLists.filter((list) => {
-    return list.finishedDate === selectedDate
+    const habitListDateStr = getYMDStr(list.finishedDateTime)
+    
+    if (habitListDateStr === selectedDateStr){
+      if (list.finishedDateTime){
+        return (list)
+      }
+    }
   })
+  // モーダルの表示 / 非表示をスイッチ
   const changeModalStatus = () => {
     setGlobalState({ type: CHANGE_MODAL_STATUS, payload: {isModalOpen: !globalState.isModalOpen}})
   }
 
   useEffect(()=> {
+    setHabitLists()
     setHabitResultList()
   },[])
 
@@ -99,21 +120,21 @@ const HabitList:FC = () => {
       <Header title="習慣化チャレンジリスト"/>
       <HabitListSelectDate />
       {
-        filteredHabitList.map((list) => {
-          return(
-            <HabitListItem
+        globalState.habitLists.map((list,index) => {
+          const habitList = filteredHabitList.map((resultList,index)=>{
+            return resultList.id === list.id
+          })
+          return (
+            <HabitListItem 
               id={list.id}
-              title={list.title}
-              finished={list.finished}
-              finished={list.finished}
-              finishedYear={list.finishedYear}
-              finishedMonth={list.finishedMonth}
-              finishedDate={list.finishedDate}
+              habitName={list.habitName}
+              trigger={list.trigger}
+              finished={!habitList ? false : true}
             />
           )
         })
       }
-      <div className={`${Style.addBtnWrap} ${selectedDate != today.getDate() && Style.btnHide}`} >
+      <div className={`${Style.addBtnWrap} ${selectedDate.getUTCDate() != today.getDate() && Style.btnHide}`} >
         <FloatingAddBtn handleClick={changeModalStatus}/>
       </div>
       <Modal>
