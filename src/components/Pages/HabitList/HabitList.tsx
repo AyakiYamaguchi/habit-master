@@ -157,7 +157,7 @@ const HabitList:FC = () => {
           )
         })
       }
-      <div className={`${Style.addBtnWrap} ${selectedDate.getUTCDate() != today.getDate() && Style.btnHide}`} >
+      <div className={`${Style.addBtnWrap} ${selectedDate.getDate() !== today.getDate() && Style.btnHide}`} >
         <FloatingAddBtn handleClick={changeModalStatus}/>
       </div>
       <Modal>
