@@ -1,5 +1,5 @@
 import React, { FC, useContext , useEffect , useState } from 'react';
-import { BrowserRouter as Router, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import firebase from '../apis/FirebaseConf';
 import { AuthContext } from '../store/Auth';
 import { SET_USER } from '../store/Auth';

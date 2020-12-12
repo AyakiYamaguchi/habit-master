@@ -1,4 +1,4 @@
-import React, { FC , useEffect , useContext } from 'react';
+import React, { FC } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import HabitList from './components/Pages/HabitList/HabitList';
 import Login from './components/Pages/Login/Login';

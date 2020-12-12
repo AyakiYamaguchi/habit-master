@@ -16,7 +16,7 @@ const today = new Date()
 const habitResultLists = [
   {
     id: '1',
-    finished: false,
+    finished: true,
     scheduledDateTime: today,
     scheduledYear: today.getFullYear(),
     scheduledMonth: today.getMonth(),
@@ -67,8 +67,23 @@ const habitLists = [
     weeklySch: {},
     remindHour: today.getHours(),
     remindMinutes: today.getMinutes(),
+  },
+  {
+    id: '4',
+    habitName: '瞬間英作文を1パートやる',
+    trigger: '寝る前',
+    weeklySch: {},
+    remindHour: today.getHours(),
+    remindMinutes: today.getMinutes(),
   }
 ]
+
+type scheduleList = {
+  id: string;
+  finished: boolean;
+  habitName: string;
+  trigger: string;
+}
 
 const HabitList:FC = () => {
   const { globalState, setGlobalState } = useContext(Store)
@@ -91,20 +106,31 @@ const HabitList:FC = () => {
     return Y + M + D
   }
 
-  // 現在選択されている日付を取得
+  // 現在選択されている日付を取得しYYYYMMDD形式に変換
   const selectedDate = globalState.selectedDate
   const selectedDateStr = getYMDStr(selectedDate)
 
-  // 選択している日付で、習慣ステータスが完了しているリストのみを取得
-  const filteredHabitList = globalState.habitResultLists.filter((list) => {
-    const habitListDateStr = getYMDStr(list.finishedDateTime)
-    
-    if (habitListDateStr === selectedDateStr){
-      if (list.finishedDateTime){
-        return (list)
+  // 選択している日付でスケジュールされている習慣リストの配列を作成
+  const scheduledLists:scheduleList[] = []
+  globalState.habitLists.map((habitList, index)=>{
+    globalState.habitResultLists.map((resultList, index)=>{
+      // resultListの日付をYYYYMMDD形式に変換
+      const resultListDateStr = getYMDStr(resultList.finishedDateTime)
+      // 選択している日付でスケジュールされていた習慣リストを配列に追加
+      if(habitList.id === resultList.id && resultListDateStr === selectedDateStr){
+        const scheduleList = {
+          id: habitList.id,
+          finished: resultList.finished,
+          habitName: habitList.habitName,
+          trigger: habitList.trigger,
+        }
+        return (
+          scheduledLists.push(scheduleList)
+        )
       }
-    }
+    })
   })
+
   // モーダルの表示 / 非表示をスイッチ
   const changeModalStatus = () => {
     setGlobalState({ type: CHANGE_MODAL_STATUS, payload: {isModalOpen: !globalState.isModalOpen}})
@@ -120,16 +146,13 @@ const HabitList:FC = () => {
       <Header title="習慣化チャレンジリスト"/>
       <HabitListSelectDate />
       {
-        globalState.habitLists.map((list,index) => {
-          const habitList = filteredHabitList.map((resultList,index)=>{
-            return resultList.id === list.id
-          })
+        scheduledLists.map((list,index) => { 
           return (
             <HabitListItem 
               id={list.id}
               habitName={list.habitName}
               trigger={list.trigger}
-              finished={!habitList ? false : true}
+              finished={list.finished}
             />
           )
         })
