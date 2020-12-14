@@ -1,34 +1,35 @@
 import React , { useState , useContext, useCallback } from 'react'
 import { CHANGE_MODAL_STATUS, Store } from '../../../store/index'
-import Style from './CreateHabitListForm.module.scss';
+import Style from './HabitListForm.module.scss';
 import SubmitBtn from '../../Atoms/SubmitBtn/SubmitBtn';
 import CancelBtn from '../../Atoms/CancelBtn/CancelBtn';
 import InputText from '../../Atoms/InputText/InputText';
-import { CREATE_HABIT_LIST } from '../../../store/index';
+import { UPDATE_HABIT_LIST } from '../../../store/index';
+import { defaultDayOfWeekProps } from '../../../store/index'
 
-// 週選択のデフォルト状態の変数を定義
-const defaultDayOfWeekProps = [
-  { dayOfWeek: '日',selected: false },
-  { dayOfWeek: '月',selected: false },
-  { dayOfWeek: '火',selected: false },
-  { dayOfWeek: '水',selected: false },
-  { dayOfWeek: '木',selected: false },
-  { dayOfWeek: '金',selected: false },
-  { dayOfWeek: '土',selected: false },
-]
-
-const CreateHabitListForm= () => {
+const HabitListForm= () => {
   const { globalState , setGlobalState } = useContext(Store)
-  const [habitListTitle , setHabitListTitle] = useState('')
-  const [trigger, setTrigger] = useState('')
-  const [remindTime, setRemindTime] = useState('')
-  // 週の選択状態をstateを定義し、初期値をセット
-  const [DayOfWeekLists, setDayOfWeekLists] = useState(defaultDayOfWeekProps)
+  const [habitList,setHabitList] = useState({
+    habitName: '',
+    trigger: '',
+    dayOfWeekLists: defaultDayOfWeekProps,
+    remindTime: 0,
+  })
+  // const [habitListTitle , setHabitListTitle] = useState('')
+  // const [trigger, setTrigger] = useState('')
+  // const [remindTime, setRemindTime] = useState('')
+  // const [DayOfWeekLists, setDayOfWeekLists] = useState(defaultDayOfWeekProps)
+  
   // 曜日選択時にStateを更新する処理
   const onClickDayOfWeek = (index:number) => {
-    const updatedDayOfWeekLists = DayOfWeekLists.slice();
+    const updatedDayOfWeekLists = habitList.dayOfWeekLists.slice();
     updatedDayOfWeekLists[index].selected = !updatedDayOfWeekLists[index].selected;
-    setDayOfWeekLists(updatedDayOfWeekLists);
+    setHabitList({
+      ...habitList,
+      
+    })
+    ;
+
   }
   // submitボタンクリック時に、値をセットする処理を追加
 
@@ -42,8 +43,8 @@ const CreateHabitListForm= () => {
     setTrigger(updateTrigger);
   },[trigger])
 
-  const onCreateHabitList = () => {
-    setGlobalState({type: CREATE_HABIT_LIST, payload: {title: habitListTitle}})
+  const updateHabitLists = () => {
+    setGlobalState({type: UPDATE_HABIT_LIST, payload: {title: habitList}})
     setHabitListTitle('')
     setGlobalState({type: CHANGE_MODAL_STATUS, payload: {isModalOpen: !globalState.isModalOpen}})
   }
@@ -88,6 +89,7 @@ const CreateHabitListForm= () => {
         <div className={Style.remindWrap}>
           <input 
             type='tel'
+            value={remindTime}
             className={Style.remindInput}
             onChange={(e)=>setRemindTime(e.target.value)}
           />
@@ -95,11 +97,11 @@ const CreateHabitListForm= () => {
         </div>
       </div>
       <div className={Style.btnWrap}>
-        <SubmitBtn btnText="登録する" handleClick={onCreateHabitList}/>
+        <SubmitBtn btnText="登録する" handleClick={updateHabitLists}/>
         <CancelBtn btnText="キャンセル" handleClick={changeModalStatus}/>
       </div>
     </div>
   );
 }
 
-export default CreateHabitListForm;
+export default HabitListForm;

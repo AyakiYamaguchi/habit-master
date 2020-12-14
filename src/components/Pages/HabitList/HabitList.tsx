@@ -5,7 +5,7 @@ import Footer from '../../Organisms/Footer/Footer';
 import { Store } from '../../../store/index';
 import HabitListItem from '../../Molecules/HabitListItem/HabitListItem';
 import Modal from '../../Molecules/Modal/Modal';
-import CreateHabitListForm from '../../Molecules/CreateHabitListForm/CreateHabitListForm';
+import HabitListForm from '../../Molecules/HabitListForm/HabitListForm';
 import HabitListSelectDate from '../../Molecules/HabitListSelectDate/HabitListSelectDate';
 import FloatingAddBtn from '../../Atoms/FloatingAddBtn/FloatingAddBtn';
 import { CHANGE_MODAL_STATUS } from '../../../store/index';
@@ -143,12 +143,12 @@ const HabitList:FC = () => {
 
   return (
     <div>
-      <Header title="習慣化チャレンジリスト"/>
+      <Header title="習慣リスト"/>
       <HabitListSelectDate />
       {
         scheduledLists.map((list,index) => { 
           return (
-            <HabitListItem 
+            <HabitListItem
               id={list.id}
               habitName={list.habitName}
               trigger={list.trigger}
@@ -161,7 +161,7 @@ const HabitList:FC = () => {
         <FloatingAddBtn handleClick={changeModalStatus}/>
       </div>
       <Modal>
-        <CreateHabitListForm />
+        <HabitListForm />
       </Modal>
       <Footer selectedMenu="list"/>
     </div>

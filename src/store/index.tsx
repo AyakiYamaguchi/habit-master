@@ -4,7 +4,7 @@ export const SET_GOAL = 'SET_GOAL'
 export const SET_HABIT_LISTS = 'SET_HABIT_LISTS'
 export const SET_HABIT_RESULT_LIST = 'SET_HABIT_RESULT_LIST'
 export const EDIT_HABIT_RESULT_STATUS = 'EDIT_HABIT_RESULT_STATUS'
-export const CREATE_HABIT_LIST = 'CREATE_HABIT_LIST'
+export const UPDATE_HABIT_LIST = 'UPDATE_HABIT_LIST'
 export const SET_SELECTED_HABIT_LIST_DATE = 'SET_SELECTED_HABIT_LIST_DATE'
 export const CHANGE_MODAL_STATUS = 'CHANGE_MODAL_STATUS'
 
@@ -12,7 +12,7 @@ export type HabitList = {
   id: string;
   habitName: string;
   trigger: string;
-  weeklySch: {};
+  weeklySch: [];
   remindHour: number;
   remindMinutes: number;
 }
@@ -27,6 +27,16 @@ export type HabitResultList = {
   finishedDateTime: Date;
 }
 
+export const defaultDayOfWeekProps = [
+  { dayOfWeek: '日',selected: false },
+  { dayOfWeek: '月',selected: false },
+  { dayOfWeek: '火',selected: false },
+  { dayOfWeek: '水',selected: false },
+  { dayOfWeek: '木',selected: false },
+  { dayOfWeek: '金',selected: false },
+  { dayOfWeek: '土',selected: false },
+]
+
 type State = {
   habitResultLists: HabitResultList[];
   habitLists: HabitList[];
@@ -40,7 +50,7 @@ type Action =
 { type: 'SET_HABIT_LISTS' , payload: { habitLists: HabitList[]}} |
 { type: 'SET_HABIT_RESULT_LIST' , payload: {habitResultLists: HabitResultList[]} } |
 { type: 'EDIT_HABIT_RESULT_STATUS' , payload: {id: string } } |
-{ type: 'CREATE_HABIT_LIST', payload: {title: string}} |
+{ type: 'UPDATE_HABIT_LIST', payload: {habitlist: HabitList}} |
 { type: 'SET_SELECTED_HABIT_LIST_DATE', payload: {selectedDate: Date}} |
 { type: 'CHANGE_MODAL_STATUS' , payload: {isModalOpen: boolean}}
 
@@ -68,14 +78,14 @@ const reducer = (state: State, action: Action) => {
         }
         return list
       })}
-    case CREATE_HABIT_LIST:
+    case UPDATE_HABIT_LIST:
       const nextId = String(state.habitLists.length +1)
       const today = new Date()
       return { ...state , habitLists: [...state.habitLists, {
         id: nextId,
         habitName: 'test',
         trigger: 'test',
-        weeklySch: {},
+        weeklySch: [],
         remindHour: 12,
         remindMinutes: 12,
         // id: nextId,
