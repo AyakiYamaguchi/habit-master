@@ -15,33 +15,27 @@ const HabitListForm= () => {
     dayOfWeekLists: defaultDayOfWeekProps,
     remindTime: 0,
   })
-  // const [habitListTitle , setHabitListTitle] = useState('')
-  // const [trigger, setTrigger] = useState('')
-  // const [remindTime, setRemindTime] = useState('')
-  // const [DayOfWeekLists, setDayOfWeekLists] = useState(defaultDayOfWeekProps)
-  
   // 曜日選択時にStateを更新する処理
   const onClickDayOfWeek = (index:number) => {
     const updatedDayOfWeekLists = habitList.dayOfWeekLists.slice();
     updatedDayOfWeekLists[index].selected = !updatedDayOfWeekLists[index].selected;
-    setHabitList({
-      ...habitList,
-      
-    })
-    ;
-
+    setHabitList({ ...habitList,dayOfWeekLists: updatedDayOfWeekLists });
   }
-  // submitボタンクリック時に、値をセットする処理を追加
 
   const handleChangeListTitle = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const listTitle = e.target.value;
-    setHabitListTitle(listTitle);
-  },[habitListTitle])
+    const updateHabitName = e.target.value;
+    setHabitList({...habitList, habitName: updateHabitName });
+  },[habitList.habitName])
 
   const handleChangeTrigger = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const updateTrigger = e.target.value;
-    setTrigger(updateTrigger);
-  },[trigger])
+    setHabitList({ ...habitList, trigger: updateTrigger });
+  },[habitList.trigger])
+
+  const handleChangeRemindTime = useCallback((e: React.ChangeEvent<HTMLInputElement>)=>{
+    const updateRemindTime = Number(e.target.value);
+    setHabitList({...habitList, remindTime: updateRemindTime})
+  },[habitList.remindTime])
 
   const updateHabitLists = () => {
     setGlobalState({type: UPDATE_HABIT_LIST, payload: {title: habitList}})
@@ -57,7 +51,7 @@ const HabitListForm= () => {
         <h2 className={Style.title}>習慣化したい行動</h2>
         <InputText
           placeholder="本を1ページ読む"
-          state={habitListTitle}
+          state={habitList.habitName}
           handleChange={handleChangeListTitle}
         />
       </div>
@@ -65,14 +59,14 @@ const HabitListForm= () => {
         <h2 className={Style.title}>行動するタイミング</h2>
         <InputText
           placeholder="例：朝食を食べたあと"
-          state={habitListTitle}
+          state={habitList.trigger}
           handleChange={handleChangeTrigger}
         />
       </div>
       <div className={Style.section}>
         <h2 className={Style.title}>行動する曜日</h2>
         <div className={Style.dayOfWeek__wrap}>
-          {DayOfWeekLists.map((list,index)=>{
+          {habitList.dayOfWeekLists.map((list,index)=>{
             return(
               <div 
                 onClick={()=>onClickDayOfWeek(index)}
@@ -89,9 +83,9 @@ const HabitListForm= () => {
         <div className={Style.remindWrap}>
           <input 
             type='tel'
-            value={remindTime}
+            value={habitList.remindTime}
             className={Style.remindInput}
-            onChange={(e)=>setRemindTime(e.target.value)}
+            onChange={handleChangeRemindTime}
           />
           <p className={Style.remindText}>時にリマインド配信</p>
         </div>
