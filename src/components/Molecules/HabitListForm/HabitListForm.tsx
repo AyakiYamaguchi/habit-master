@@ -1,13 +1,18 @@
-import React , { useState , useContext, useCallback } from 'react'
+import React , { FC, useState , useContext, useCallback } from 'react'
 import { CHANGE_MODAL_STATUS, Store } from '../../../store/index'
 import Style from './HabitListForm.module.scss';
 import SubmitBtn from '../../Atoms/SubmitBtn/SubmitBtn';
 import CancelBtn from '../../Atoms/CancelBtn/CancelBtn';
 import InputText from '../../Atoms/InputText/InputText';
+import { CREATE_HABIT_LIST } from '../../../store/index';
 import { UPDATE_HABIT_LIST } from '../../../store/index';
 import { defaultDayOfWeekProps } from '../../../store/index'
 
-const HabitListForm= () => {
+type Props = {
+  currentListId?: string;
+}
+
+const HabitListForm:FC<Props>= ({currentListId}) => {
   const { globalState , setGlobalState } = useContext(Store)
   const [habitList,setHabitList] = useState({
     habitName: '',
@@ -25,23 +30,34 @@ const HabitListForm= () => {
   const handleChangeListTitle = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const updateHabitName = e.target.value;
     setHabitList({...habitList, habitName: updateHabitName });
-  },[habitList.habitName])
+  },[habitList])
 
   const handleChangeTrigger = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const updateTrigger = e.target.value;
     setHabitList({ ...habitList, trigger: updateTrigger });
-  },[habitList.trigger])
+  },[habitList])
 
   const handleChangeRemindTime = useCallback((e: React.ChangeEvent<HTMLInputElement>)=>{
     const updateRemindTime = Number(e.target.value);
     setHabitList({...habitList, remindTime: updateRemindTime})
-  },[habitList.remindTime])
+  },[habitList])
 
-  const updateHabitLists = () => {
-    setGlobalState({type: UPDATE_HABIT_LIST, payload: {title: habitList}})
-    setHabitListTitle('')
+  const createOrUpdateHabitList = () => {
+    const currentHabitList = {
+      habitName: habitList.habitName,
+      trigger: habitList.trigger,
+      weeklySch: habitList.dayOfWeekLists,
+      remindHour: habitList.remindTime,
+      remindMinutes: 0,
+    }
+    if(currentListId === undefined){
+      setGlobalState({type: CREATE_HABIT_LIST, payload: {habitList: currentHabitList}})
+    }else{
+      setGlobalState({type: UPDATE_HABIT_LIST, payload: {habitlist: currentHabitList, currentListId: currentListId}})
+    }
     setGlobalState({type: CHANGE_MODAL_STATUS, payload: {isModalOpen: !globalState.isModalOpen}})
   }
+
   const changeModalStatus = () => {
     setGlobalState({type: CHANGE_MODAL_STATUS, payload: {isModalOpen: !globalState.isModalOpen}})
   }
@@ -91,7 +107,7 @@ const HabitListForm= () => {
         </div>
       </div>
       <div className={Style.btnWrap}>
-        <SubmitBtn btnText="登録する" handleClick={updateHabitLists}/>
+        <SubmitBtn btnText="登録する" handleClick={createOrUpdateHabitList}/>
         <CancelBtn btnText="キャンセル" handleClick={changeModalStatus}/>
       </div>
     </div>

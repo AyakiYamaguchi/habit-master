@@ -4,15 +4,16 @@ export const SET_GOAL = 'SET_GOAL'
 export const SET_HABIT_LISTS = 'SET_HABIT_LISTS'
 export const SET_HABIT_RESULT_LIST = 'SET_HABIT_RESULT_LIST'
 export const EDIT_HABIT_RESULT_STATUS = 'EDIT_HABIT_RESULT_STATUS'
+export const CREATE_HABIT_LIST = 'CREATE_HABIT_LIST'
 export const UPDATE_HABIT_LIST = 'UPDATE_HABIT_LIST'
 export const SET_SELECTED_HABIT_LIST_DATE = 'SET_SELECTED_HABIT_LIST_DATE'
 export const CHANGE_MODAL_STATUS = 'CHANGE_MODAL_STATUS'
 
 export type HabitList = {
-  id: string;
+  id?: string;
   habitName: string;
   trigger: string;
-  weeklySch: [];
+  weeklySch: {}[];
   remindHour: number;
   remindMinutes: number;
 }
@@ -50,7 +51,8 @@ type Action =
 { type: 'SET_HABIT_LISTS' , payload: { habitLists: HabitList[]}} |
 { type: 'SET_HABIT_RESULT_LIST' , payload: {habitResultLists: HabitResultList[]} } |
 { type: 'EDIT_HABIT_RESULT_STATUS' , payload: {id: string } } |
-{ type: 'UPDATE_HABIT_LIST', payload: {habitlist: HabitList}} |
+{ type: 'CREATE_HABIT_LIST', payload: {habitList: HabitList} }|
+{ type: 'UPDATE_HABIT_LIST', payload: {habitlist: HabitList , currentListId: string}} |
 { type: 'SET_SELECTED_HABIT_LIST_DATE', payload: {selectedDate: Date}} |
 { type: 'CHANGE_MODAL_STATUS' , payload: {isModalOpen: boolean}}
 
@@ -79,22 +81,23 @@ const reducer = (state: State, action: Action) => {
         return list
       })}
     case UPDATE_HABIT_LIST:
-      const nextId = String(state.habitLists.length +1)
-      const today = new Date()
-      return { ...state , habitLists: [...state.habitLists, {
-        id: nextId,
-        habitName: 'test',
-        trigger: 'test',
-        weeklySch: [],
-        remindHour: 12,
-        remindMinutes: 12,
-        // id: nextId,
-        // finished: false,
-        // scheduled: today,
-        // scheduledYear: today.getFullYear(),
-        // scheduledMonth: today.getMonth() + 1,
-        // scheduledDate: today.getDate(),
-      }]}
+      // const nextId = String(state.habitLists.length +1)
+      return {
+        ...state , habitlist: state.habitLists.map((list,index)=>{
+          // 同じリストIDが存在する場合はフォームの値で更新
+          if(list.id === action.payload.currentListId){
+            return { ...list, 
+              habitName: 'test',
+              trigger: '',
+              weeklySch: [],
+              remindHour: 0,
+            }
+          }
+          return list
+        })
+      }
+    case CREATE_HABIT_LIST:
+      return { ...state , habitLists: [...state.habitLists, action.payload.habitList]}
     case SET_SELECTED_HABIT_LIST_DATE:
       return { ...state, selectedDate: action.payload.selectedDate}
     case CHANGE_MODAL_STATUS:
