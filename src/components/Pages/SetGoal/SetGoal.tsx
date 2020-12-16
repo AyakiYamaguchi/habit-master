@@ -1,7 +1,7 @@
 import React , { useState, useContext } from 'react';
 import InputStep from '../../Molecules/InputStep/InputStep';
 import TitleText from '../../Atoms/TitleText/TitleText';
-import EditGoal from '../../Organisms/EditGoal/EditGoal';
+import InputGoal from '../../Organisms/InputGoal/InputGoal';
 import Style from './SetGoal.module.scss';
 import SubmitBtn from '../../Atoms/SubmitBtn/SubmitBtn';
 import CancelBtn from '../../Atoms/CancelBtn/CancelBtn';
@@ -39,7 +39,7 @@ const SetGoal = () => {
         想像した未来の自分の姿を目標に書いてみてください。
         目標が具体的であると、より効果的です。
       </p>
-      <EditGoal goal={goal} handleChange={handleChangeGoal} errorMessage={errorMessage}/>
+      <InputGoal goal={goal} handleChange={handleChangeGoal} errorMessage={errorMessage}/>
       <div className={Style.btnWrap}>
         <SubmitBtn btnText="この目標ではじめる" handleClick={handleClickSubmit}/>
         <CancelBtn btnText="あとで目標を設定する" handleClick={handleClickCancel}/>

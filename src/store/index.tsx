@@ -28,7 +28,7 @@ export type HabitResultList = {
   finishedDateTime: Date;
 }
 
-export const defaultDayOfWeekProps = [
+export const initialDayOfWeekProps = [
   { dayOfWeek: '日',selected: false },
   { dayOfWeek: '月',selected: false },
   { dayOfWeek: '火',selected: false },

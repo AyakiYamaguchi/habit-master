@@ -1,0 +1,8 @@
+@import '../../../styles/variables';
+
+.message {
+  color: $errorColorMedium;
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+  text-align: left;
+}

@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import TitleText from '../../Atoms/TitleText/TitleText'
-import Style from './EditGoal.module.scss'
+import Style from './InputGoal.module.scss'
 
 type Props = {
   goal?: string;
@@ -8,7 +8,7 @@ type Props = {
   handleChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
-const EditGoal:FC<Props> = ({goal, errorMessage, handleChange}) => {
+const InputGoal:FC<Props> = ({goal, errorMessage, handleChange}) => {
   return (
     <div className={Style.wrap}>
       <TitleText title="わたしの目標" />
@@ -23,4 +23,4 @@ const EditGoal:FC<Props> = ({goal, errorMessage, handleChange}) => {
   )
 }
 
-export default EditGoal
+export default InputGoal

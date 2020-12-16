@@ -6,20 +6,25 @@ import CancelBtn from '../../Atoms/CancelBtn/CancelBtn';
 import InputText from '../../Atoms/InputText/InputText';
 import { CREATE_HABIT_LIST } from '../../../store/index';
 import { UPDATE_HABIT_LIST } from '../../../store/index';
-import { defaultDayOfWeekProps } from '../../../store/index'
+import { initialDayOfWeekProps } from '../../../store/index'
+import { validateRequired } from '../../Validate/Validate';
 
 type Props = {
   currentListId?: string;
 }
 
+const initialState = {
+  habitName: '',
+  trigger: '',
+  dayOfWeekLists: initialDayOfWeekProps,
+  remindTime: 0,
+}
+
 const HabitListForm:FC<Props>= ({currentListId}) => {
   const { globalState , setGlobalState } = useContext(Store)
-  const [habitList,setHabitList] = useState({
-    habitName: '',
-    trigger: '',
-    dayOfWeekLists: defaultDayOfWeekProps,
-    remindTime: 0,
-  })
+  const [habitList,setHabitList] = useState(initialState)
+  const [habitNameErrorMessage, setHabitNameErrorMessage] = useState('')
+  const [triggerErrorMessage, setTriggerErrorMessage] = useState('')
   // 曜日選択時にStateを更新する処理
   const onClickDayOfWeek = (index:number) => {
     const updatedDayOfWeekLists = habitList.dayOfWeekLists.slice();
@@ -42,7 +47,19 @@ const HabitListForm:FC<Props>= ({currentListId}) => {
     setHabitList({...habitList, remindTime: updateRemindTime})
   },[habitList])
 
+  const validate = () => {
+    const habitNameErrorInfo = validateRequired(habitList.habitName,'習慣が入力されていません')
+    if (habitNameErrorInfo){
+      setHabitNameErrorMessage(habitNameErrorInfo)
+    }
+    const triggerErrorInfo = validateRequired(habitList.trigger,'行動するタイミングが入力されていません')
+    if (triggerErrorInfo){
+      setTriggerErrorMessage(triggerErrorInfo)
+    }
+  }
+
   const createOrUpdateHabitList = () => {
+    validate()
     const currentHabitList = {
       habitName: habitList.habitName,
       trigger: habitList.trigger,
@@ -50,12 +67,17 @@ const HabitListForm:FC<Props>= ({currentListId}) => {
       remindHour: habitList.remindTime,
       remindMinutes: 0,
     }
-    if(currentListId === undefined){
-      setGlobalState({type: CREATE_HABIT_LIST, payload: {habitList: currentHabitList}})
+    if (habitNameErrorMessage || triggerErrorMessage){
+      return
     }else{
-      setGlobalState({type: UPDATE_HABIT_LIST, payload: {habitlist: currentHabitList, currentListId: currentListId}})
+      if(currentListId === undefined){
+        setGlobalState({type: CREATE_HABIT_LIST, payload: {habitList: currentHabitList}})
+      }else{
+        setGlobalState({type: UPDATE_HABIT_LIST, payload: {habitlist: currentHabitList, currentListId: currentListId}})
+      }
+      setGlobalState({type: CHANGE_MODAL_STATUS, payload: {isModalOpen: !globalState.isModalOpen}})
+      setHabitList(initialState)
     }
-    setGlobalState({type: CHANGE_MODAL_STATUS, payload: {isModalOpen: !globalState.isModalOpen}})
   }
 
   const changeModalStatus = () => {
@@ -69,6 +91,7 @@ const HabitListForm:FC<Props>= ({currentListId}) => {
           placeholder="本を1ページ読む"
           state={habitList.habitName}
           handleChange={handleChangeListTitle}
+          errorMessage={habitNameErrorMessage}
         />
       </div>
       <div className={Style.section}>
@@ -77,6 +100,7 @@ const HabitListForm:FC<Props>= ({currentListId}) => {
           placeholder="例：朝食を食べたあと"
           state={habitList.trigger}
           handleChange={handleChangeTrigger}
+          errorMessage={triggerErrorMessage}
         />
       </div>
       <div className={Style.section}>

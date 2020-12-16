@@ -4,7 +4,6 @@ import { CHANGE_MODAL_STATUS, CREATE_HABIT_LIST, Store } from '../../../store/in
 import HabitListForm from '../../Molecules/HabitListForm/HabitListForm'
 import SubmitBtn from '../../Atoms/SubmitBtn/SubmitBtn';
 import CancelBtn from '../../Atoms/CancelBtn/CancelBtn';
-import { defaultDayOfWeekProps } from '../../../store/index'
 import HabitListItem from '../../Molecules/HabitListItem/HabitListItem';
 
 const CreateHabitList = () => {
