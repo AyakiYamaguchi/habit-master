@@ -5,7 +5,7 @@ import Footer from '../../Organisms/Footer/Footer';
 import { Store } from '../../../store/index';
 import HabitListItem from '../../Molecules/HabitListItem/HabitListItem';
 import Modal from '../../Molecules/Modal/Modal';
-import HabitListForm from '../../Molecules/HabitListForm/HabitListForm';
+import HabitListForm from '../../Organisms/HabitListForm';
 import HabitListSelectDate from '../../Molecules/HabitListSelectDate/HabitListSelectDate';
 import FloatingAddBtn from '../../Atoms/FloatingAddBtn/FloatingAddBtn';
 import { CHANGE_MODAL_STATUS } from '../../../store/index';
