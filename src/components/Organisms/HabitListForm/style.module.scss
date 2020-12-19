@@ -1,0 +1,68 @@
+@import '../../../styles/variables';
+
+.title {
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: $fontColorGray;
+}
+
+.section {
+  margin-bottom: 25px;
+}
+
+.inputArea{
+  width: 100%;
+  font-size: 1.4rem;
+  padding: 14px 17px;
+  border-radius: 5px;
+  border: 1px solid $baseColorGrayMedium;
+}
+
+.btnWrap {
+  text-align: center;
+}
+
+.dayOfWeek__wrap {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dayOfWeek__item {
+  font-size: 1.4rem;
+  color: $keyColorHeavy;
+  font-weight: bold;
+  padding: 12px 11px;
+  border-radius: 3px;
+  border: solid 1px $keyColorHeavy;
+}
+
+.selected {
+  color: #fff;
+  background-color: $keyColorHeavy;
+}
+
+.remindWrap {
+  display: flex;
+  align-items: center;
+}
+
+.remindItemWrap {
+  display: flex;
+  align-items: center;
+}
+
+.remindInput {
+  width: 70px;
+  font-size: 1.4rem;
+  text-align: center;
+  padding: 10px 17px;
+  border-radius: 5px;
+  border: 1px solid $baseColorGrayMedium;
+}
+
+.remindText {
+  font-size: 1.4rem;
+  margin-left: 10px;
+  margin-right: 10px;
+}

@@ -1,11 +1,12 @@
 import React, { FC } from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import HabitList from './components/Pages/HabitList/HabitList';
 import Login from './components/Pages/Login/Login';
 import Report from './components/Pages/Report/Report';
 import Settings from './components/Pages/Settings/Settings'
 import PrivateRoute from './components/PrivateRoute'
 import SetGoal from './components/Pages/SetGoal/SetGoal'
+import CreateHabitList from './components/Pages/CreateHabitList'
 
 const App:FC = () => {
   return (
@@ -26,6 +27,9 @@ const App:FC = () => {
         </Route>
         <Route exact path="/settings">
           <Settings />
+        </Route>
+        <Route exact path="/create_habitlist">
+          <CreateHabitList />
         </Route>
       </Switch>
     </Router>

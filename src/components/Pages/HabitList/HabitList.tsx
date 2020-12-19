@@ -161,7 +161,7 @@ const HabitList:FC = () => {
         <FloatingAddBtn handleClick={changeModalStatus}/>
       </div>
       <Modal>
-        <HabitListForm />
+        
       </Modal>
       <Footer selectedMenu="list"/>
     </div>
