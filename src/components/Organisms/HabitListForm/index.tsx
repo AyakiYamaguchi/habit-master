@@ -1,6 +1,7 @@
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import { FieldArray, Formik , Field } from 'formik';
 import { initialDayOfWeekProps } from '../../../store/index';
+import { Store } from '../../../store/index'
 import Style from './style.module.scss';
 import SubmitBtn from '../../Atoms/SubmitBtn/SubmitBtn';
 import CancelBtn from '../../Atoms/CancelBtn/CancelBtn';
@@ -11,11 +12,7 @@ type Props = {
 
 const HabitListForm:FC<Props> = ({ handleCancel }) => {
   const hours = Array.from(new Array(24)).map((v,i) => i)
-  // const onClickDayOfWeek = (index:number) => {
-  //   const updatedDayOfWeekLists = habitList.dayOfWeekLists.slice();
-  //   updatedDayOfWeekLists[index].selected = !updatedDayOfWeekLists[index].selected;
-  //   setHabitList({ ...habitList,dayOfWeekLists: updatedDayOfWeekLists });
-  // }
+  const { globalState , setGlobalState } = useContext(Store)
   return (
     <Formik
       initialValues={{
@@ -24,7 +21,9 @@ const HabitListForm:FC<Props> = ({ handleCancel }) => {
         dayOfWeekLists: initialDayOfWeekProps,
         remindTime: 0,
       }}
-      onSubmit={values => console.log(values)}
+      onSubmit={values => 
+        console.log(values)
+      }
       render={(props) => (
         <form onSubmit={props.handleSubmit}>
           <div className={Style.section}>
@@ -99,8 +98,10 @@ const HabitListForm:FC<Props> = ({ handleCancel }) => {
               </div>
             </div>
           </div>
-          <SubmitBtn btnText="登録する"/>
-          <CancelBtn btnText="キャンセル" handleClick={handleCancel}/>
+          <div className={Style.btnWrap}>
+            <SubmitBtn btnText="登録する"/>
+            <CancelBtn btnText="キャンセル" handleClick={handleCancel}/>
+          </div>
         </form>
       )}
     />

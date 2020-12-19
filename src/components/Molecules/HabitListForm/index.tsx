@@ -1,6 +1,6 @@
 import React , { FC, useState , useContext, useCallback } from 'react'
 import { CHANGE_MODAL_STATUS, Store } from '../../../store/index'
-import Style from './HabitListForm.module.scss';
+import Style from './style.module.scss';
 import SubmitBtn from '../../Atoms/SubmitBtn/SubmitBtn';
 import CancelBtn from '../../Atoms/CancelBtn/CancelBtn';
 import InputText from '../../Atoms/InputText/InputText';

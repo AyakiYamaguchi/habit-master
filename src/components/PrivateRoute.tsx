@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import firebase from '../apis/FirebaseConf';
 import { AuthContext } from '../store/Auth';
 import { SET_USER } from '../store/Auth';
-import Loading from '../components/Templates/Loading/Loading'
+import Loading from './templates/Loading'
 
 const PrivateRoute:FC = () => {
   const { AuthState, setAuthState } = useContext(AuthContext)
