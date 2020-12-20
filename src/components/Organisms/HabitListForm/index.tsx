@@ -1,10 +1,11 @@
 import React, { FC, useContext } from 'react';
-import { FieldArray, Formik , Field } from 'formik';
+import { FieldArray, Formik , Field, ErrorMessage } from 'formik';
 import { initialDayOfWeekProps } from '../../../store/index';
-import { Store } from '../../../store/index'
+import { Store } from '../../../store/index';
 import Style from './style.module.scss';
 import SubmitBtn from '../../Atoms/SubmitBtn/SubmitBtn';
 import CancelBtn from '../../Atoms/CancelBtn/CancelBtn';
+import * as yup from 'yup';
 
 type Props = {
   handleCancel: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>)=> void;
@@ -13,6 +14,10 @@ type Props = {
 const HabitListForm:FC<Props> = ({ handleCancel }) => {
   const hours = Array.from(new Array(24)).map((v,i) => i)
   const { globalState , setGlobalState } = useContext(Store)
+  const validation = yup.object().shape({
+    habitName: yup.string()
+      .required('習慣化したい行動が入力されていません')
+  });
   return (
     <Formik
       initialValues={{
@@ -21,6 +26,7 @@ const HabitListForm:FC<Props> = ({ handleCancel }) => {
         dayOfWeekLists: initialDayOfWeekProps,
         remindTime: 0,
       }}
+      validationSchema={validation}
       onSubmit={values => 
         console.log(values)
       }
@@ -28,6 +34,7 @@ const HabitListForm:FC<Props> = ({ handleCancel }) => {
         <form onSubmit={props.handleSubmit}>
           <div className={Style.section}>
             <h2 className={Style.title}>習慣化したい行動</h2>
+            <ErrorMessage name="habitName" component="div"/>
             <input 
               name="habitName"
               placeholder="例：本を1ページ読む"
