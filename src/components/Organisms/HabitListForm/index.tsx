@@ -16,7 +16,9 @@ const HabitListForm:FC<Props> = ({ handleCancel }) => {
   const { globalState , setGlobalState } = useContext(Store)
   const validation = yup.object().shape({
     habitName: yup.string()
-      .required('習慣化したい行動が入力されていません')
+      .required('習慣化したい行動が入力されていません'),
+    trigger: yup.string()
+      .required('行動のタイミングが入力されていません')
   });
   return (
     <Formik
@@ -34,23 +36,24 @@ const HabitListForm:FC<Props> = ({ handleCancel }) => {
         <form onSubmit={props.handleSubmit}>
           <div className={Style.section}>
             <h2 className={Style.title}>習慣化したい行動</h2>
-            <ErrorMessage name="habitName" component="div"/>
+            <ErrorMessage name="habitName" component="div" className={Style.errorMessage}/>
             <input 
               name="habitName"
               placeholder="例：本を1ページ読む"
               value={props.values.habitName}
               onChange={props.handleChange}
-              className={Style.inputArea}
+              className={`${Style.inputArea} ${props.errors.habitName && Style.errorInputArea}`}
             />
           </div>
           <div className={Style.section}>
             <h2 className={Style.title}>行動するタイミング</h2>
+            <ErrorMessage name="trigger" component="div" className={Style.errorMessage}/>
             <input 
               name="trigger"
               placeholder="例：朝食を食べたあと"
               value={props.values.trigger}
               onChange={props.handleChange}
-              className={Style.inputArea}
+              className={`${Style.inputArea} ${props.errors.trigger && Style.errorInputArea}`}
             />
           </div>
           <div className={Style.section}>

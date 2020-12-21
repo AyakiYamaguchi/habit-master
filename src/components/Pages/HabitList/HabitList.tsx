@@ -1,6 +1,6 @@
 import React , { FC, useContext, useEffect } from 'react';
 import Style from './HabitList.module.scss';
-import Header from '../../Organisms/Header/Header';
+import Header from '../../Organisms/Header';
 import Footer from '../../Organisms/Footer/Footer';
 import { Store } from '../../../store/index';
 import HabitListItem from '../../Molecules/HabitListItem/HabitListItem';

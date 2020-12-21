@@ -1,6 +1,6 @@
 import React from 'react'
 import Footer from '../../Organisms/Footer/Footer'
-import Header from '../../Organisms/Header/Header'
+import Header from '../../Organisms/Header'
 import Calendar from '../../Organisms/Calendar/Calendar'
 
 const Report = () => {

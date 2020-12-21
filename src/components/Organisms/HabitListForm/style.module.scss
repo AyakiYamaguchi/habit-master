@@ -19,6 +19,11 @@
   border: 1px solid $baseColorGrayMedium;
 }
 
+.errorInputArea {
+  border: 1px solid $errorColorMedium;
+  background-color: $errorColorLight;
+}
+
 .btnWrap {
   text-align: center;
 }
@@ -65,4 +70,10 @@
   font-size: 1.4rem;
   margin-left: 10px;
   margin-right: 10px;
+}
+
+.errorMessage {
+  color: $errorColorMedium;
+  font-size: 1.2rem;
+  margin-bottom: 5px;
 }
