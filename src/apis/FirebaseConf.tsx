@@ -10,5 +10,7 @@ firebase.initializeApp({
   messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID
 })
 
-export const FacebookProvider = new firebase.auth.FacebookAuthProvider();
 export default firebase
+export const FacebookProvider = new firebase.auth.FacebookAuthProvider();
+
+export const db = firebase.firestore()

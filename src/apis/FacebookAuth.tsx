@@ -17,15 +17,6 @@ export const getCurrentUser = async() => {
       return currentUser
     }
   });
-  // const user = await firebase.auth().currentUser;
-  // return user
-  // return await firebase.auth().onAuthStateChanged((user)=>{
-  //   if(user){
-  //     return user
-  //   }else {
-  //     return null
-  //   }
-  // })
 }
 
 export const SignOut = async() => {

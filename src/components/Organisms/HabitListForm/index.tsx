@@ -1,10 +1,13 @@
 import React, { FC, useContext } from 'react';
 import { FieldArray, Formik , Field, ErrorMessage } from 'formik';
+import { useHistory } from 'react-router-dom';
 import { initialDayOfWeekProps } from '../../../store/index';
 import { Store } from '../../../store/index';
+import { AuthContext } from '../../../store/Auth'
 import Style from './style.module.scss';
 import SubmitBtn from '../../Atoms/SubmitBtn/SubmitBtn';
 import CancelBtn from '../../Atoms/CancelBtn/CancelBtn';
+import { setHabitList } from '../../../apis/Firestore';
 import * as yup from 'yup';
 
 type Props = {
@@ -14,6 +17,12 @@ type Props = {
 const HabitListForm:FC<Props> = ({ handleCancel }) => {
   const hours = Array.from(new Array(24)).map((v,i) => i)
   const { globalState , setGlobalState } = useContext(Store)
+  const { AuthState , setAuthState } = useContext(AuthContext)
+  const history = useHistory()
+  // ログインユーザーのuid取得
+  const userId = AuthState.user?.uid
+
+  // バリデーション設定
   const validation = yup.object().shape({
     habitName: yup.string()
       .required('習慣化したい行動が入力されていません'),
@@ -23,14 +32,20 @@ const HabitListForm:FC<Props> = ({ handleCancel }) => {
   return (
     <Formik
       initialValues={{
+        id: '',
         habitName: '',
         trigger: '',
-        dayOfWeekLists: initialDayOfWeekProps,
-        remindTime: 0,
+        weeklySch: initialDayOfWeekProps,
+        remindHour: 0,
+        remindMinutes: 0,
       }}
       validationSchema={validation}
       onSubmit={values => 
-        console.log(values)
+        setHabitList( userId , values.id ,values ).then(()=>{
+          history.push('/list')
+        }).catch((error)=>{
+          console.log(error)
+        })
       }
       render={(props) => (
         <form onSubmit={props.handleSubmit}>
@@ -62,11 +77,11 @@ const HabitListForm:FC<Props> = ({ handleCancel }) => {
               name="dayOfWeekLists"
               render={() => (
                 <div className={Style.dayOfWeek__wrap}>
-                  {props.values.dayOfWeekLists.map((list,index)=>{
+                  {props.values.weeklySch.map((list,index)=>{
                     return (
                       <div
                         onClick={()=> {
-                          const updatedDayOfWeekLists = props.values.dayOfWeekLists.slice();
+                          const updatedDayOfWeekLists = props.values.weeklySch.slice();
                           updatedDayOfWeekLists[index].selected = !updatedDayOfWeekLists[index].selected;
                           props.setFieldValue( "dayOfWeekLists", updatedDayOfWeekLists)}
                         }
