@@ -3,6 +3,8 @@ import Style from './HabitList.module.scss';
 import Header from '../../Organisms/Header';
 import Footer from '../../Organisms/Footer/Footer';
 import { Store } from '../../../store/index';
+import { AuthContext } from '../../../store/Auth';
+import { fetchHabitList } from '../../../apis/Firestore';
 import HabitListItem from '../../Molecules/HabitListItem/HabitListItem';
 import Modal from '../../Molecules/Modal/Modal';
 import HabitListForm from '../../Organisms/HabitListForm';
@@ -43,40 +45,40 @@ const habitResultLists = [
   }
 ]
 
-const habitLists = [
-  {
-    id: '1',
-    habitName: 'コードを一行書く',
-    trigger: '夕食を食べた後',
-    weeklySch: [],
-    remindHour: today.getHours(),
-    remindMinutes: today.getMinutes(),
-  },
-  {
-    id: '2',
-    habitName: '1ページ読書をする',
-    trigger: 'お風呂に入ったとき',
-    weeklySch: [],
-    remindHour: today.getHours(),
-    remindMinutes: today.getMinutes(),
-  },
-  {
-    id: '3',
-    habitName: 'ストレッチをする',
-    trigger: '寝る前',
-    weeklySch: [],
-    remindHour: today.getHours(),
-    remindMinutes: today.getMinutes(),
-  },
-  {
-    id: '4',
-    habitName: '瞬間英作文を1パートやる',
-    trigger: '寝る前',
-    weeklySch: [],
-    remindHour: today.getHours(),
-    remindMinutes: today.getMinutes(),
-  }
-]
+// const habitLists = [
+//   {
+//     id: '1',
+//     habitName: 'コードを一行書く',
+//     trigger: '夕食を食べた後',
+//     weeklySch: [],
+//     remindHour: today.getHours(),
+//     remindMinutes: today.getMinutes(),
+//   },
+//   {
+//     id: '2',
+//     habitName: '1ページ読書をする',
+//     trigger: 'お風呂に入ったとき',
+//     weeklySch: [],
+//     remindHour: today.getHours(),
+//     remindMinutes: today.getMinutes(),
+//   },
+//   {
+//     id: '3',
+//     habitName: 'ストレッチをする',
+//     trigger: '寝る前',
+//     weeklySch: [],
+//     remindHour: today.getHours(),
+//     remindMinutes: today.getMinutes(),
+//   },
+//   {
+//     id: '4',
+//     habitName: '瞬間英作文を1パートやる',
+//     trigger: '寝る前',
+//     weeklySch: [],
+//     remindHour: today.getHours(),
+//     remindMinutes: today.getMinutes(),
+//   }
+// ]
 
 type scheduleList = {
   id: string;
@@ -87,14 +89,18 @@ type scheduleList = {
 
 const HabitList:FC = () => {
   const { globalState, setGlobalState } = useContext(Store)
-
+  const { AuthState , setAuthState } = useContext(AuthContext)
   // 習慣結果リスト取得
   const setHabitResultList = () => {
     setGlobalState({ type: SET_HABIT_RESULT_LIST , payload: {habitResultLists: habitResultLists}})
   }
+  const userId = AuthState.user?.uid
   // 習慣リストマスタ取得
   const setHabitLists = () => {
-    setGlobalState({ type: SET_HABIT_LISTS , payload: {habitLists: habitLists}})
+    fetchHabitList(userId).then((result)=>{
+      console.log(result)
+    })
+    // setGlobalState({ type: SET_HABIT_LISTS , payload: {habitLists: habitLists}})
   }
 
   // 日付をYYYYMMDD形式の文字列に変換
