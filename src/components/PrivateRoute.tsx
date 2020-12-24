@@ -24,6 +24,7 @@ const PrivateRoute:FC = () => {
 
         fetchHabitList(user.uid).then((result)=>{
           console.log(result)
+          setGlobalState({type: SET_HABIT_LISTS, payload: {habitLists: result}})
         })
         currentUser = user
         console.log(user)

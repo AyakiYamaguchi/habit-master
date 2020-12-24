@@ -6,7 +6,18 @@ import firebase,　{ db } from './FirebaseConf';
 // 習慣リスト一覧の取得
 export const fetchHabitList = async(userId: string | undefined ) => {
   const habitListRef = db.collection("users").doc(userId).collection('habitLists')
-  return await habitListRef.get()
+  // const habitLists = await habitListRef.get()
+
+  const habitLists:HabitList[] = [];
+  await habitListRef.get().then((result)=>{
+    result.docs.map((list,index)=>{
+      const data = list.data() as HabitList
+      if(data){
+        habitLists.push(data)
+      }
+    })
+  })
+  return habitLists
 }
 
 // 習慣リストの新規登録 or 更新メソッド
