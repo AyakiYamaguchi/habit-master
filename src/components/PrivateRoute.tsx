@@ -21,13 +21,10 @@ const PrivateRoute:FC = () => {
           userName: result.displayName
         }
         setAuthState({type: SET_USER, payload: {user: user}})
-
         fetchHabitList(user.uid).then((result)=>{
           console.log(result)
           setGlobalState({type: SET_HABIT_LISTS, payload: {habitLists: result}})
         })
-        currentUser = user
-        console.log(user)
       }
       setLoading(false)
     })

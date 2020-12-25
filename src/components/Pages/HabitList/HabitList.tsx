@@ -45,41 +45,6 @@ const habitResultLists = [
   }
 ]
 
-// const habitLists = [
-//   {
-//     id: '1',
-//     habitName: 'コードを一行書く',
-//     trigger: '夕食を食べた後',
-//     weeklySch: [],
-//     remindHour: today.getHours(),
-//     remindMinutes: today.getMinutes(),
-//   },
-//   {
-//     id: '2',
-//     habitName: '1ページ読書をする',
-//     trigger: 'お風呂に入ったとき',
-//     weeklySch: [],
-//     remindHour: today.getHours(),
-//     remindMinutes: today.getMinutes(),
-//   },
-//   {
-//     id: '3',
-//     habitName: 'ストレッチをする',
-//     trigger: '寝る前',
-//     weeklySch: [],
-//     remindHour: today.getHours(),
-//     remindMinutes: today.getMinutes(),
-//   },
-//   {
-//     id: '4',
-//     habitName: '瞬間英作文を1パートやる',
-//     trigger: '寝る前',
-//     weeklySch: [],
-//     remindHour: today.getHours(),
-//     remindMinutes: today.getMinutes(),
-//   }
-// ]
-
 type scheduleList = {
   id: string;
   finished: boolean;

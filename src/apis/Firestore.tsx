@@ -4,7 +4,7 @@ import firebase,　{ db } from './FirebaseConf';
 
 
 // 習慣リスト一覧の取得
-export const fetchHabitList = async(userId: string | undefined ) => {
+export const fetchHabitList = async(userId: string | undefined) => {
   const habitListRef = db.collection("users").doc(userId).collection('habitLists')
   // const habitLists = await habitListRef.get()
 
@@ -45,6 +45,21 @@ export const setHabitList = async(userId: string | undefined, habitListId: strin
   }
 }
 
+// 習慣予定リストの追加
+export const addHabitResult = (userId: string , habitListId: string) => {
+  const today = new Date()
+  const habitResultListsRef = db.collection("users").doc(userId).collection('scheduledHabits')
+    habitResultListsRef.add({
+      id: habitListId,
+      scheduledDateTime: today,
+      scheduledYear: today.getFullYear(),
+      scheduledMonth: today.getMonth(),
+      scheduledDate: today.getDate(),
+      finished: false,
+      finishedDateTime: null,
+    }
+  )
+}
 
 // 習慣リストの削除
 
