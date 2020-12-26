@@ -7,7 +7,7 @@ import { AuthContext } from '../../../store/Auth'
 import Style from './style.module.scss';
 import SubmitBtn from '../../Atoms/SubmitBtn/SubmitBtn';
 import CancelBtn from '../../Atoms/CancelBtn/CancelBtn';
-import { setHabitList } from '../../../apis/Firestore';
+import { setHabitList , getLastHabitListId, addScheduledHabit } from '../../../apis/Firestore';
 import * as yup from 'yup';
 
 type Props = {
@@ -19,9 +19,24 @@ const HabitListForm:FC<Props> = ({ handleCancel }) => {
   const { globalState , setGlobalState } = useContext(Store)
   const { AuthState , setAuthState } = useContext(AuthContext)
   const history = useHistory()
-  // ログインユーザーのuid取得
-  const userId = AuthState.user?.uid
-
+  // ログインユーザーの取得
+  const user = AuthState.user
+  // 新規習慣リストの場合に、習慣予定リストにも新規登録する処理
+  const addHabitSchedule = (userId: string, habitListId: string) => {
+    // 新規習慣リストの場合
+    if(habitListId === ''){
+      getLastHabitListId(user.uid).then((lastHabitListId)=>{
+        addScheduledHabit(userId,lastHabitListId).then(()=>{
+          history.push('/list')
+        }).catch((error)=>{
+          console.log(error)
+        })
+      })
+    // 既存リストの場合
+    }else{
+      history.push('/list')
+    }
+  }
   // バリデーション設定
   const validation = yup.object().shape({
     habitName: yup.string()
@@ -40,9 +55,9 @@ const HabitListForm:FC<Props> = ({ handleCancel }) => {
         remindMinutes: 0,
       }}
       validationSchema={validation}
-      onSubmit={values => 
-        setHabitList( userId , values.id ,values ).then(()=>{
-          history.push('/list')
+      onSubmit={values =>
+        setHabitList(user.uid ,values.id ,values).then(()=>{
+          addHabitSchedule(user.uid,values.id)
         }).catch((error)=>{
           console.log(error)
         })

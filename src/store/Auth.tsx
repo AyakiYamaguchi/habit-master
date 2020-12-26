@@ -8,15 +8,17 @@ export type User = {
 }
 
 type State = {
-  user: User | null;
+  user: User;
 }
 
 type Action =
 { type: 'SET_USER', payload: {user: User}} |
 { type: 'DELETE_USER'}
 
+const initialStateOfUser = {uid: '' , userName: null}
+
 const initialState = {
-  user: null,
+  user: initialStateOfUser,
 }
 
 const reducer = (state: State ,action: Action) => {
@@ -24,7 +26,7 @@ const reducer = (state: State ,action: Action) => {
     case SET_USER:
       return { ...state, user: action.payload.user }
     case DELETE_USER:
-      return { ...state, user: null}
+      return { ...state, user: initialStateOfUser}
     default:
       return state
   }

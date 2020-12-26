@@ -4,7 +4,7 @@ import Header from '../../Organisms/Header';
 import Footer from '../../Organisms/Footer/Footer';
 import { Store } from '../../../store/index';
 import { AuthContext } from '../../../store/Auth';
-import { fetchHabitList } from '../../../apis/Firestore';
+import { fetchHabitList, getLastHabitListId } from '../../../apis/Firestore';
 import HabitListItem from '../../Molecules/HabitListItem/HabitListItem';
 import Modal from '../../Molecules/Modal/Modal';
 import HabitListForm from '../../Organisms/HabitListForm';
@@ -59,12 +59,13 @@ const HabitList:FC = () => {
   const setHabitResultList = () => {
     setGlobalState({ type: SET_HABIT_RESULT_LIST , payload: {habitResultLists: habitResultLists}})
   }
-  const userId = AuthState.user?.uid
+  const userId = AuthState.user.uid
   // 習慣リストマスタ取得
   const setHabitLists = () => {
-    fetchHabitList(userId).then((result)=>{
-      console.log(result)
-    })
+    // fetchHabitList(userId).then((result)=>{
+    //   const last = result.slice(-1)[0];
+    //   console.log(last)
+    // })
     // setGlobalState({ type: SET_HABIT_LISTS , payload: {habitLists: habitLists}})
   }
 
