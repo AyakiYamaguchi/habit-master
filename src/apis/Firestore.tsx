@@ -72,3 +72,28 @@ export const addScheduledHabit = async(userId: string , habitListId: string) => 
 
 
 // 習慣リスト詳細の取得
+
+
+// ユーザー一覧の取得
+export const getUsers = async() => {
+  const usersRef = db.collection('users')
+  let userIdLists:string[] = []
+  let userHabitLists:any[] = []
+  await usersRef.get().then((docs)=>{
+    docs.forEach((list)=>{
+      userIdLists.push(list.id)
+    })
+  })
+  
+  await userIdLists.map((listId,index)=>{
+    db.collection("users").doc(listId).collection('habitLists').get().then((result)=>{
+      const habits = {
+        listId : result.docs
+      }
+      userHabitLists.push(result)
+    })
+  })
+  const users = await usersRef.get()
+  return users
+  // return await userIdLists
+}

@@ -14,6 +14,13 @@ admin.initializeApp();
 exports.addScheduleHabits = functions
   .region('asia-northeast1')
   .https.onRequest(async(req,res)=>{
-    const user = admin.firestore().collection('users').get()
-    res.send({user})
+    // 全ユーザーを取得
+    const users = admin.firestore().collection('users').get()
+    
+    // users.map((user) => {
+    //   // 各ユーザーの習慣リストマスタを取得
+
+    //   // 翌日の習慣予定リストを追加
+    // })
+    res.send({users})
 })

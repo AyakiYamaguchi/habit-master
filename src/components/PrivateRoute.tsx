@@ -5,7 +5,7 @@ import { AuthContext } from '../store/Auth';
 import { SET_USER } from '../store/Auth';
 import { Store } from '../store/index';
 import { SET_HABIT_LISTS } from '../store/index';
-import { fetchHabitList } from '../apis/Firestore';
+import { fetchHabitList,getUsers } from '../apis/Firestore';
 import Loading from './templates/Loading';
 
 const PrivateRoute:FC = () => {
@@ -26,6 +26,9 @@ const PrivateRoute:FC = () => {
           setGlobalState({type: SET_HABIT_LISTS, payload: {habitLists: result}})
         })
       }
+      getUsers().then((result)=>{
+        console.log(result)
+      })
       setLoading(false)
     })
   }
