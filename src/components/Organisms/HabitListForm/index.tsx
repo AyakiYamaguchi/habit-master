@@ -7,7 +7,7 @@ import { AuthContext } from '../../../store/Auth'
 import Style from './style.module.scss';
 import SubmitBtn from '../../Atoms/SubmitBtn/SubmitBtn';
 import CancelBtn from '../../Atoms/CancelBtn/CancelBtn';
-import { setHabitList , getLastHabitListId, addScheduledHabit } from '../../../apis/Firestore';
+import { setHabitList , getLastHabitListId, addScheduledHabit } from '../../../apis/FirestoreHabits';
 import * as yup from 'yup';
 
 type Props = {

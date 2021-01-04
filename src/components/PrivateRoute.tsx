@@ -5,14 +5,15 @@ import { AuthContext } from '../store/Auth';
 import { SET_USER } from '../store/Auth';
 import { Store } from '../store/index';
 import { SET_HABIT_LISTS } from '../store/index';
-import { fetchHabitList,getUsers } from '../apis/Firestore';
+import { fetchHabitList } from '../apis/FirestoreHabits';
+import { getUsers } from '../apis/FirestoreUsers';
 import Loading from './templates/Loading';
 
 const PrivateRoute:FC = () => {
   const { AuthState, setAuthState } = useContext(AuthContext)
   const { globalState , setGlobalState } = useContext(Store)
   const [loading, setLoading] = useState(true)
-  let currentUser = AuthState.user
+  let currentUserId = AuthState.user.uid
   const LoginCheck = () => {
     firebase.auth().onAuthStateChanged(function(result) {
       if (result) {
@@ -40,7 +41,7 @@ const PrivateRoute:FC = () => {
   return (
     <>
       { !loading ?
-        (!currentUser ?
+        ( currentUserId === "" ?
           <Redirect to='/login' /> : <></>
         ) : (
           <div>

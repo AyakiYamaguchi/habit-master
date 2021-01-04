@@ -5,7 +5,7 @@ import firebase,　{ db } from './FirebaseConf';
 
 // 習慣リスト一覧の取得
 export const fetchHabitList = async(userId: string) => {
-  const habitListRef = db.collection("users").doc(userId).collection('habitLists')
+  const habitListRef = db.collection('users').doc(userId).collection('habitLists')
 
   const habitLists:HabitList[] = [];
   await habitListRef.get().then((result)=>{
@@ -21,7 +21,7 @@ export const fetchHabitList = async(userId: string) => {
 
 // 一番最後に登録された習慣リストのIDを取得
 export const getLastHabitListId = async(userId: string) => {
-  const habitListRef = db.collection("users").doc(userId).collection('habitLists')
+  const habitListRef = db.collection('users').doc(userId).collection('habitLists')
   return await habitListRef.get().then((result)=>{
     return result.docs.slice(-1)[0].id
   })
@@ -31,7 +31,7 @@ export const getLastHabitListId = async(userId: string) => {
 export const setHabitList = async(userId: string, habitListId: string ,habitList: HabitList) => {
   // 新規リスト登録
   if (!habitListId){
-    const habitListRef = db.collection("users").doc(userId).collection('habitLists')
+    const habitListRef = db.collection('users').doc(userId).collection('habitLists')
     return await habitListRef.add({
       habitName: habitList.habitName,
       trigger: habitList.trigger,
@@ -41,7 +41,7 @@ export const setHabitList = async(userId: string, habitListId: string ,habitList
     })
   } else {
     // 登録済みリストの更新
-    const currentHabitListRef = db.collection("users").doc(userId).collection('habitLists').doc(habitListId)
+    const currentHabitListRef = db.collection('users').doc(userId).collection('habitLists').doc(habitListId)
     return await currentHabitListRef.update({
       habitName: habitList.habitName,
       trigger: habitList.trigger,
@@ -55,7 +55,7 @@ export const setHabitList = async(userId: string, habitListId: string ,habitList
 // 習慣予定リストの追加
 export const addScheduledHabit = async(userId: string , habitListId: string) => {
   const today = new Date()
-  const habitResultListsRef = db.collection("users").doc(userId).collection('scheduledHabits')
+  const habitResultListsRef = db.collection('users').doc(userId).collection('scheduledHabits')
   return await habitResultListsRef.add({
     id: habitListId,
     scheduledDateTime: today,
@@ -74,26 +74,3 @@ export const addScheduledHabit = async(userId: string , habitListId: string) => 
 // 習慣リスト詳細の取得
 
 
-// ユーザー一覧の取得
-export const getUsers = async() => {
-  const usersRef = db.collection('users')
-  let userIdLists:string[] = []
-  let userHabitLists:any[] = []
-  await usersRef.get().then((docs)=>{
-    docs.forEach((list)=>{
-      userIdLists.push(list.id)
-    })
-  })
-  
-  await userIdLists.map((listId,index)=>{
-    db.collection("users").doc(listId).collection('habitLists').get().then((result)=>{
-      const habits = {
-        listId : result.docs
-      }
-      userHabitLists.push(result)
-    })
-  })
-  const users = await usersRef.get()
-  return users
-  // return await userIdLists
-}

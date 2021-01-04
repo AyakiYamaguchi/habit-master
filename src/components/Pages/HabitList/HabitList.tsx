@@ -4,7 +4,7 @@ import Header from '../../Organisms/Header';
 import Footer from '../../Organisms/Footer/Footer';
 import { Store } from '../../../store/index';
 import { AuthContext } from '../../../store/Auth';
-import { fetchHabitList, getLastHabitListId } from '../../../apis/Firestore';
+import { fetchHabitList, getLastHabitListId } from '../../../apis/FirestoreHabits';
 import HabitListItem from '../../Molecules/HabitListItem/HabitListItem';
 import Modal from '../../Molecules/Modal/Modal';
 import HabitListForm from '../../Organisms/HabitListForm';
