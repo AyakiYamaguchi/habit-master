@@ -12,7 +12,7 @@ export const fetchHabitList = async(userId: string) => {
     result.docs.map((list,index)=>{
       const data = list.data() as HabitList
       if(data){
-        habitLists.push(data)
+        habitLists.push(Object.assign({id: list.id} ,data))
       }
     })
   })
