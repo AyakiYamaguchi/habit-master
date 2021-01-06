@@ -36,13 +36,18 @@ const PrivateRoute:FC = () => {
             if(habitLists.length > 0){
               // 習慣リストマスタから習慣実行予定リストを作成
               habitLists.map((list,index)=>{
-                // addScheduledHabit(userId, list.id)
+                // addScheduledHabit(userId, list.id).then(()=>{
+                //   console.log('リストの保存に成功しました')
+                // }).catch((error)=>{
+                //   console.log(error)
+                // })
                 console.log(list)
               })
             }
           })
         })
       })
+      
       setLoading(false)
     })
   }

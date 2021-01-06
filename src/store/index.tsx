@@ -10,7 +10,7 @@ export const SET_SELECTED_HABIT_LIST_DATE = 'SET_SELECTED_HABIT_LIST_DATE'
 export const CHANGE_MODAL_STATUS = 'CHANGE_MODAL_STATUS'
 
 export type HabitList = {
-  id?: string;
+  id: string;
   habitName: string;
   trigger: string;
   weeklySch: {}[];
@@ -18,8 +18,9 @@ export type HabitList = {
   remindMinutes: number;
 }
 
-export type HabitResultList = {
+export type ScheduledHabit = {
   id: string;
+  habitListId: string;
   scheduledDateTime: Date;
   scheduledYear: number;
   scheduledMonth: number;
@@ -39,7 +40,7 @@ export const initialDayOfWeekProps = [
 ]
 
 type State = {
-  habitResultLists: HabitResultList[];
+  scheduledHabits: ScheduledHabit[];
   habitLists: HabitList[];
   goal: string;
   selectedDate: Date;
@@ -49,7 +50,7 @@ type State = {
 type Action =
 { type: 'SET_GOAL' , payload: { goal: string }} |
 { type: 'SET_HABIT_LISTS' , payload: { habitLists: HabitList[]}} |
-{ type: 'SET_HABIT_RESULT_LIST' , payload: {habitResultLists: HabitResultList[]} } |
+{ type: 'SET_HABIT_RESULT_LIST' , payload: {scheduledHabits: ScheduledHabit[]} } |
 { type: 'EDIT_HABIT_RESULT_STATUS' , payload: {id: string } } |
 { type: 'CREATE_HABIT_LIST', payload: {habitList: HabitList} }|
 { type: 'UPDATE_HABIT_LIST', payload: {habitlist: HabitList , currentListId: string}} |
@@ -57,7 +58,7 @@ type Action =
 { type: 'CHANGE_MODAL_STATUS' , payload: {isModalOpen: boolean}}
 
 const initialState:State = {
-  habitResultLists: [],
+  scheduledHabits: [],
   habitLists: [],
   goal: '',
   selectedDate: new Date(),
@@ -71,11 +72,11 @@ const reducer = (state: State, action: Action) => {
     case SET_HABIT_LISTS:
       return { ...state, habitLists: action.payload.habitLists }
     case SET_HABIT_RESULT_LIST:
-      return { ...state , habitResultLists: action.payload.habitResultLists }
+      return { ...state , scheduledHabits: action.payload.scheduledHabits }
     case EDIT_HABIT_RESULT_STATUS:
       const id = action.payload.id
-      return {...state, habitResultLists: state.habitResultLists.map((list)=> {
-        if( list.id === id ){
+      return {...state, habitResultLists: state.scheduledHabits.map((list)=> {
+        if( list.habitListId === id ){
           return { ...list, finished: !list.finished }
         }
         return list

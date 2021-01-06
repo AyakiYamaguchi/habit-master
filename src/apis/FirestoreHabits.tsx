@@ -1,5 +1,5 @@
 import React from 'react';
-import { HabitList } from '../store';
+import { HabitList, ScheduledHabit } from '../store';
 import firebase,　{ db } from './FirebaseConf';
 
 
@@ -52,12 +52,37 @@ export const setHabitList = async(userId: string, habitListId: string ,habitList
   }
 }
 
+// 習慣リストの削除
+
+
+// 習慣リスト詳細の取得
+
+
+
+
+
+// 習慣予定リスト一覧の取得
+export const fetchScheduledHabit = async(userId: string,) => {
+  const scheduledHabits: ScheduledHabit[] = []
+  const scheduledHabitsRef = db.collection('users').doc(userId).collection('scheduledHabits')
+  await scheduledHabitsRef.get().then((resultLists)=>{
+    resultLists.docs.map((list,index) => {
+      const data = list.data() as ScheduledHabit
+      if(data){
+        scheduledHabits.push(Object.assign({id: list.id}, data))
+      }
+    })
+  })
+  return await scheduledHabits
+}
+
+
 // 習慣予定リストの追加
 export const addScheduledHabit = async(userId: string , habitListId: string) => {
   const today = new Date()
   const habitResultListsRef = db.collection('users').doc(userId).collection('scheduledHabits')
   return await habitResultListsRef.add({
-    id: habitListId,
+    habitListId: habitListId,
     scheduledDateTime: today,
     scheduledYear: today.getFullYear(),
     scheduledMonth: today.getMonth(),
@@ -68,9 +93,9 @@ export const addScheduledHabit = async(userId: string , habitListId: string) => 
 )
 }
 
-// 習慣リストの削除
+// 習慣予定リストの更新
 
 
-// 習慣リスト詳細の取得
 
+// 習慣予定リストの削除
 
