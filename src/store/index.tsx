@@ -1,8 +1,7 @@
 import React, { createContext, useReducer, FC } from 'react'
-
 export const SET_GOAL = 'SET_GOAL'
 export const SET_HABIT_LISTS = 'SET_HABIT_LISTS'
-export const SET_HABIT_RESULT_LIST = 'SET_HABIT_RESULT_LIST'
+export const SET_SCHEDULED_HABITS = 'SET_SCHEDULED_HABITS'
 export const EDIT_HABIT_RESULT_STATUS = 'EDIT_HABIT_RESULT_STATUS'
 export const CREATE_HABIT_LIST = 'CREATE_HABIT_LIST'
 export const UPDATE_HABIT_LIST = 'UPDATE_HABIT_LIST'
@@ -50,7 +49,7 @@ type State = {
 type Action =
 { type: 'SET_GOAL' , payload: { goal: string }} |
 { type: 'SET_HABIT_LISTS' , payload: { habitLists: HabitList[]}} |
-{ type: 'SET_HABIT_RESULT_LIST' , payload: {scheduledHabits: ScheduledHabit[]} } |
+{ type: 'SET_SCHEDULED_HABITS' , payload: {scheduledHabits: ScheduledHabit[]} } |
 { type: 'EDIT_HABIT_RESULT_STATUS' , payload: {id: string } } |
 { type: 'CREATE_HABIT_LIST', payload: {habitList: HabitList} }|
 { type: 'UPDATE_HABIT_LIST', payload: {habitlist: HabitList , currentListId: string}} |
@@ -71,7 +70,7 @@ const reducer = (state: State, action: Action) => {
       return { ...state, goal: action.payload.goal }
     case SET_HABIT_LISTS:
       return { ...state, habitLists: action.payload.habitLists }
-    case SET_HABIT_RESULT_LIST:
+    case SET_SCHEDULED_HABITS:
       return { ...state , scheduledHabits: action.payload.scheduledHabits }
     case EDIT_HABIT_RESULT_STATUS:
       const id = action.payload.id
@@ -123,4 +122,8 @@ export const StoreProvider:FC = ({ children }) => {
       { children }
     </Store.Provider>
   )
+}
+
+export const selectedDateScheduleLists = () => {
+  
 }
