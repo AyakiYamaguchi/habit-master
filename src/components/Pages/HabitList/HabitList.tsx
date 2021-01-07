@@ -4,7 +4,6 @@ import Header from '../../Organisms/Header';
 import Footer from '../../Organisms/Footer/Footer';
 import { Store } from '../../../store/index';
 import { AuthContext } from '../../../store/Auth';
-import { fetchHabitList, getLastHabitListId, fetchScheduledHabit } from '../../../apis/FirestoreHabits';
 import HabitListItem from '../../Molecules/HabitListItem/HabitListItem';
 import Modal from '../../Molecules/Modal/Modal';
 import HabitListForm from '../../Organisms/HabitListForm';
@@ -40,26 +39,26 @@ const HabitList:FC = () => {
   const selectedDate = globalState.selectedDate
   const selectedDateStr = getYMDStr(selectedDate)
 
-  // // 選択している日付でスケジュールされている習慣リストの配列を作成
-  // const scheduledLists:scheduleList[] = []
-  // globalState.habitLists.map((habitList, index)=>{
-  //   globalState.scheduledHabits.map((resultList, index)=>{
-  //     // resultListの日付をYYYYMMDD形式に変換
-  //     const resultListDateStr = getYMDStr(resultList.scheduledDateTime)
-  //     // 選択している日付でスケジュールされていた習慣リストを配列に追加
-  //     if(habitList.id === resultList.habitListId && resultListDateStr === selectedDateStr){
-  //       const scheduleList = {
-  //         id: habitList.id,
-  //         finished: resultList.finished,
-  //         habitName: habitList.habitName,
-  //         trigger: habitList.trigger,
-  //       }
-  //       return (
-  //         scheduledLists.push(scheduleList)
-  //       )
-  //     }
-  //   })
-  // })
+  // 選択している日付でスケジュールされている習慣リストの配列を作成
+  const scheduledLists:scheduleList[] = []
+  globalState.habitLists.map((habitList, index)=>{
+    globalState.scheduledHabits.map((resultList, index)=>{
+      // resultListの日付をYYYYMMDD形式に変換
+      const resultListDateStr = getYMDStr(resultList.scheduledDateTime)
+      // 選択している日付でスケジュールされていた習慣リストを配列に追加
+      if(habitList.id === resultList.habitListId && resultListDateStr === selectedDateStr){
+        const scheduleList = {
+          id: habitList.id,
+          finished: resultList.finished,
+          habitName: habitList.habitName,
+          trigger: habitList.trigger,
+        }
+        return (
+          scheduledLists.push(scheduleList)
+        )
+      }
+    })
+  })
 
   // モーダルの表示 / 非表示をスイッチ
   const changeModalStatus = () => {
@@ -73,7 +72,7 @@ const HabitList:FC = () => {
     <div>
       <Header title="習慣リスト"/>
       <HabitListSelectDate />
-      {/* {
+      {
         scheduledLists.map((list,index) => { 
           return (
             <HabitListItem
@@ -83,22 +82,6 @@ const HabitList:FC = () => {
               finished={list.finished}
             />
           )
-        })
-      } */}
-      {
-        globalState.habitLists.map((habitList,index)=>{
-          globalState.scheduledHabits.map((scheduledHabit,index)=>{
-            habitList.id === scheduledHabit.habitListId && getYMDStr(scheduledHabit.scheduledDateTime)  === selectedDateStr (
-              return (
-                <HabitListItem
-                  id={habitList.id}
-                  habitName={habitList.habitName}
-                  trigger={habitList.trigger}
-                  finished={scheduledHabit.finished}
-                />
-              )
-            )
-          })
         })
       }
       <div className={`${Style.addBtnWrap} ${selectedDate.getDate() !== today.getDate() && Style.btnHide}`} >
