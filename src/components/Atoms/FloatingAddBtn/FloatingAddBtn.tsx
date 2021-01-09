@@ -2,7 +2,7 @@ import React , { FC } from 'react'
 import Style from './FloatingAddBtn.module.scss'
 
 type Props = {
-  handleClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>)=> void;
+  handleClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>)=> void;
 }
 
 const FloatigAddBtn:FC<Props> = ({handleClick}) => {

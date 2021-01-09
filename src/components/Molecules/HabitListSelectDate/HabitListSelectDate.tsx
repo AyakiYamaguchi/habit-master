@@ -8,6 +8,10 @@ import { SET_SELECTED_HABIT_LIST_DATE } from '../../../store/index'
 const today = new Date()
 const dateLists = getDateLists(today,14).reverse()
 
+// type Props = {
+//   handleClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>)=> void;
+// }
+
 const HabitListSelectDate:FC = () => {
   const { globalState , setGlobalState } = useContext(Store)
   const onClickDate = (selectedDate: string) => {
@@ -33,7 +37,13 @@ const HabitListSelectDate:FC = () => {
       {
         dateLists.map((item) => {
           return(
-            <div className={`${Style.dateItemWrap} ${selectedDate === item && Style.selectedDate}`} onClick={()=>{onClickDate(item)}}>
+            <div 
+              className={`
+                ${Style.dateItemWrap} 
+                ${selectedDate === item && Style.selectedDate}
+              `} 
+              onClick={()=>onClickDate(item)}
+            >
               <li className={Style.dayOfWeek}>{getDayStrJP(item)}</li>
               <li className={Style.date}>{getOnlyDate(item)}</li>
             </div>
