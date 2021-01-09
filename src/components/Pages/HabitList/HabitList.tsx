@@ -14,7 +14,7 @@ import { SET_HABIT_LISTS } from '../../../store/index';
 import { getYMDStr } from '../../../helper/dateHelper'
 
 const today = new Date()
-
+const todayStr = getYMDStr(today)
 type scheduleList = {
   id: string;
   finished: boolean;
@@ -37,28 +37,27 @@ const HabitList:FC = () => {
 
   // 現在選択されている日付を取得しYYYYMMDD形式に変換
   const selectedDate = globalState.selectedDate
-  const selectedDateStr = getYMDStr(selectedDate)
 
   // 選択している日付でスケジュールされている習慣リストの配列を作成
-  const scheduledLists:scheduleList[] = []
-  globalState.habitLists.map((habitList, index)=>{
-    globalState.scheduledHabits.map((resultList, index)=>{
-      // resultListの日付をYYYYMMDD形式に変換
-      const resultListDateStr = getYMDStr(resultList.scheduledDateTime)
-      // 選択している日付でスケジュールされていた習慣リストを配列に追加
-      if(habitList.id === resultList.habitListId && resultListDateStr === selectedDateStr){
-        const scheduleList = {
-          id: habitList.id,
-          finished: resultList.finished,
-          habitName: habitList.habitName,
-          trigger: habitList.trigger,
-        }
-        return (
-          scheduledLists.push(scheduleList)
-        )
-      }
-    })
-  })
+  // const scheduledLists:scheduleList[] = []
+  // globalState.habitLists.map((habitList, index)=>{
+  //   globalState.scheduledHabits.map((resultList, index)=>{
+  //     // resultListの日付をYYYYMMDD形式に変換
+  //     const resultListDateStr = getYMDStr(resultList.scheduledDateTime)
+  //     // 選択している日付でスケジュールされていた習慣リストを配列に追加
+  //     if(habitList.id === resultList.habitListId && resultListDateStr === selectedDate){
+  //       const scheduleList = {
+  //         id: habitList.id,
+  //         finished: resultList.finished,
+  //         habitName: habitList.habitName,
+  //         trigger: habitList.trigger,
+  //       }
+  //       return (
+  //         scheduledLists.push(scheduleList)
+  //       )
+  //     }
+  //   })
+  // })
 
   // モーダルの表示 / 非表示をスイッチ
   const changeModalStatus = () => {
@@ -72,7 +71,7 @@ const HabitList:FC = () => {
     <div>
       <Header title="習慣リスト"/>
       <HabitListSelectDate />
-      {
+      {/* {
         scheduledLists.map((list,index) => { 
           return (
             <HabitListItem
@@ -83,8 +82,8 @@ const HabitList:FC = () => {
             />
           )
         })
-      }
-      <div className={`${Style.addBtnWrap} ${selectedDate.getDate() !== today.getDate() && Style.btnHide}`} >
+      } */}
+      <div className={`${Style.addBtnWrap} ${selectedDate !== todayStr && Style.btnHide}`} >
         <FloatingAddBtn handleClick={changeModalStatus}/>
       </div>
       <Modal>

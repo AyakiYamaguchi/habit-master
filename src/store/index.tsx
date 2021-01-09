@@ -1,4 +1,5 @@
 import React, { createContext, useReducer, FC } from 'react'
+import { getYMDStr } from '../helper/dateHelper';
 export const SET_GOAL = 'SET_GOAL'
 export const SET_HABIT_LISTS = 'SET_HABIT_LISTS'
 export const SET_SCHEDULED_HABITS = 'SET_SCHEDULED_HABITS'
@@ -42,7 +43,7 @@ type State = {
   scheduledHabits: ScheduledHabit[];
   habitLists: HabitList[];
   goal: string;
-  selectedDate: Date;
+  selectedDate: string;
   isModalOpen: boolean;
 }
 
@@ -53,14 +54,16 @@ type Action =
 { type: 'EDIT_HABIT_RESULT_STATUS' , payload: {id: string } } |
 { type: 'CREATE_HABIT_LIST', payload: {habitList: HabitList} }|
 { type: 'UPDATE_HABIT_LIST', payload: {habitlist: HabitList , currentListId: string}} |
-{ type: 'SET_SELECTED_HABIT_LIST_DATE', payload: {selectedDate: Date}} |
+{ type: 'SET_SELECTED_HABIT_LIST_DATE', payload: {selectedDate: string}} |
 { type: 'CHANGE_MODAL_STATUS' , payload: {isModalOpen: boolean}}
+
+const today = new Date()
 
 const initialState:State = {
   scheduledHabits: [],
   habitLists: [],
   goal: '',
-  selectedDate: new Date(),
+  selectedDate: getYMDStr(today),
   isModalOpen: false,
 }
 

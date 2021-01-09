@@ -24,7 +24,7 @@ const CalendarDate:FC<Props> = ({year, month, date}) => {
       ${date ? Style.dateWrap : Style.none}`}>
       <span className={`
         ${Style.dateItem}
-        ${listLength == finishedListLength && finishedListLength > 0 && Style.done}
+        ${listLength === finishedListLength && finishedListLength > 0 && Style.done}
         ${finishedListLength > 0 && Style.doing}
       `}>
         {date}
