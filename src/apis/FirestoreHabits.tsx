@@ -80,8 +80,8 @@ export const fetchScheduledHabit = async(userId: string,) => {
 // 習慣予定リストの追加
 export const addScheduledHabit = async(userId: string , habitListId: string) => {
   const today = new Date()
-  const habitResultListsRef = db.collection('users').doc(userId).collection('scheduledHabits')
-  return await habitResultListsRef.add({
+  const scheduledHabitsRef = db.collection('users').doc(userId).collection('scheduledHabits')
+  return await scheduledHabitsRef.add({
     habitListId: habitListId,
     scheduledDateTime: today,
     scheduledYear: today.getFullYear(),
@@ -93,8 +93,14 @@ export const addScheduledHabit = async(userId: string , habitListId: string) => 
 )
 }
 
-// 習慣予定リストの更新
+// 習慣予定リストの終了ステータス更新
+export const changeHabitFinishedStatus = async(userId: string , scheduledHabitsId: string, currentFinishedStatus: boolean) => {
+  const scheduledHabitRef = db.collection('users').doc(userId).collection('scheduledHabits').doc(scheduledHabitsId)
 
+  return await scheduledHabitRef.update({
+    finished: !currentFinishedStatus
+  })
+}
 
 
 // 習慣予定リストの削除

@@ -8,17 +8,18 @@ import { Store } from '../../../store/index';
 import { AuthContext } from '../../../store/Auth';
 import HabitListItem from '../../Molecules/HabitListItem/HabitListItem';
 import Modal from '../../Molecules/Modal/Modal';
-import HabitListForm from '../../Organisms/HabitListForm';
 import HabitListSelectDate from '../../Molecules/HabitListSelectDate/HabitListSelectDate';
 import FloatingAddBtn from '../../Atoms/FloatingAddBtn/FloatingAddBtn';
 import { CHANGE_MODAL_STATUS } from '../../../store/index';
-import { SET_SELECTED_HABIT_LIST_DATE } from '../../../store/index';
+import { EDIT_HABIT_RESULT_STATUS , SET_SELECTED_HABIT_LIST_DATE } from '../../../store/index';
 import { getYMDStr } from '../../../helper/dateHelper'
+import { changeHabitFinishedStatus } from '../../../apis/FirestoreHabits'
 
 const today = new Date()
 const todayStr = getYMDStr(today)
 type scheduleList = {
-  id: string;
+  habitListId: string;
+  scheduledHabitId: string;
   finished: boolean;
   habitName: string;
   trigger: string;
@@ -45,7 +46,8 @@ const HabitList:FC = () => {
       // 選択している日付でスケジュールされていた習慣リストを配列に追加
       if(habitList.id === resultList.habitListId && resultListDateStr === selectedDate){
         const scheduleList = {
-          id: habitList.id,
+          habitListId: habitList.id,
+          scheduledHabitId: resultList.id,
           finished: resultList.finished,
           habitName: habitList.habitName,
           trigger: habitList.trigger,
@@ -62,6 +64,14 @@ const HabitList:FC = () => {
     setGlobalState({ type: CHANGE_MODAL_STATUS, payload: {isModalOpen: !globalState.isModalOpen}})
   }
 
+  const clickHabitList =(userId:string, scheduledHabitsId:string,currentFinishedStatus:boolean) => {
+    changeHabitFinishedStatus(userId, scheduledHabitsId, currentFinishedStatus).then(()=>{
+      setGlobalState({ type: EDIT_HABIT_RESULT_STATUS, payload: {id: scheduledHabitsId}})
+    }).catch((error)=>{
+      console.log(error)
+    })
+  }
+
   return (
     <div>
       <Header title="習慣リスト"/>
@@ -70,10 +80,11 @@ const HabitList:FC = () => {
         scheduledLists.map((list,index) => { 
           return (
             <HabitListItem
-              id={list.id}
+              id={list.habitListId}
               habitName={list.habitName}
               trigger={list.trigger}
               finished={list.finished}
+              handleClick={()=>clickHabitList(userId,list.scheduledHabitId,list.finished)}
             />
           )
         })
