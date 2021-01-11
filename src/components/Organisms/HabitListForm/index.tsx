@@ -26,7 +26,8 @@ const HabitListForm:FC<Props> = ({ handleCancel }) => {
     // 新規習慣リストの場合
     if(habitListId === ''){
       getLastHabitListId(user.uid).then((lastHabitListId)=>{
-        addScheduledHabit(userId,lastHabitListId).then(()=>{
+        const today = new Date()
+        addScheduledHabit(userId,lastHabitListId,today).then(()=>{
           history.push('/list')
         }).catch((error)=>{
           console.log(error)
@@ -53,6 +54,8 @@ const HabitListForm:FC<Props> = ({ handleCancel }) => {
         weeklySch: initialDayOfWeekProps,
         remindHour: 0,
         remindMinutes: 0,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       }}
       validationSchema={validation}
       onSubmit={values =>

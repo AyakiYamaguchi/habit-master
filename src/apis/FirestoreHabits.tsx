@@ -1,4 +1,5 @@
 import React from 'react';
+import Moment from 'moment'
 import { HabitList, ScheduledHabit } from '../store';
 import firebase,　{ db } from './FirebaseConf';
 
@@ -38,6 +39,8 @@ export const setHabitList = async(userId: string, habitListId: string ,habitList
       weeklySch: habitList.weeklySch,
       remindHour: habitList.remindHour,
       remindMinutes: habitList.remindMinutes,
+      createdAt: firebase.firestore.Timestamp.now(),
+      updatedAt: firebase.firestore.Timestamp.now()
     })
   } else {
     // 登録済みリストの更新
@@ -48,6 +51,7 @@ export const setHabitList = async(userId: string, habitListId: string ,habitList
       weeklySch: habitList.weeklySch,
       remindHour: habitList.remindHour,
       remindMinutes: habitList.remindMinutes,
+      updatedAt: firebase.firestore.Timestamp.now()
     })
   }
 }
@@ -78,17 +82,18 @@ export const fetchScheduledHabit = async(userId: string,) => {
 
 
 // 習慣予定リストの追加
-export const addScheduledHabit = async(userId: string , habitListId: string) => {
-  const today = new Date()
+export const addScheduledHabit = async(userId: string , habitListId: string, createdDate: Date) => {
   const scheduledHabitsRef = db.collection('users').doc(userId).collection('scheduledHabits')
   return await scheduledHabitsRef.add({
     habitListId: habitListId,
-    scheduledDateTime: today,
-    scheduledYear: today.getFullYear(),
-    scheduledMonth: today.getMonth(),
-    scheduledDate: today.getDate(),
+    scheduledDateTime: createdDate,
+    scheduledYear: createdDate.getFullYear(),
+    scheduledMonth: createdDate.getMonth(),
+    scheduledDate: createdDate.getDate(),
     finished: false,
     finishedDateTime: null,
+    createdAt: firebase.firestore.Timestamp.now(),
+    updatedAt: firebase.firestore.Timestamp.now()
   }
 )
 }
@@ -98,7 +103,8 @@ export const changeHabitFinishedStatus = async(userId: string , scheduledHabitsI
   const scheduledHabitRef = db.collection('users').doc(userId).collection('scheduledHabits').doc(scheduledHabitsId)
 
   return await scheduledHabitRef.update({
-    finished: !currentFinishedStatus
+    finished: !currentFinishedStatus,
+    updatedAt: firebase.firestore.Timestamp.now()
   })
 }
 

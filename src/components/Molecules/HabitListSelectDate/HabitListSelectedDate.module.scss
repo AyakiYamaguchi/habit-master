@@ -11,11 +11,12 @@
 }
 
 .dateItemWrap {
-  padding: 8px 15px;
+  padding: 8px 17px;
   border: 1px solid $keyColorHeavy;
-  border-radius: 10px;
+  border-radius: 8px;
   margin-right: 5px;
   text-align: center;
+  color: $fontColorBlack;
   background-color: #fff;
 
   &:last-of-type {

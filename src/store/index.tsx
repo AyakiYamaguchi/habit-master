@@ -16,6 +16,8 @@ export type HabitList = {
   weeklySch: {}[];
   remindHour: number;
   remindMinutes: number;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export type ScheduledHabit = {
