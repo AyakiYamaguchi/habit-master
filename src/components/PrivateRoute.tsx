@@ -1,6 +1,6 @@
 import React, { FC, useContext , useEffect , useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import firebase from '../apis/FirebaseConf';
+import firebase, { db } from '../apis/FirebaseConf';
 import { AuthContext } from '../store/Auth';
 import { SET_USER } from '../store/Auth';
 import { Store } from '../store/index';
@@ -35,26 +35,6 @@ const PrivateRoute:FC = () => {
           setGlobalState({ type: SET_SCHEDULED_HABITS , payload: {scheduledHabits: result}})
         })
       }
-      // 全ユーザーのID一覧を取得
-      getUserIdLists().then((users)=>{
-        users.map((id,index)=>{
-          // ユーザーごとの習慣リストマスタを取得
-          const userId = id
-          fetchHabitList(userId).then((habitLists)=>{
-            if(habitLists.length > 0){
-              // 習慣リストマスタから習慣実行予定リストを作成
-              habitLists.map((list,index)=>{
-                // addScheduledHabit(userId, list.id).then(()=>{
-                //   console.log('リストの保存に成功しました')
-                // }).catch((error)=>{
-                //   console.log(error)
-                // })
-                console.log(list)
-              })
-            }
-          })
-        })
-      })
       
       setLoading(false)
     })

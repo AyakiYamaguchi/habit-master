@@ -80,6 +80,9 @@ export const fetchScheduledHabit = async(userId: string,) => {
   return await scheduledHabits
 }
 
+export const fetchScheduledHabit1 = async(scheduledHabitId: string) => {
+  
+}
 
 // 習慣予定リストの追加
 export const addScheduledHabit = async(userId: string , habitListId: string, createdDate: Date) => {
@@ -94,8 +97,7 @@ export const addScheduledHabit = async(userId: string , habitListId: string, cre
     finishedDateTime: null,
     createdAt: firebase.firestore.Timestamp.now(),
     updatedAt: firebase.firestore.Timestamp.now()
-  }
-)
+  })
 }
 
 // 習慣予定リストの終了ステータス更新

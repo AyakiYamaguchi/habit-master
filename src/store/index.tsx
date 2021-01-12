@@ -3,11 +3,13 @@ import { getYMDStr } from '../helper/dateHelper';
 export const SET_GOAL = 'SET_GOAL'
 export const SET_HABIT_LISTS = 'SET_HABIT_LISTS'
 export const SET_SCHEDULED_HABITS = 'SET_SCHEDULED_HABITS'
+export const ADD_SCHEDULED_HABIT = 'ADD_SCHEDULED_HABIT'
 export const EDIT_HABIT_RESULT_STATUS = 'EDIT_HABIT_RESULT_STATUS'
 export const CREATE_HABIT_LIST = 'CREATE_HABIT_LIST'
 export const UPDATE_HABIT_LIST = 'UPDATE_HABIT_LIST'
 export const SET_SELECTED_HABIT_LIST_DATE = 'SET_SELECTED_HABIT_LIST_DATE'
 export const CHANGE_MODAL_STATUS = 'CHANGE_MODAL_STATUS'
+
 
 export type HabitList = {
   id: string;
@@ -53,6 +55,7 @@ type Action =
 { type: 'SET_GOAL' , payload: { goal: string }} |
 { type: 'SET_HABIT_LISTS' , payload: { habitLists: HabitList[]}} |
 { type: 'SET_SCHEDULED_HABITS' , payload: {scheduledHabits: ScheduledHabit[]} } |
+{ type: 'ADD_SCHEDULED_HABIT', payload: {scheduledHabit: ScheduledHabit }} |
 { type: 'EDIT_HABIT_RESULT_STATUS' , payload: {id: string } } |
 { type: 'CREATE_HABIT_LIST', payload: {habitList: HabitList} }|
 { type: 'UPDATE_HABIT_LIST', payload: {habitlist: HabitList , currentListId: string}} |
@@ -77,6 +80,8 @@ const reducer = (state: State, action: Action) => {
       return { ...state, habitLists: action.payload.habitLists }
     case SET_SCHEDULED_HABITS:
       return { ...state , scheduledHabits: action.payload.scheduledHabits }
+    case ADD_SCHEDULED_HABIT:
+      return { ...state , scheduledHabits: [...state.scheduledHabits, action.payload.scheduledHabit]}
     case EDIT_HABIT_RESULT_STATUS:
       const id = action.payload.id
       return {...state, scheduledHabits: state.scheduledHabits.map((list)=> {
@@ -86,7 +91,6 @@ const reducer = (state: State, action: Action) => {
         return list
       })}
     case UPDATE_HABIT_LIST:
-      // const nextId = String(state.habitLists.length +1)
       return {
         ...state , habitlist: state.habitLists.map((list,index)=>{
           // 同じリストIDが存在する場合はフォームの値で更新

@@ -11,9 +11,10 @@ import Modal from '../../Molecules/Modal/Modal';
 import HabitListSelectDate from '../../Molecules/HabitListSelectDate/HabitListSelectDate';
 import FloatingAddBtn from '../../Atoms/FloatingAddBtn/FloatingAddBtn';
 import { CHANGE_MODAL_STATUS } from '../../../store/index';
-import { EDIT_HABIT_RESULT_STATUS , SET_SELECTED_HABIT_LIST_DATE } from '../../../store/index';
+import { EDIT_HABIT_RESULT_STATUS , ADD_SCHEDULED_HABIT , SET_SELECTED_HABIT_LIST_DATE } from '../../../store/index';
 import { getYMDStr } from '../../../helper/dateHelper'
 import { changeHabitFinishedStatus, addScheduledHabit } from '../../../apis/FirestoreHabits'
+import { convertScheduledHabit } from '../../../helper/habitHelper'
 
 const today = new Date()
 const todayStr = getYMDStr(today)
@@ -82,21 +83,24 @@ const HabitList = () => {
     if(scheduledHabitsOfSelectedDate.length === 0){
       habitLists.map((habitList,index)=>{
         const habitListCreatedAt = getYMDStr(habitList.createdAt)
-        if (habitListCreatedAt >= selectedDateStr){
-          addScheduledHabit(userId,habitList.id,selectedDate).then(()=>{
-
+        if (habitListCreatedAt <= selectedDateStr){
+          addScheduledHabit(userId,habitList.id,selectedDate).then((result)=>{
+            console.log(result.id)
+            // const scheduledHabit = convertScheduledHabit(habitList.id,selectedDate)
+            // setGlobalState({ type: ADD_SCHEDULED_HABIT, payload: {scheduledHabit: scheduledHabit}})
           })
         }
       })
     }
+    // 未作成の予定リストが合った場合
     scheduledHabitsOfSelectedDate.map((list,index)=>{
       habitLists.map((habitList,index)=>{
         if(list.habitListId !== habitList.id){
           // 選択した日付より過去日かを判定
           const habitListCreatedAt = getYMDStr(habitList.createdAt)
-          if (habitListCreatedAt >= selectedDateStr){
+          if (habitListCreatedAt <= selectedDateStr){
             addScheduledHabit(userId,habitList.id,selectedDate).then(()=>{
-              
+
             })
           }
         }
@@ -107,7 +111,6 @@ const HabitList = () => {
 
   useEffect(() => {
     // setScheduledHabits()
-    console.log(selectedDate)
     }, [scheduledHabitsOfSelectedDate])
 
   return (
