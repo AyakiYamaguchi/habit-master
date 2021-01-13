@@ -66,7 +66,7 @@ export const setHabitList = async(userId: string, habitListId: string ,habitList
 
 
 // 習慣予定リスト一覧の取得
-export const fetchScheduledHabit = async(userId: string,) => {
+export const fetchScheduledHabits = async(userId: string,) => {
   const scheduledHabits: ScheduledHabit[] = []
   const scheduledHabitsRef = db.collection('users').doc(userId).collection('scheduledHabits')
   await scheduledHabitsRef.get().then((resultLists)=>{
@@ -80,8 +80,10 @@ export const fetchScheduledHabit = async(userId: string,) => {
   return await scheduledHabits
 }
 
-export const fetchScheduledHabit1 = async(scheduledHabitId: string) => {
-  
+// 指定したidの習慣予定リストを取得
+export const fetchScheduledHabit = async(userId: string ,scheduledHabitId: string) => {
+  const scheduledHabitRef = db.collection('users').doc(userId).collection('scheduledHabits').doc(scheduledHabitId)
+  return await scheduledHabitRef.get()
 }
 
 // 習慣予定リストの追加

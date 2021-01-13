@@ -31,6 +31,8 @@ export type ScheduledHabit = {
   scheduledDate: number;
   finished: boolean;
   finishedDateTime: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export const initialDayOfWeekProps = [
