@@ -11,7 +11,7 @@ import Modal from '../../Molecules/Modal/Modal';
 import HabitListSelectDate from '../../Molecules/HabitListSelectDate/HabitListSelectDate';
 import FloatingAddBtn from '../../Atoms/FloatingAddBtn/FloatingAddBtn';
 import { CHANGE_MODAL_STATUS } from '../../../store/index';
-import { EDIT_HABIT_RESULT_STATUS , ADD_SCHEDULED_HABIT , SET_SELECTED_HABIT_LIST_DATE } from '../../../store/index';
+import { ScheduledHabit, EDIT_HABIT_RESULT_STATUS , ADD_SCHEDULED_HABIT , SET_SELECTED_HABIT_LIST_DATE } from '../../../store/index';
 import { getYMDStr } from '../../../helper/dateHelper'
 import { changeHabitFinishedStatus, addScheduledHabit, fetchScheduledHabit, fetchHabitList } from '../../../apis/FirestoreHabits'
 import { convertScheduledHabit } from '../../../helper/habitHelper'
@@ -79,39 +79,56 @@ const HabitList = () => {
   }
 
   const setScheduledHabits = () =>{
+    console.log('実行')
     // 予定リストが1件も存在しない場合
     if(scheduledHabitsOfSelectedDate.length === 0){
-      
-      habitLists.map((habitList,index)=>{
+      console.log('リストが1件もありません')
+      habitLists.map((habitList)=>{
         const habitListCreatedAt = getYMDStr(habitList.createdAt)
         if (habitListCreatedAt <= selectedDateStr){
+          console.log('作成対象のリストがあります')
           // addScheduledHabit(userId,habitList.id,selectedDate).then((result)=>{
-          //   fetchScheduledHabit(userId,result.id).then((scheduledHabit)=>{
-          //     setGlobalState({ type: ADD_SCHEDULED_HABIT, payload: {scheduledHabit: scheduledHabit.data()}})
+          //   fetchScheduledHabit(userId,result.id).then((result)=>{
+          //     const scheduledHabit = result.data() as ScheduledHabit
+          //     setGlobalState({ type: ADD_SCHEDULED_HABIT, payload: {scheduledHabit: scheduledHabit}})
           //   })
-          //   console.log(result.id)
-            
           // })
-          
+        }
+      })
+    }else{
+      const habitListIds:string[] = []
+      habitLists.map((list)=>{
+        habitListIds.push(list.id)
+      })
+      const scheduledHabitsIds:string[] = []
+      scheduledHabitsOfSelectedDate.map((list)=>{
+        scheduledHabitsIds.push(list.habitListId)
+      })
+
+      habitListIds.concat(scheduledHabitsIds).forEach(item=>{
+        if(habitListIds.includes(item) && !scheduledHabitsIds.includes(item)){
+          console.log(item)
         }
       })
     }
     // 未作成の予定リストがあった場合
-    scheduledHabitsOfSelectedDate.map((list,index)=>{
-      habitLists.map((habitList,index)=>{
-        if(list.habitListId !== habitList.id){
-          // 選択した日付より過去日かを判定
-          const habitListCreatedAt = getYMDStr(habitList.createdAt)
-          if (habitListCreatedAt <= selectedDateStr){
-            // addScheduledHabit(userId,habitList.id,selectedDate).then(()=>{
-            //   fetchScheduledHabit(userId,list.scheduledHabitId).then((result)=>{
-            //     console.log(result)
-            //   })
-            // })
-          }
-        }
-      })
-    })
+    // scheduledHabitsOfSelectedDate.map((list)=>{
+    //   habitLists.map((habitList)=>{
+    //     if(list.habitListId !== habitList.id){
+    //       // 選択した日付より過去日かを判定
+    //       const habitListCreatedAt = getYMDStr(habitList.createdAt)
+    //       if (habitListCreatedAt <= selectedDateStr){
+    //         console.log('未作成のリストがあります')
+    //         // addScheduledHabit(userId,habitList.id,selectedDate).then((result)=>{
+    //         //   fetchScheduledHabit(userId,result.id).then((result)=>{
+    //         //     const scheduledHabit = result.data() as ScheduledHabit
+    //         //     setGlobalState({ type: ADD_SCHEDULED_HABIT, payload: {scheduledHabit: scheduledHabit}})
+    //         //   })
+    //         // })
+    //       }
+    //     }
+    //   })
+    // })
   }
   
 
