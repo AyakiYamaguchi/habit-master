@@ -10,8 +10,13 @@ export const fetchHabitList = async(userId: string) => {
 
   const habitLists:HabitList[] = [];
   await habitListRef.get().then((result)=>{
-    result.docs.map((list,index)=>{
-      const data = list.data() as HabitList
+    result.docs.map((list)=>{
+      const data = {
+        ...list.data(),
+        createdAt: list.data().createdAt.toDate(),
+        updatedAt: list.data().updatedAt.toDate(),
+      } as HabitList
+      // const data1 = list.data() as HabitList
       if(data){
         habitLists.push(Object.assign({id: list.id} ,data))
       }
