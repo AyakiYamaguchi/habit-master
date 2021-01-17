@@ -34,8 +34,24 @@
   background-color: $baseColorGrayMedium;
 }
 
-.list_title {
-  font-size: 1.6rem;
-  font-weight: bold;
+.habitList {
+
+  &__wrapper {
+    
+  }
+  &__habitName {
+    font-size: 1.6rem;
+    font-weight: bold;
+  }
+
+  &__trigger {
+    font-size: 1.3rem;
+    color: $fontColorGray;
+    margin-bottom: 7px;
+  }
 }
 
+
+.trigger {
+
+}

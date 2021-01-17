@@ -29,8 +29,10 @@ const HabitListItem:FC<Props> = ({id , habitName , trigger , finished , handleCl
           <div className={Style.unchecked}></div>
         )
       }
-      <p className={Style.list_title}>{trigger}</p>
-      <p className={Style.list_title}>{habitName}</p>
+      <div className={Style.habitList__wrapper}>
+        <p className={Style.habitList__trigger}>{trigger}</p>
+        <p className={Style.habitList__habitName}>{habitName}</p>
+      </div>
     </div>
   )
 }
