@@ -1,9 +1,73 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if
-          request.time < timestamp.date(2021, 1, 19);
+    function isLogin() {
+    return request.auth.uid != null;
+    }
+
+    function onlyIdentityUser(userId){
+      return isLogin() && request.auth.uid == userId;
+    }
+		// 習慣リストのスキーマ検証
+    function isValidHabitList(habitList){
+    	return habitList.size() == 7
+      && 'habitName' in habitList && habitList.habitName is string
+      && 'trigger' in habitList && habitList.trigger is string
+      && 'weeklySch' in habitList 
+      && 'remindHour' in habitList && habitList.remindHour is number
+      && 'remindMinutes' in habitList && habitList.remindMinutes is number
+      && 'createdAt' in habitList && habitList.createdAt is timestamp
+      && 'updatedAt' in habitList && habitList.updatedAt is timestamp;
+    }
+		// 習慣予定リストのスキーマ検証
+    function isValidScheduledHabit(scheduledHabit){
+    	return scheduledHabit.size() == 9
+      && 'habitListId' in scheduledHabit && scheduledHabit.habitListId is string
+      && 'scheduledDateTime' in scheduledHabit && scheduledHabit.scheduledDateTime is timestamp
+      && 'scheduledYear' in scheduledHabit && scheduledHabit.scheduledYear is number
+      && 'scheduledMonth' in scheduledHabit && scheduledHabit.scheduledMonth is number
+      && 'scheduledDate' in scheduledHabit && scheduledHabit.scheduledDate is number
+      && 'finished' in scheduledHabit && scheduledHabit.finished is bool
+      && 'finishedDateTime' in scheduledHabit
+      && 'createdAt' in scheduledHabit && scheduledHabit.createdAt is timestamp
+      && 'updatedA' in scheduledHabit && scheduledHabit.updatedA is timestamp;
+    }
+    
+  	match /users/{userId}{
+    	allow get: if isLogin()
+      && onlyIdentityUser(userId);
+      
+      allow create: if isLogin()
+      && onlyIdentityUser(userId);
+      
+				// 習慣リストのルール    	
+      match /habitLists/{habitListId}{
+        allow read : if onlyIdentityUser(userId);
+
+        allow create: if onlyIdentityUser(userId)
+        && isValidHabitList(request.resource.data);
+        // && request.resource.data.createdAt == request.time;
+
+        allow update: if onlyIdentityUser(userId)
+        && isValidHabitList(request.resource.data);
+        // && request.resource.data.updatedAt == request.time;
+
+        allow delete: if onlyIdentityUser(userId);
+      }
+      // 習慣予定リストのルール
+      match /scheduledHabits/{scheduledHabitId}{
+        allow read : if onlyIdentityUser(userId);
+
+        allow create: if onlyIdentityUser(userId)
+        && isValidScheduledHabit(request.resource.data);
+        // && request.resource.data.createdAt == request.time;
+
+        allow update: if onlyIdentityUser(userId)
+        && isValidScheduledHabit(request.resource.data);
+        // && request.resource.data.updatedAt == request.time;
+
+        allow delete: if onlyIdentityUser(userId);
+    	}
     }
   }
 }
