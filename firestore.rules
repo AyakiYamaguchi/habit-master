@@ -13,11 +13,11 @@ service cloud.firestore {
     	return habitList.size() == 7
       && 'habitName' in habitList && habitList.habitName is string
       && 'trigger' in habitList && habitList.trigger is string
-      && 'weeklySch' in habitList 
+      && 'weeklySch' in habitList && habitList.weeklySch is list
       && 'remindHour' in habitList && habitList.remindHour is number
-      && 'remindMinutes' in habitList && habitList.remindMinutes is number
-      && 'createdAt' in habitList && habitList.createdAt is timestamp
-      && 'updatedAt' in habitList && habitList.updatedAt is timestamp;
+      && 'remindMinutes' in habitList && habitList.remindMinutes is number;
+      // && 'createdAt' in habitList && habitList.createdAt is timestamp
+      // && 'updatedAt' in habitList && habitList.updatedAt is timestamp;
     }
 		// 習慣予定リストのスキーマ検証
     function isValidScheduledHabit(scheduledHabit){
@@ -28,9 +28,9 @@ service cloud.firestore {
       && 'scheduledMonth' in scheduledHabit && scheduledHabit.scheduledMonth is number
       && 'scheduledDate' in scheduledHabit && scheduledHabit.scheduledDate is number
       && 'finished' in scheduledHabit && scheduledHabit.finished is bool
-      && 'finishedDateTime' in scheduledHabit
-      && 'createdAt' in scheduledHabit && scheduledHabit.createdAt is timestamp
-      && 'updatedA' in scheduledHabit && scheduledHabit.updatedA is timestamp;
+      && 'finishedDateTime' in scheduledHabit;
+      // && 'createdAt' in scheduledHabit && scheduledHabit.createdAt is timestamp
+      // && 'updatedA' in scheduledHabit && scheduledHabit.updatedA is timestamp;
     }
     
   	match /users/{userId}{
