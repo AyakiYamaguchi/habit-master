@@ -15,7 +15,7 @@ type Props = {
 }
 
 const HabitListForm:FC<Props> = ({ handleCancel }) => {
-  const hours = Array.from(new Array(24)).map((v,i) => i)
+  const hours = [...Array(24)].map((_, i) => i)
   const { globalState , setGlobalState } = useContext(Store)
   const { AuthState , setAuthState } = useContext(AuthContext)
   const history = useHistory()
