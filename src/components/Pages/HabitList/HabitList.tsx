@@ -10,7 +10,6 @@ import HabitListItem from '../../Molecules/HabitListItem/HabitListItem';
 import Modal from '../../Molecules/Modal/Modal';
 import HabitListSelectDate from '../../Molecules/HabitListSelectDate/HabitListSelectDate';
 import FloatingAddBtn from '../../Atoms/FloatingAddBtn/FloatingAddBtn';
-import { CHANGE_MODAL_STATUS } from '../../../store/index';
 import { ScheduledHabit, EDIT_HABIT_RESULT_STATUS , ADD_SCHEDULED_HABIT , SET_SELECTED_HABIT_LIST_DATE } from '../../../store/index';
 import { getYMDStr } from '../../../helper/dateHelper'
 import { changeHabitFinishedStatus, addScheduledHabit, fetchScheduledHabit, fetchHabitList } from '../../../apis/FirestoreHabits'
@@ -29,7 +28,7 @@ type scheduleList = {
 
 const HabitList = () => {
   const { globalState, setGlobalState } = useContext(Store)
-  const { AuthState , setAuthState } = useContext(AuthContext)
+  const { AuthState } = useContext(AuthContext)
   const userId = AuthState.user.uid
   
   // 現在選択されている日付を取得
@@ -64,11 +63,6 @@ const HabitList = () => {
       }
     })
   })
-
-  // モーダルの表示 / 非表示をスイッチ
-  const changeModalStatus = () => {
-    setGlobalState({ type: CHANGE_MODAL_STATUS, payload: {isModalOpen: !globalState.isModalOpen}})
-  }
 
   const clickHabitList =(userId:string, scheduledHabitsId:string, currentFinishedStatus:boolean) => {
     changeHabitFinishedStatus(userId, scheduledHabitsId, currentFinishedStatus).then(()=>{
@@ -154,9 +148,6 @@ const HabitList = () => {
           <FloatingAddBtn />
         </Link>
       </div>
-      <Modal>
-        
-      </Modal>
       <Footer selectedMenu="list"/>
     </div>
   )

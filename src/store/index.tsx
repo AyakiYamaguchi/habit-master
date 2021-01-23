@@ -83,7 +83,8 @@ const reducer = (state: State, action: Action) => {
     case SET_SCHEDULED_HABITS:
       return { ...state , scheduledHabits: action.payload.scheduledHabits }
     case ADD_SCHEDULED_HABIT:
-      return { ...state , scheduledHabits: [...state.scheduledHabits, action.payload.scheduledHabit]}
+      const newScheduledHabits = [...state.scheduledHabits, action.payload.scheduledHabit]
+      return { ...state , scheduledHabits: newScheduledHabits }
     case EDIT_HABIT_RESULT_STATUS:
       const id = action.payload.id
       return {...state, scheduledHabits: state.scheduledHabits.map((list)=> {
@@ -108,7 +109,8 @@ const reducer = (state: State, action: Action) => {
         })
       }
     case CREATE_HABIT_LIST:
-      return { ...state , habitLists: [...state.habitLists, action.payload.habitList]}
+      const newHabitLists = [...state.habitLists, action.payload.habitList]
+      return { ...state , habitLists: newHabitLists}
     case SET_SELECTED_HABIT_LIST_DATE:
       return { ...state, selectedDate: action.payload.selectedDate}
     case CHANGE_MODAL_STATUS:

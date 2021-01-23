@@ -5,7 +5,7 @@ import { AuthContext } from '../store/Auth';
 import { SET_USER } from '../store/Auth';
 import { Store } from '../store/index';
 import { SET_HABIT_LISTS, SET_SCHEDULED_HABITS } from '../store/index';
-import { fetchHabitList, addScheduledHabit, fetchScheduledHabits } from '../apis/FirestoreHabits';
+import { fetchHabitList, addScheduledHabit, fetchScheduledHabits, getLastHabitListId } from '../apis/FirestoreHabits';
 import { getUserIdLists } from '../apis/FirestoreUsers';
 import Loading from './templates/Loading';
 
@@ -33,6 +33,9 @@ const PrivateRoute:FC = () => {
         fetchScheduledHabits(user.uid).then((result)=>{
           console.log(result)
           setGlobalState({ type: SET_SCHEDULED_HABITS , payload: {scheduledHabits: result}})
+        })
+        getLastHabitListId(user.uid).then((result)=>{
+          console.log(result)
         })
       }
       

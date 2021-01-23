@@ -28,8 +28,8 @@ export const fetchHabitList = async(userId: string) => {
 // 一番最後に登録された習慣リストのIDを取得
 export const getLastHabitListId = async(userId: string) => {
   const habitListRef = db.collection('users').doc(userId).collection('habitLists')
-  return await habitListRef.get().then((result)=>{
-    return result.docs.slice(-1)[0].id
+  return await habitListRef.orderBy("createdAt", "desc").limit(1).get().then((result)=>{
+    return result.docs[0].id
   })
 }
 

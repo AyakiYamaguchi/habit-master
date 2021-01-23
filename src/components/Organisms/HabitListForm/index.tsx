@@ -1,13 +1,13 @@
 import React, { FC, useContext } from 'react';
 import { FieldArray, Formik , Field, ErrorMessage } from 'formik';
 import { useHistory } from 'react-router-dom';
-import { initialDayOfWeekProps } from '../../../store/index';
-import { Store } from '../../../store/index';
+import { HabitList, initialDayOfWeekProps } from '../../../store/index';
+import { Store , ScheduledHabit ,ADD_SCHEDULED_HABIT, CREATE_HABIT_LIST } from '../../../store/index';
 import { AuthContext } from '../../../store/Auth'
 import Style from './style.module.scss';
 import SubmitBtn from '../../Atoms/SubmitBtn/SubmitBtn';
 import CancelBtn from '../../Atoms/CancelBtn/CancelBtn';
-import { setHabitList , getLastHabitListId, addScheduledHabit } from '../../../apis/FirestoreHabits';
+import { setHabitList , getLastHabitListId, addScheduledHabit, fetchScheduledHabit } from '../../../apis/FirestoreHabits';
 import * as yup from 'yup';
 
 type Props = {
@@ -16,19 +16,24 @@ type Props = {
 
 const HabitListForm:FC<Props> = ({ handleCancel }) => {
   const hours = [...Array(24)].map((_, i) => i)
-  const { globalState , setGlobalState } = useContext(Store)
-  const { AuthState , setAuthState } = useContext(AuthContext)
+  const { setGlobalState } = useContext(Store)
+  const { AuthState } = useContext(AuthContext)
   const history = useHistory()
   // ログインユーザーの取得
   const user = AuthState.user
   // 新規習慣リストの場合に、習慣予定リストにも新規登録する処理
-  const addHabitSchedule = (userId: string, habitListId: string) => {
+  const addHabitSchedule = (userId: string, habitListId: string, habitList: HabitList) => {
     // 新規習慣リストの場合
     if(habitListId === ''){
+      setGlobalState({type: CREATE_HABIT_LIST, payload: {habitList: habitList}})
       getLastHabitListId(user.uid).then((lastHabitListId)=>{
         const today = new Date()
-        addScheduledHabit(userId,lastHabitListId,today).then(()=>{
-          history.push('/list')
+        addScheduledHabit(userId,lastHabitListId,today).then((result)=>{
+          fetchScheduledHabit(userId,result.id).then((result)=>{
+            const scheduledHabit = Object.assign({id: result.id}, result.data())  as ScheduledHabit
+            setGlobalState({ type: ADD_SCHEDULED_HABIT, payload: {scheduledHabit: scheduledHabit}})
+            history.push('/list')
+          })
         }).catch((error)=>{
           console.log(error)
         })
@@ -60,7 +65,7 @@ const HabitListForm:FC<Props> = ({ handleCancel }) => {
       validationSchema={validation}
       onSubmit={values =>
         setHabitList(user.uid ,values.id ,values).then(()=>{
-          addHabitSchedule(user.uid,values.id)
+          addHabitSchedule(user.uid,values.id,values)
         }).catch((error)=>{
           console.log(error)
         })
