@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import Style from './InputText.module.scss';
-import ErrorMessage from '../ErrorMessage/ErrorMessage'
+import ErrorMessage from '../ErrorMessage'
 
 type Props = {
   placeholder?: string;

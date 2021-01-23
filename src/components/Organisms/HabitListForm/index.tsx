@@ -5,8 +5,8 @@ import { HabitList, initialDayOfWeekProps } from '../../../store/index';
 import { Store , ScheduledHabit ,ADD_SCHEDULED_HABIT, CREATE_HABIT_LIST } from '../../../store/index';
 import { AuthContext } from '../../../store/Auth'
 import Style from './style.module.scss';
-import SubmitBtn from '../../Atoms/SubmitBtn/SubmitBtn';
-import CancelBtn from '../../Atoms/CancelBtn/CancelBtn';
+import SubmitBtn from '../../Atoms/SubmitBtn';
+import CancelBtn from '../../Atoms/CancelBtn';
 import { setHabitList , getLastHabitListId, addScheduledHabit, fetchScheduledHabit } from '../../../apis/FirestoreHabits';
 import * as yup from 'yup';
 

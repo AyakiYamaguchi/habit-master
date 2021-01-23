@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import TitleText from '../../Atoms/TitleText/TitleText'
+import TitleText from '../../Atoms/TitleText'
 import Style from './InputGoal.module.scss'
 
 type Props = {

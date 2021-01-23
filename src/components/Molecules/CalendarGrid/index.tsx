@@ -1,6 +1,6 @@
 import React, { FC , useEffect , useState } from 'react'
 import Style from './CalendarGrid.module.scss'
-import CalendarDate from '../../Atoms/CalendarDate/CalendarDate'
+import CalendarDate from '../../Atoms/CalendarDate'
 
 
 const getDays = (year:number,month:number) => {

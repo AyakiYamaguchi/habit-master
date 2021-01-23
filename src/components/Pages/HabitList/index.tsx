@@ -3,13 +3,13 @@ import {Link} from 'react-router-dom';
 import Style from './HabitList.module.scss';
 import Moment from 'moment'
 import Header from '../../Organisms/Header';
-import Footer from '../../Organisms/Footer/Footer';
+import Footer from '../../Organisms/Footer';
 import { Store } from '../../../store/index';
 import { AuthContext } from '../../../store/Auth';
-import HabitListItem from '../../Molecules/HabitListItem/HabitListItem';
-import Modal from '../../Molecules/Modal/Modal';
-import HabitListSelectDate from '../../Molecules/HabitListSelectDate/HabitListSelectDate';
-import FloatingAddBtn from '../../Atoms/FloatingAddBtn/FloatingAddBtn';
+import HabitListItem from '../../Molecules/HabitListItem';
+import Modal from '../../Molecules/Modal';
+import HabitListSelectDate from '../../Molecules/HabitListSelectDate';
+import FloatingAddBtn from '../../Atoms/FloatingAddBtn';
 import { ScheduledHabit, EDIT_HABIT_RESULT_STATUS , ADD_SCHEDULED_HABIT , SET_SELECTED_HABIT_LIST_DATE } from '../../../store/index';
 import { getYMDStr } from '../../../helper/dateHelper'
 import { changeHabitFinishedStatus, addScheduledHabit, fetchScheduledHabit, fetchHabitList } from '../../../apis/FirestoreHabits'

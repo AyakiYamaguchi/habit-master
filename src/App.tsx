@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import HabitList from './components/pages/HabitList/HabitList';
+import HabitList from './components/pages/HabitList';
 import Login from './components/pages/Login/Login';
-import Report from './components/pages/Report/Report';
-import Settings from './components/pages/Settings/Settings'
+import Report from './components/pages/Report';
+import Settings from './components/pages/Settings'
 import PrivateRoute from './components/PrivateRoute'
-import SetGoal from './components/pages/SetGoal/SetGoal'
+import SetGoal from './components/pages/SetGoal'
 import CreateHabitList from './components/pages/CreateHabitList'
 
 const App:FC = () => {

@@ -1,6 +1,6 @@
 import React from 'react'
 import Style from './Calendar.module.scss'
-import CalendarGrid from '../../Molecules/CalendarGrid/CalendarGrid'
+import CalendarGrid from '../../Molecules/CalendarGrid'
 
 const Calendar = () => {
   return (

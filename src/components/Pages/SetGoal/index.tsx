@@ -1,11 +1,11 @@
 import React , { useState, useContext } from 'react';
-import InputStep from '../../Molecules/InputStep/InputStep';
-import TitleText from '../../Atoms/TitleText/TitleText';
-import InputGoal from '../../Organisms/InputGoal/InputGoal';
+import InputStep from '../../Molecules/InputStep';
+import TitleText from '../../Atoms/TitleText';
+import InputGoal from '../../Organisms/InputGoal';
 import Style from './SetGoal.module.scss';
-import SubmitBtn from '../../Atoms/SubmitBtn/SubmitBtn';
-import CancelBtn from '../../Atoms/CancelBtn/CancelBtn';
-import { validateRequired } from '../../Validate/Validate';
+import SubmitBtn from '../../Atoms/SubmitBtn';
+import CancelBtn from '../../Atoms/CancelBtn';
+import { validateRequired } from '../../Validate';
 import {Store} from '../../../store/index';
 import { SET_GOAL } from '../../../store/index';
 

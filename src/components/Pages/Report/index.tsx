@@ -1,7 +1,7 @@
 import React from 'react'
-import Footer from '../../Organisms/Footer/Footer'
+import Footer from '../../Organisms/Footer'
 import Header from '../../Organisms/Header'
-import Calendar from '../../Organisms/Calendar/Calendar'
+import Calendar from '../../Organisms/Calendar'
 
 const Report = () => {
   return (

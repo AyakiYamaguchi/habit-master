@@ -2,7 +2,7 @@ import React, { FC , useContext } from 'react';
 import { AuthContext} from '../../../store/Auth';
 import { DELETE_USER } from '../../../store/Auth';
 import Header from '../../Organisms/Header';
-import Footer from '../../Organisms/Footer/Footer';
+import Footer from '../../Organisms/Footer';
 import { SignOut } from '../../../apis/FacebookAuth';
 
 const Settings:FC = () => {
