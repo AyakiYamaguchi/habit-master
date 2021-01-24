@@ -1,13 +1,15 @@
 import React, {FC,useState,useContext,useEffect,useCallback} from 'react';
 import Style from './CreateHabitList.module.scss'
+import { useHistory } from 'react-router-dom';
 import { CHANGE_MODAL_STATUS, CREATE_HABIT_LIST, Store } from '../../../store/index';
 import HabitListForm from '../../Organisms/HabitListForm'
 import Layout from '../../templates/Layout';
 import Header from '../../Organisms/Header'
 
 const CreateHabitList = () => {
+  const history = useHistory()
   const handleCancel = () => {
-    console.log('cancel')
+    history.push('/list')
   }
   return (
     <div>
