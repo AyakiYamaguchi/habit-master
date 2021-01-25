@@ -1,8 +1,9 @@
-import React, { FC, useContext } from 'react'
-import checkIcon from '../../../images/check-line_icon.png'
-import Style from './HabitListItem.module.scss'
-import { EDIT_HABIT_RESULT_STATUS } from '../../../store/index'
-import { Store } from '../../../store/index'
+import React, { FC, useContext } from 'react';
+import { Link } from 'react-router-dom';
+import checkIcon from '../../../images/check-line_icon.png';
+import Style from './HabitListItem.module.scss';
+import { EDIT_HABIT_RESULT_STATUS } from '../../../store/index';
+import { Store } from '../../../store/index';
 
 type Props = {
   id: string;
@@ -19,20 +20,22 @@ const HabitListItem:FC<Props> = ({id , habitName , trigger , finished , handleCl
     setGlobalState({type: EDIT_HABIT_RESULT_STATUS, payload: {id: id}})
   }
   return (
-    <div className={Style.list_wrapper} key={id} onClick={handleClick}>
+    <div className={Style.list_wrapper} key={id}>
       {
         finished ? (
-          <div className={Style.checked}>
+          <div className={Style.checked} onClick={handleClick}>
             <img src={checkIcon} />
           </div>
         ):(
-          <div className={Style.unchecked}></div>
+          <div className={Style.unchecked} onClick={handleClick}></div>
         )
       }
-      <div className={Style.habitList__wrapper}>
-        <p className={Style.habitList__trigger}>{trigger}</p>
-        <p className={Style.habitList__habitName}>{habitName}</p>
-      </div>
+      <Link to='/habitList/detail'>
+        <div className={Style.habitList__wrapper}>
+          <p className={Style.habitList__trigger}>{trigger}</p>
+          <p className={Style.habitList__habitName}>{habitName}</p>
+        </div>
+      </Link>
     </div>
   )
 }

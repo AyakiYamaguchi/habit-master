@@ -7,13 +7,11 @@ import Footer from '../../Organisms/Footer';
 import { Store } from '../../../store/index';
 import { AuthContext } from '../../../store/Auth';
 import HabitListItem from '../../Molecules/HabitListItem';
-import Modal from '../../Molecules/Modal';
 import HabitListSelectDate from '../../Molecules/HabitListSelectDate';
 import FloatingAddBtn from '../../Atoms/FloatingAddBtn';
 import { ScheduledHabit, EDIT_HABIT_RESULT_STATUS , ADD_SCHEDULED_HABIT , SET_SELECTED_HABIT_LIST_DATE } from '../../../store/index';
 import { getYMDStr } from '../../../helper/dateHelper'
 import { changeHabitFinishedStatus, addScheduledHabit, fetchScheduledHabit, fetchHabitList } from '../../../apis/FirestoreHabits'
-import { convertScheduledHabit } from '../../../helper/habitHelper'
 
 const today = new Date()
 const todayStr = getYMDStr(today)

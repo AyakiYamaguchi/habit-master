@@ -19,7 +19,7 @@ const App:FC = () => {
         <Route exact path="/set_goal">
           <SetGoal />
         </Route>
-        <Route exact path="/list">
+        <Route exact path="/habitlists">
           <HabitList />
         </Route>
         <Route exact path="/report">

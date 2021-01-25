@@ -23,7 +23,6 @@ const PrivateRoute:FC = () => {
         }
         // ユーザー情報を保存
         setAuthState({type: SET_USER, payload: {user: user}})
-
         // 習慣リストマスタを取得
         fetchHabitList(user.uid).then((result)=>{
           console.log(result)
@@ -34,11 +33,7 @@ const PrivateRoute:FC = () => {
           console.log(result)
           setGlobalState({ type: SET_SCHEDULED_HABITS , payload: {scheduledHabits: result}})
         })
-        getLastHabitListId(user.uid).then((result)=>{
-          console.log(result)
-        })
       }
-      
       setLoading(false)
     })
   }

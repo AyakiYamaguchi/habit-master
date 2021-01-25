@@ -20,7 +20,7 @@ const Login:FC = () => {
       }
       setAuthState({ type: SET_USER , payload: { user: user }})
       currentUser = user
-      history.push('/list')
+      history.push('/habitlists')
     }).catch((error)=> {
       console.log(error)
     })
@@ -46,7 +46,7 @@ const Login:FC = () => {
         </div>
       ) : (
         <Router>
-          <Redirect to='/list'/>
+          <Redirect to='/habitlists'/>
         </Router>
       )
     }

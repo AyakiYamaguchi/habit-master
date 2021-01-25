@@ -9,7 +9,7 @@ import Header from '../../Organisms/Header'
 const CreateHabitList = () => {
   const history = useHistory()
   const handleCancel = () => {
-    history.push('/list')
+    history.push('/habitlists')
   }
   return (
     <div>
