@@ -16,7 +16,7 @@ const Footer:FC<Props> = (Props) => {
   const menuIcons = [
     {
       text: 'List',
-      pathname: 'list',
+      pathname: 'habitlists',
       selectedIcon: SelectedListIcon,
       unselectedIcon: UnselectedListIcon,
     },

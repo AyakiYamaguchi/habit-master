@@ -19,7 +19,7 @@ const HabitListSelectDate:FC = () => {
   }
   const selectedDate = globalState.selectedDate
 
-  // 最新のスクロールへ自動スクロールさせる設定
+  // 最新の日付へ自動スクロールさせる設定
   const ref = React.createRef<HTMLDivElement>()
   const scrollDateList = useCallback(() => {
       ref!.current!.scrollIntoView({
@@ -29,7 +29,7 @@ const HabitListSelectDate:FC = () => {
     },[ ref ],)
 
   useEffect(() => {
-      scrollDateList()
+    scrollDateList()
   }, [])
   return (
     <div className={Style.dateAreaWrap}>

@@ -25,6 +25,16 @@ export const fetchHabitList = async(userId: string) => {
   return habitLists
 }
 
+// 指定したIDの習慣リストを取得
+export const gethabitListDetail = async(userId: string, habitListId: string) => {
+  const habitListRef = db.collection('users').doc(userId).collection('habitLists').doc(habitListId)
+  return await habitListRef.get().then((result)=>{
+    const habitList = result.data() as HabitList
+    return habitList
+  })
+}
+
+
 // 一番最後に登録された習慣リストのIDを取得
 export const getLastHabitListId = async(userId: string) => {
   const habitListRef = db.collection('users').doc(userId).collection('habitLists')

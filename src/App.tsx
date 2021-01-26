@@ -3,10 +3,11 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import HabitList from './components/pages/HabitList';
 import Login from './components/pages/Login/Login';
 import Report from './components/pages/Report';
-import Settings from './components/pages/Settings'
-import PrivateRoute from './components/PrivateRoute'
-import SetGoal from './components/pages/SetGoal'
-import CreateHabitList from './components/pages/CreateHabitList'
+import Settings from './components/pages/Settings';
+import PrivateRoute from './components/PrivateRoute';
+import SetGoal from './components/pages/SetGoal';
+import CreateHabitList from './components/pages/CreateHabitList';
+import HabitListDetail from './components/pages/HabitListDetail';
 
 const App:FC = () => {
   return (
@@ -21,6 +22,9 @@ const App:FC = () => {
         </Route>
         <Route exact path="/habitlists">
           <HabitList />
+        </Route>
+        <Route exact path="/habitlists/:id">
+          <HabitListDetail />
         </Route>
         <Route exact path="/report">
           <Report />

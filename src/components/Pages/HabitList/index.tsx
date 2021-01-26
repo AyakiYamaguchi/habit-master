@@ -133,6 +133,7 @@ const HabitList = () => {
           return (
             <HabitListItem
               id={list.habitListId}
+              habitListId={list.habitListId}
               habitName={list.habitName}
               trigger={list.trigger}
               finished={list.finished}

@@ -7,13 +7,14 @@ import { Store } from '../../../store/index';
 
 type Props = {
   id: string;
+  habitListId: string;
   habitName: string;
   trigger: string;
   finished: boolean;
   handleClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>)=> void;
 }
 
-const HabitListItem:FC<Props> = ({id , habitName , trigger , finished , handleClick}) => {
+const HabitListItem:FC<Props> = ({id, habitListId, habitName, trigger, finished, handleClick}) => {
   const { globalState, setGlobalState } = useContext(Store)
   // const { id, title , finished } = habitList
   const editHabitStatus = (id: string) => {
@@ -30,7 +31,7 @@ const HabitListItem:FC<Props> = ({id , habitName , trigger , finished , handleCl
           <div className={Style.unchecked} onClick={handleClick}></div>
         )
       }
-      <Link to='/habitList/detail'>
+      <Link to={'/habitlists/' + habitListId }>
         <div className={Style.habitList__wrapper}>
           <p className={Style.habitList__trigger}>{trigger}</p>
           <p className={Style.habitList__habitName}>{habitName}</p>
