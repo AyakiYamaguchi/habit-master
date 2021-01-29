@@ -1,11 +1,14 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Style from './HabitListDetail.module.scss';
-import { HabitList } from '../../../store/index';
+import { HabitList, ScheduledHabit } from '../../../store/index';
 import { AuthContext } from '../../../store/Auth';
+import { Store } from '../../../store/index';
 import { gethabitListDetail } from '../../../apis/FirestoreHabits'
 import Header from '../../Organisms/Header';
 import Layout from '../../templates/Layout';
+import Calendar from '../../Organisms/Calendar';
+import TitleText from '../../Atoms/TitleText';
 
 type RouteParams = {
   id: string;
@@ -13,13 +16,21 @@ type RouteParams = {
 
 const HabitListDetail = () => {
   const { AuthState } = useContext(AuthContext)
+  const { globalState } = useContext(Store);
   const [habitList, setHabitList] = useState<HabitList>()
+  const [scheduledHabits, setScheduledHabits] = useState<ScheduledHabit[]>()
   const {id} = useParams<RouteParams>();
   const getHabitList = () => {
     gethabitListDetail(AuthState.user.uid, id).then((result)=>{
       setHabitList(result)
+      const scheduledHabits = globalState.scheduledHabits.filter((list)=>{
+        return list.habitListId === id
+      })
+      setScheduledHabits(scheduledHabits)
+      console.log(scheduledHabits)
     })
   }
+  
   useEffect(() => {
     getHabitList()
   }, [])
@@ -27,7 +38,13 @@ const HabitListDetail = () => {
     <div>
       <Header title="習慣リスト詳細"/>
       <Layout>
-        <h2 className={Style.title}>習慣リスト設定</h2>
+        <TitleText title={'継続レポート'}/>
+        {scheduledHabits && 
+          <div className={Style.calendarWrap}>
+            <Calendar scheduledHabits={scheduledHabits}/>
+          </div>
+        }
+        <TitleText title={'習慣リストの設定'}/>
         <div className={Style.settingArea__wrap}>
           {habitList && 
             <div>
@@ -60,7 +77,6 @@ const HabitListDetail = () => {
             </div>
           }
         </div>
-        <h2 className={Style.title}>継続レポート</h2>
       </Layout>
     </div>
   )

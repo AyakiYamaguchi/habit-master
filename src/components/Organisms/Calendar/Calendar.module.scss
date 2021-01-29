@@ -9,12 +9,13 @@
   color: $fontColorBlack;
 
   &__title {
-    font-size: 2.0rem;
+    font-size: 1.8rem;
+    font-weight: bold;
     margin: 0;
   }
 
   &__button{
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     font-weight: bold;
     color: $keyColorHeavy;
     margin: 0 15px;
@@ -38,7 +39,7 @@
 
   th {
     text-align: center;
-    padding-top: 20px;
+    padding-top: 10px;
     padding-bottom: 10px;
     font-size: 1.4rem;
     color: $fontColorBlack;
@@ -46,7 +47,7 @@
 }
 
 .dateItem {
-  padding: 10px 0;
+  padding: 8px 0;
   text-align: center;
 }
 
