@@ -1,0 +1,38 @@
+@import '../../../styles/variables';
+
+
+.calendarWrap {
+  padding: 0 2.5%;
+  background-color: white;
+}
+.statusDescription {
+
+  &__wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+    background-color: white;
+  }
+  &__finishedCircle {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: $keyColorHeavy;
+    margin-right: 5px;
+  }
+
+  &__unFinishedCircle {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 2px solid $keyColorHeavy;
+    margin-right: 5px;
+  }
+
+  &__text {
+    font-size: 1.2rem;
+    margin-right: 10px;
+  }
+}

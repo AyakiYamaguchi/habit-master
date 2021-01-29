@@ -1,31 +1,19 @@
-import React, { FC, useContext } from 'react'
-import moment from 'moment'
-import Style from './CalendarDate.module.scss'
-import { Store } from '../../../store/index'
+import React, { FC } from 'react';
+import Style from './CalendarDate.module.scss';
 
 type Props = {
-  year: number
-  month: number
-  date: number | null
+  date: number | null;
+  finishedStatus: string;
 }
 
-const CalendarDate:FC<Props> = ({year, month, date}) => {
-  const { globalState, setGlobalState } = useContext(Store)
-  const dailyHabitLists = globalState.scheduledHabits.filter((list)=> {
-    return year === list.scheduledYear && month === list.scheduledMonth +1 && date === list.scheduledDate
-  })
-  const finishedLists = dailyHabitLists.filter((list) => {
-    return list.finished === true
-  })
-  const listLength = dailyHabitLists.length
-  const finishedListLength = finishedLists.length
+const CalendarDate:FC<Props> = ({date , finishedStatus}) => {
   return (
     <div className={`
       ${date ? Style.dateWrap : Style.none}`}>
       <span className={`
         ${Style.dateItem}
-        ${listLength === finishedListLength && finishedListLength > 0 && Style.done}
-        ${finishedListLength > 0 && Style.doing}
+        ${finishedStatus === 'done' && Style.done}
+        ${finishedStatus === 'doing' && Style.doing}
       `}>
         {date}
       </span>

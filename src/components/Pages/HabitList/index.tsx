@@ -147,7 +147,7 @@ const HabitList = () => {
           <FloatingAddBtn />
         </Link>
       </div>
-      <Footer selectedMenu="list"/>
+      <Footer selectedMenu="habitlists"/>
     </div>
   )
 }
