@@ -18,17 +18,20 @@
   &__list_wrap {
     padding-top: 20px;
     padding-bottom: 20px;
-    border-bottom: 1px solid$baseColorGrayMedium;
+    border-bottom: 1px solid $baseColorGrayMedium;
     margin-right: -5%;
   }
   &__title {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     margin-bottom: 12px;
+    font-weight: bold;
+    color: $fontColorGray;
   }
 
   &__item {
     font-size: 1.6rem;
     font-weight: bold;
+    color: $fontColorBlack;
   }
 
   &__dayOfWeek_wrap {
