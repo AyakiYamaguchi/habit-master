@@ -1,0 +1,52 @@
+@import '../../../styles/variables';
+
+.title {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: $keyColorMedium;
+  margin-top: 25px;
+  margin-bottom: 10px;
+}
+
+.settingArea {
+  &__wrap {
+    background-color: white;
+    padding: 0 5%;
+    margin: 0 -5%;
+  }
+
+  &__list_wrap {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid$baseColorGrayMedium;
+    margin-right: -5%;
+  }
+  &__title {
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+  }
+
+  &__item {
+    font-size: 1.6rem;
+    font-weight: bold;
+  }
+
+  &__dayOfWeek_wrap {
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__dayOfWeek_item {
+    padding: 11px 12px;
+    font-size: 1.4rem;
+    border-radius: 3px;
+    color: $unselectedColor;
+    background-color: $baseColorGrayLight;
+  }
+
+  &__dayOfWeek_item_selected {
+    color: white;
+    background-color: $keyColorHeavy;
+  }
+}
