@@ -8,6 +8,7 @@ import PrivateRoute from './components/PrivateRoute';
 import SetGoal from './components/pages/SetGoal';
 import CreateHabitList from './components/pages/CreateHabitList';
 import HabitListDetail from './components/pages/HabitListDetail';
+import EditHabitList from './components/pages/EditHabitList';
 
 const App:FC = () => {
   return (
@@ -25,6 +26,9 @@ const App:FC = () => {
         </Route>
         <Route exact path="/habitlists/:id">
           <HabitListDetail />
+        </Route>
+        <Route exact path="/habitlists/:id/edit">
+          <EditHabitList />
         </Route>
         <Route exact path="/report">
           <Report />

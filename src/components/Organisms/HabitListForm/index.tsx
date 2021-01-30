@@ -1,20 +1,20 @@
 import React, { FC, useContext } from 'react';
 import { FieldArray, Formik , Field, ErrorMessage } from 'formik';
 import { useHistory } from 'react-router-dom';
-import { HabitList, initialDayOfWeekProps } from '../../../store/index';
-import { Store , ScheduledHabit ,ADD_SCHEDULED_HABIT, CREATE_HABIT_LIST } from '../../../store/index';
+import { Store ,HabitList, ScheduledHabit ,ADD_SCHEDULED_HABIT, CREATE_HABIT_LIST, UPDATE_HABIT_LIST } from '../../../store/index';
 import { AuthContext } from '../../../store/Auth'
 import Style from './style.module.scss';
 import SubmitBtn from '../../Atoms/SubmitBtn';
 import CancelBtn from '../../Atoms/CancelBtn';
-import { setHabitList , getLastHabitListId, addScheduledHabit, fetchScheduledHabit } from '../../../apis/FirestoreHabits';
+import { setHabitList , getLastHabitListId, addScheduledHabit, fetchScheduledHabit, getHabitListDetail } from '../../../apis/FirestoreHabits';
 import * as yup from 'yup';
 
 type Props = {
   handleCancel: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>)=> void;
+  habitList: HabitList;
 }
 
-const HabitListForm:FC<Props> = ({ handleCancel }) => {
+const HabitListForm:FC<Props> = ({ handleCancel, habitList }) => {
   const hours = [...Array(24)].map((_, i) => i)
   const { setGlobalState } = useContext(Store)
   const { AuthState } = useContext(AuthContext)
@@ -32,7 +32,7 @@ const HabitListForm:FC<Props> = ({ handleCancel }) => {
           fetchScheduledHabit(userId,result.id).then((result)=>{
             const scheduledHabit = Object.assign({id: result.id}, result.data())  as ScheduledHabit
             setGlobalState({ type: ADD_SCHEDULED_HABIT, payload: {scheduledHabit: scheduledHabit}})
-            history.push('/list')
+            history.push('/habitlists')
           })
         }).catch((error)=>{
           console.log(error)
@@ -40,7 +40,10 @@ const HabitListForm:FC<Props> = ({ handleCancel }) => {
       })
     // 既存リストの場合
     }else{
-      history.push('/list')
+      getHabitListDetail(userId, habitListId).then((result)=>{
+        setGlobalState({ type: UPDATE_HABIT_LIST, payload: { habitlist: result } })
+        history.push('/habitlists/'+ habitListId)
+      })
     }
   }
   // バリデーション設定
@@ -52,16 +55,7 @@ const HabitListForm:FC<Props> = ({ handleCancel }) => {
   });
   return (
     <Formik
-      initialValues={{
-        id: '',
-        habitName: '',
-        trigger: '',
-        weeklySch: initialDayOfWeekProps,
-        remindHour: 0,
-        remindMinutes: 0,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      }}
+      initialValues={habitList}
       validationSchema={validation}
       onSubmit={values =>
         setHabitList(user.uid ,values.id ,values).then(()=>{

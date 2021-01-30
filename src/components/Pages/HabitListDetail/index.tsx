@@ -1,14 +1,15 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import Style from './HabitListDetail.module.scss';
 import { HabitList, ScheduledHabit } from '../../../store/index';
 import { AuthContext } from '../../../store/Auth';
 import { Store } from '../../../store/index';
-import { gethabitListDetail } from '../../../apis/FirestoreHabits'
+import { getHabitListDetail } from '../../../apis/FirestoreHabits';
 import Header from '../../Organisms/Header';
 import Layout from '../../templates/Layout';
 import Calendar from '../../Organisms/Calendar';
 import TitleText from '../../Atoms/TitleText';
+import EditBtn from '../../Atoms/EditBtn';
 
 type RouteParams = {
   id: string;
@@ -21,13 +22,12 @@ const HabitListDetail = () => {
   const [scheduledHabits, setScheduledHabits] = useState<ScheduledHabit[]>()
   const {id} = useParams<RouteParams>();
   const getHabitList = () => {
-    gethabitListDetail(AuthState.user.uid, id).then((result)=>{
+    getHabitListDetail(AuthState.user.uid, id).then((result)=>{
       setHabitList(result)
       const scheduledHabits = globalState.scheduledHabits.filter((list)=>{
         return list.habitListId === id
       })
       setScheduledHabits(scheduledHabits)
-      console.log(scheduledHabits)
     })
   }
   
@@ -76,6 +76,11 @@ const HabitListDetail = () => {
               </div>
             </div>
           }
+          <div className={Style.settingArea__editBtn_wrap}>
+            <Link to={'/habitlists/'+id+'/edit'}>
+              <EditBtn btnText={'設定を編集する'}/>
+            </Link>
+          </div>
         </div>
       </Layout>
     </div>

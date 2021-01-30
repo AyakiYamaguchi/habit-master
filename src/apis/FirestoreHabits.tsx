@@ -26,10 +26,10 @@ export const fetchHabitList = async(userId: string) => {
 }
 
 // 指定したIDの習慣リストを取得
-export const gethabitListDetail = async(userId: string, habitListId: string) => {
+export const getHabitListDetail = async(userId: string, habitListId: string) => {
   const habitListRef = db.collection('users').doc(userId).collection('habitLists').doc(habitListId)
   return await habitListRef.get().then((result)=>{
-    const habitList = result.data() as HabitList
+    const habitList = Object.assign({id: result.id}, result.data() as HabitList)
     return habitList
   })
 }
@@ -64,8 +64,9 @@ export const setHabitList = async(userId: string, habitListId: string ,habitList
       habitName: habitList.habitName,
       trigger: habitList.trigger,
       weeklySch: habitList.weeklySch,
-      remindHour: habitList.remindHour,
-      remindMinutes: habitList.remindMinutes,
+      remindHour: Number(habitList.remindHour),
+      remindMinutes: Number(habitList.remindMinutes),
+      createdAt: habitList.createdAt,
       updatedAt: firebase.firestore.Timestamp.now()
     })
   }

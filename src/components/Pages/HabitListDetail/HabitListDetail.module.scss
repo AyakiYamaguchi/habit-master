@@ -52,6 +52,11 @@
     color: white;
     background-color: $keyColorHeavy;
   }
+
+  &__editBtn_wrap {
+    text-align: center;
+    padding: 20px 0;
+  }
 }
 
 .calendarWrap {

@@ -56,13 +56,13 @@ type State = {
 type Action =
 { type: 'SET_GOAL' , payload: { goal: string }} |
 { type: 'SET_HABIT_LISTS' , payload: { habitLists: HabitList[]}} |
-{ type: 'SET_SCHEDULED_HABITS' , payload: {scheduledHabits: ScheduledHabit[]} } |
-{ type: 'ADD_SCHEDULED_HABIT', payload: {scheduledHabit: ScheduledHabit }} |
-{ type: 'EDIT_HABIT_RESULT_STATUS' , payload: {id: string } } |
-{ type: 'CREATE_HABIT_LIST', payload: {habitList: HabitList} }|
-{ type: 'UPDATE_HABIT_LIST', payload: {habitlist: HabitList , currentListId: string}} |
-{ type: 'SET_SELECTED_HABIT_LIST_DATE', payload: {selectedDate: string}} |
-{ type: 'CHANGE_MODAL_STATUS' , payload: {isModalOpen: boolean}}
+{ type: 'SET_SCHEDULED_HABITS' , payload: { scheduledHabits: ScheduledHabit[]}} |
+{ type: 'ADD_SCHEDULED_HABIT', payload: { scheduledHabit: ScheduledHabit }} |
+{ type: 'EDIT_HABIT_RESULT_STATUS' , payload: {id: string }} |
+{ type: 'CREATE_HABIT_LIST', payload: { habitList: HabitList }}|
+{ type: 'UPDATE_HABIT_LIST', payload: { habitlist: HabitList }} |
+{ type: 'SET_SELECTED_HABIT_LIST_DATE', payload: { selectedDate: string }} |
+{ type: 'CHANGE_MODAL_STATUS' , payload: { isModalOpen: boolean }}
 
 const today = new Date()
 
@@ -94,20 +94,14 @@ const reducer = (state: State, action: Action) => {
         return list
       })}
     case UPDATE_HABIT_LIST:
-      return {
-        ...state , habitlist: state.habitLists.map((list,index)=>{
-          // 同じリストIDが存在する場合はフォームの値で更新
-          if(list.id === action.payload.currentListId){
-            return { ...list, 
-              habitName: 'test',
-              trigger: '',
-              weeklySch: [],
-              remindHour: 0,
-            }
-          }
-          return list
-        })
-      }
+      const habitList = action.payload.habitlist
+      const updatedHabitLists = state.habitLists.map((list)=>{
+        if(habitList.id === list.id){
+          return habitList
+        }
+        return list
+      })
+      return { ...state, habitLists: updatedHabitLists}
     case CREATE_HABIT_LIST:
       const newHabitLists = [...state.habitLists, action.payload.habitList]
       return { ...state , habitLists: newHabitLists}
