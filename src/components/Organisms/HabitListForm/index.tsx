@@ -128,7 +128,7 @@ const HabitListForm:FC<Props> = ({ handleCancel, habitList }) => {
                 <p className={Style.remindText}>時</p>
               </div>
               <div className={Style.remindItemWrap}>
-                <Field as="select" name="remindMin" className={Style.remindInput}>
+                <Field as="select" name="remindMinutes" className={Style.remindInput}>
                   <option value="00">00</option>
                   <option value="10">10</option>
                   <option value="20">20</option>

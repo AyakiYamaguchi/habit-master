@@ -52,8 +52,8 @@ export const setHabitList = async(userId: string, habitListId: string ,habitList
       habitName: habitList.habitName,
       trigger: habitList.trigger,
       weeklySch: habitList.weeklySch,
-      remindHour: Number(habitList.remindHour),
-      remindMinutes: Number(habitList.remindMinutes),
+      remindHour: habitList.remindHour,
+      remindMinutes: habitList.remindMinutes,
       createdAt: firebase.firestore.Timestamp.now(),
       updatedAt: firebase.firestore.Timestamp.now()
     })
@@ -64,8 +64,8 @@ export const setHabitList = async(userId: string, habitListId: string ,habitList
       habitName: habitList.habitName,
       trigger: habitList.trigger,
       weeklySch: habitList.weeklySch,
-      remindHour: Number(habitList.remindHour),
-      remindMinutes: Number(habitList.remindMinutes),
+      remindHour: habitList.remindHour,
+      remindMinutes: habitList.remindMinutes,
       createdAt: habitList.createdAt,
       updatedAt: firebase.firestore.Timestamp.now()
     })

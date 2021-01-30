@@ -16,8 +16,8 @@ const CreateHabitList = () => {
     habitName: '',
     trigger: '',
     weeklySch: initialDayOfWeekProps,
-    remindHour: 9,
-    remindMinutes: 0o0,
+    remindHour: '9',
+    remindMinutes: '00',
     createdAt: new Date(),
     updatedAt: new Date(),
   }

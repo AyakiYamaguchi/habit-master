@@ -16,8 +16,8 @@ export type HabitList = {
   habitName: string;
   trigger: string;
   weeklySch: {dayOfWeek:string; selected: boolean;}[];
-  remindHour: number;
-  remindMinutes: number;
+  remindHour: string;
+  remindMinutes: string;
   createdAt: Date;
   updatedAt: Date;
 }

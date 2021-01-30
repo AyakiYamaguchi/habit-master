@@ -72,7 +72,7 @@ const HabitListDetail = () => {
               </div>
               <div className={Style.settingArea__list_wrap}>
                 <h3 className={Style.settingArea__title}>リマインダー</h3>
-                <p className={Style.settingArea__item}>{habitList.remindHour + ':' + habitList.remindMinutes} 時にリマインド通知</p>
+                <p className={Style.settingArea__item}>{habitList.remindHour + ' : ' + habitList.remindMinutes} にリマインド通知</p>
               </div>
             </div>
           }

@@ -14,8 +14,8 @@ service cloud.firestore {
       && 'habitName' in habitList && habitList.habitName is string
       && 'trigger' in habitList && habitList.trigger is string
       && 'weeklySch' in habitList && habitList.weeklySch is list
-      && 'remindHour' in habitList && habitList.remindHour is number
-      && 'remindMinutes' in habitList && habitList.remindMinutes is number;
+      && 'remindHour' in habitList && habitList.remindHour is string
+      && 'remindMinutes' in habitList && habitList.remindMinutes is string;
       // && 'createdAt' in habitList && habitList.createdAt is timestamp
       // && 'updatedAt' in habitList && habitList.updatedAt is timestamp;
     }
