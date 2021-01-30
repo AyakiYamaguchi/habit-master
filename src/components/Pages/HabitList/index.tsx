@@ -126,7 +126,7 @@ const HabitList = () => {
 
   return (
     <div>
-      <Header title="習慣リスト"/>
+      <Header title="習慣リスト" hideBackBtn={true}/>
       <HabitListSelectDate/>
       {
         scheduledHabitsOfSelectedDate.map((list,index) => { 

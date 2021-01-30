@@ -10,7 +10,7 @@ const Report = () => {
   const scheduledHabits = globalState.scheduledHabits;
   return (
     <div>
-      <Header title={'レポート'}/>
+      <Header title={'レポート'} hideBackBtn={true}/>
         <div className={Style.calendarWrap}>
           <Calendar scheduledHabits={scheduledHabits}/>
         </div>

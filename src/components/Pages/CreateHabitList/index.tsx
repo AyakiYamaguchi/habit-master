@@ -24,7 +24,7 @@ const CreateHabitList = () => {
 
   return (
     <div>
-      <Header title="習慣リストの新規作成"/>
+      <Header title="習慣リストの新規作成" hideBackBtn={false}/>
       <Layout>
         <div className={Style.formWrap}>
           <HabitListForm handleCancel={handleCancel} habitList={initialHabitList}/>

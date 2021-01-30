@@ -18,7 +18,7 @@ const Settings:FC = () => {
   }
   return (
     <div>
-      <Header title="各種設定"/>
+      <Header title="各種設定" hideBackBtn={true}/>
       <p>{`アカウント名：${AuthState.user?.userName}`}</p>
       <p>{`uid：${AuthState.user?.uid}`}</p>
       <button onClick={ClickSignOut}>サインアウト</button>
