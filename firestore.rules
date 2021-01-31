@@ -37,8 +37,7 @@ service cloud.firestore {
     	allow get: if isLogin()
       && onlyIdentityUser(userId);
       
-      allow create: if isLogin()
-      && onlyIdentityUser(userId);
+      allow create: if isLogin();
       
 				// 習慣リストのルール    	
       match /habitLists/{habitListId}{

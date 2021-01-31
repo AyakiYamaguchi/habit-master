@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import HabitList from './components/pages/HabitList';
-import Login from './components/pages/Login/Login';
+import Login from './components/pages/Login';
 import Report from './components/pages/Report';
 import Settings from './components/pages/Settings';
 import PrivateRoute from './components/PrivateRoute';
@@ -10,6 +10,7 @@ import CreateHabitList from './components/pages/CreateHabitList';
 import HabitListDetail from './components/pages/HabitListDetail';
 import EditHabitList from './components/pages/EditHabitList';
 import Signup from './components/pages/Signup';
+import SingIn from './components/pages/SignIn';
 
 const App:FC = () => {
   return (
@@ -21,6 +22,9 @@ const App:FC = () => {
         </Route>
         <Route exact path="/signup">
           <Signup />
+        </Route>
+        <Route exact path="/signin">
+          <SingIn />
         </Route>
         <Route exact path="/set_goal">
           <SetGoal />

@@ -3,7 +3,7 @@ import { AuthContext} from '../../../store/Auth';
 import { DELETE_USER } from '../../../store/Auth';
 import Header from '../../Organisms/Header';
 import Footer from '../../Organisms/Footer';
-import { SignOut } from '../../../apis/FacebookAuth';
+import { SignOut } from '../../../apis/FirebaseAuth';
 
 const Settings:FC = () => {
   const {AuthState, setAuthState} = useContext(AuthContext)
