@@ -9,6 +9,7 @@ import SetGoal from './components/pages/SetGoal';
 import CreateHabitList from './components/pages/CreateHabitList';
 import HabitListDetail from './components/pages/HabitListDetail';
 import EditHabitList from './components/pages/EditHabitList';
+import Signup from './components/pages/Signup';
 
 const App:FC = () => {
   return (
@@ -17,6 +18,9 @@ const App:FC = () => {
       <Switch>
         <Route exact path="/login">
           <Login />
+        </Route>
+        <Route exact path="/signup">
+          <Signup />
         </Route>
         <Route exact path="/set_goal">
           <SetGoal />
