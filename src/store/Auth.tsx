@@ -4,7 +4,7 @@ export const DELETE_USER = 'DELETE_USER'
 
 export type User = {
   uid: string;
-  userName: string | null;
+  displayName: string | null;
 }
 
 type State = {
@@ -15,7 +15,7 @@ type Action =
 { type: 'SET_USER', payload: {user: User}} |
 { type: 'DELETE_USER'}
 
-const initialStateOfUser = {uid: '' , userName: null}
+const initialStateOfUser = {uid: '' , displayName: null}
 
 const initialState = {
   user: initialStateOfUser,

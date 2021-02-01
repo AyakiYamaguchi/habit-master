@@ -1,4 +1,3 @@
-import React from 'react';
 import firebase , { FacebookProvider } from './FirebaseConf'
 
 export const FacebookLogin = async() => {

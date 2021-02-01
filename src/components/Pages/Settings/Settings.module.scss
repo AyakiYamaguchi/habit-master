@@ -1,0 +1,49 @@
+@import '../../../styles/variables';
+
+.accountArea {
+  &__wrap {
+    background-color: white;
+    margin: 0 -5%;
+    padding: 30px 5%;
+    text-align: center;
+  }
+
+  &__icon_wrap {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  &__accountIcon{
+    font-size: 7rem;
+    color: $keyColorMedium;
+  }
+
+  &__provider {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    color: $keyColorHeavy;
+  }
+  &__item_wrap {
+    display: flex;
+    margin: 0 5%;
+    padding: 10px 0;
+    justify-content: space-between;
+  }
+
+  &__item_label {
+    font-size: 1.4rem;
+    color: $fontColorGray;
+    font-weight: bold;
+  }
+
+  &__item_data {
+    font-size: 1.4rem;
+    color: $fontColorBlack;
+  }
+}
+
+.deleteBtn_wrap {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}

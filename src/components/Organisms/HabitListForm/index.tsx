@@ -141,7 +141,9 @@ const HabitListForm:FC<Props> = ({ handleCancel, habitList }) => {
             </div>
           </div>
           <div className={Style.btnWrap}>
-            <SubmitBtn btnText="登録する"/>
+            <div className={Style.submitBtn_wrap}>
+              <SubmitBtn btnText="登録する"/>
+            </div>
             <CancelBtn btnText="キャンセル" handleClick={handleCancel}/>
           </div>
         </form>

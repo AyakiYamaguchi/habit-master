@@ -1,0 +1,14 @@
+@import '../../../styles/variables';
+
+.deleteBtn {
+  width: 90%;
+  height: 55px;
+  text-align: center;
+  background-color: white;
+  border: 1px solid $errorColorMedium;
+  border-radius: 30px;
+  color: $errorColorMedium;
+  font-size: 1.6rem;
+  font-weight: bold;
+  box-shadow: 0px 3px 5px rgba(0,0,0,0.10);
+}
