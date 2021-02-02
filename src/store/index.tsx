@@ -1,5 +1,4 @@
 import React, { createContext, useReducer, FC } from 'react'
-import { getYMDStr } from '../helper/dateHelper';
 export const SET_GOAL = 'SET_GOAL'
 export const SET_HABIT_LISTS = 'SET_HABIT_LISTS'
 export const SET_SCHEDULED_HABITS = 'SET_SCHEDULED_HABITS'
@@ -49,8 +48,6 @@ type State = {
   scheduledHabits: ScheduledHabit[];
   habitLists: HabitList[];
   goal: string;
-  selectedDate: string;
-  isModalOpen: boolean;
 }
 
 type Action =
@@ -60,18 +57,12 @@ type Action =
 { type: 'ADD_SCHEDULED_HABIT', payload: { scheduledHabit: ScheduledHabit }} |
 { type: 'EDIT_HABIT_RESULT_STATUS' , payload: {id: string }} |
 { type: 'CREATE_HABIT_LIST', payload: { habitList: HabitList }}|
-{ type: 'UPDATE_HABIT_LIST', payload: { habitlist: HabitList }} |
-{ type: 'SET_SELECTED_HABIT_LIST_DATE', payload: { selectedDate: string }} |
-{ type: 'CHANGE_MODAL_STATUS' , payload: { isModalOpen: boolean }}
-
-const today = new Date()
+{ type: 'UPDATE_HABIT_LIST', payload: { habitlist: HabitList }} ;
 
 const initialState:State = {
   scheduledHabits: [],
   habitLists: [],
   goal: '',
-  selectedDate: getYMDStr(today),
-  isModalOpen: false,
 }
 
 const reducer = (state: State, action: Action) => {
@@ -105,10 +96,6 @@ const reducer = (state: State, action: Action) => {
     case CREATE_HABIT_LIST:
       const newHabitLists = [...state.habitLists, action.payload.habitList]
       return { ...state , habitLists: newHabitLists}
-    case SET_SELECTED_HABIT_LIST_DATE:
-      return { ...state, selectedDate: action.payload.selectedDate}
-    case CHANGE_MODAL_STATUS:
-      return {...state, isModalOpen: action.payload.isModalOpen}
     default:
       return state
   }
