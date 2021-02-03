@@ -17,6 +17,12 @@ export const getOnlyDate = (dateItem:string) => {
 }
 
 // 指定した日付の曜日情報を取得
+export const getOnlyDayOfWeek = (dateItem:string) => {
+  const dayOfWeek = Moment(dateItem).day()
+  return dayOfWeek
+}
+
+// 指定した日付の曜日情報を取得
 export const getDayStrJP = (dateItem:string) => {
   const dayOfWeekStr = [ "日", "月", "火", "水", "木", "金", "土" ]
   const day = Moment(dateItem).day()

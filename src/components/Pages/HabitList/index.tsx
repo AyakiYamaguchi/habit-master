@@ -1,4 +1,4 @@
-import React , { FC, useContext, useEffect, useState } from 'react';
+import React , { useContext, useEffect, useState } from 'react';
 import {Link} from 'react-router-dom';
 import Style from './HabitList.module.scss';
 import Moment from 'moment'
@@ -9,12 +9,13 @@ import { AuthContext } from '../../../store/Auth';
 import HabitListItem from '../../Molecules/HabitListItem';
 import HabitListSelectDate from '../../Molecules/HabitListSelectDate';
 import FloatingAddBtn from '../../Atoms/FloatingAddBtn';
-import { ScheduledHabit, EDIT_HABIT_RESULT_STATUS , ADD_SCHEDULED_HABIT , SET_SELECTED_HABIT_LIST_DATE } from '../../../store/index';
-import { getYMDStr } from '../../../helper/dateHelper'
-import { changeHabitFinishedStatus, addScheduledHabit, fetchScheduledHabit, fetchHabitList } from '../../../apis/FirestoreHabits'
+import { ScheduledHabit, EDIT_HABIT_RESULT_STATUS , ADD_SCHEDULED_HABIT } from '../../../store/index';
+import { getYMDStr, getOnlyDayOfWeek } from '../../../helper/dateHelper'
+import { changeHabitFinishedStatus, addScheduledHabit, fetchScheduledHabit　} from '../../../apis/FirestoreHabits'
 
 const today = new Date()
 const todayStr = getYMDStr(today)
+
 type scheduleList = {
   habitListId: string;
   habitListCreatedAt: Date;
@@ -29,114 +30,119 @@ const HabitList = () => {
   const { AuthState } = useContext(AuthContext)
   const [ selectedDate, setSelectedDate] = useState(todayStr)
   const userId = AuthState.user.uid
-  
-  // 現在選択されている日付を取得
-  // const selectedDate = Moment(globalState.selectedDate).toDate()
-
-  const handleClickDate = (date:string) => {
-    setSelectedDate(date)
-  }
 
   // 選択している日付でスケジュールされている習慣リストの配列を作成
-  const scheduledHabitsOfSelectedDate :scheduleList[] = []
-  const habitLists = globalState.habitLists
-  const scheduledHabits = globalState.scheduledHabits
-  habitLists.map((habitList, index)=>{
-    scheduledHabits.map((resultList, index)=>{
-      // resultListの日付をYYYYMMDD形式に変換
-      const resultListDateStr = Moment({
-        year: resultList.scheduledYear,
-        month: resultList.scheduledMonth,
-        day: resultList.scheduledDate,
-      }).format("YYYYMMDD")
-      // 選択している日付でスケジュールされていた習慣リストを配列に追加
-      if(habitList.id === resultList.habitListId && resultListDateStr === selectedDate){
-        const scheduleList = {
+  const fillterdScheduledHabits = globalState.scheduledHabits.filter((list) => {
+    const scheduledDate = Moment({
+      year: list.scheduledYear,
+      month: list.scheduledMonth,
+      day: list.scheduledDate,
+    }).format("YYYYMMDD")
+    return scheduledDate === selectedDate
+  })
+
+  // 選択している日付の習慣リスト表示用の配列を作成
+  const scheduledHabitsOfSelectedDate:scheduleList[] = []
+  globalState.habitLists.map((habitList) => {
+    fillterdScheduledHabits.map((scheduledHabit) => {
+      if(habitList.id === scheduledHabit.habitListId){
+        const list = {
           habitListId: habitList.id,
           habitListCreatedAt: habitList.createdAt,
-          scheduledHabitId: resultList.id,
-          finished: resultList.finished,
+          scheduledHabitId: scheduledHabit.id,
+          finished: scheduledHabit.finished,
           habitName: habitList.habitName,
           trigger: habitList.trigger,
         }
-        return (
-          scheduledHabitsOfSelectedDate.push(scheduleList)
-        )
+        scheduledHabitsOfSelectedDate.push(list)
       }
     })
   })
 
-  const clickHabitList =(userId:string, scheduledHabitsId:string, currentFinishedStatus:boolean) => {
-    changeHabitFinishedStatus(userId, scheduledHabitsId, currentFinishedStatus).then(()=>{
-      setGlobalState({ type: EDIT_HABIT_RESULT_STATUS, payload: {id: scheduledHabitsId}})
-    }).catch((error)=>{
-      console.log(error)
-    })
+  // クリックした日付を取得しStateにセット
+  const handleClickDate = (date:string) => {
+    setSelectedDate(date)
   }
+  // クリックしたHabitListの完了ステータスを変更
+  const clickHabitList =(userId:string, scheduledHabitsId:string, currentFinishedStatus:boolean) => {
+    changeHabitFinishedStatus(userId, scheduledHabitsId, currentFinishedStatus)
+      .then(() => {
+        setGlobalState({ type: EDIT_HABIT_RESULT_STATUS, payload: {id: scheduledHabitsId}})
+      }).catch((error) => {
+        console.log(error)
+      })
+  }
+  // 選択している日付の曜日で習慣予定されているHabitList一覧を取得
+  const habitListsOfSelectedDayOfWeek = globalState.habitLists.filter((list) => {
+    const selectedDayOfWeek:number =  getOnlyDayOfWeek(selectedDate)
+    return list.weeklySch[selectedDayOfWeek].selected === true
+  })
+  // 選択している日付をDate型に変換
+  const selectedDateOfDateType = Moment(selectedDate).toDate()
 
-  // const setScheduledHabits = () =>{
-  //   console.log('実行')
-  //   // 予定リストが1件も存在しない場合
-  //   if(scheduledHabitsOfSelectedDate.length === 0){
-  //     console.log('リストが1件もありません')
-  //     habitLists.map((habitList)=>{
-  //       const habitListCreatedAt = getYMDStr(habitList.createdAt)
-  //       // 選択している日付より前に作成されたHabitListがあった場合のみ予定リストを追加
-  //       if (habitListCreatedAt <= selectedDate){
-  //         console.log('作成対象のリストがあります')
-  //         // 予定リストの追加処理
-  //         addScheduledHabit(userId,habitList.id,selectedDate).then((result)=>{
-  //           fetchScheduledHabit(userId,result.id).then((result)=>{
-  //             const scheduledHabit = Object.assign({id: result.id}, result.data())  as ScheduledHabit
-  //             setGlobalState({ type: ADD_SCHEDULED_HABIT, payload: {scheduledHabit: scheduledHabit}})
-  //           }).catch((error)=>{console.log(error)})
-  //         }).catch((error)=>{console.log(error)})
-  //       }
-  //     })
-  //   } else {
-  //     // habitListsの配列とscheduledHabitsOfSelectedDateの配列を比較し、
-  //     // 未登録の予定リストが存在場合、予定リストへ追加する
-
-  //     const habitListIds:string[] = []
-  //     // 選択している日付より過去に作成されたHabitListのみにフィルタし、habitListsIdsへ追加
-  //     const filteredHabitlists = habitLists.filter(item => getYMDStr(item.createdAt) <= selectedDate )
-  //     filteredHabitlists.map((list)=>{
-  //       habitListIds.push(list.id)
-  //     })
-  //     const scheduledHabitsIds:string[] = []
-  //     scheduledHabitsOfSelectedDate.map((list)=>{
-  //       scheduledHabitsIds.push(list.habitListId)
-  //     })
-  //     // 未作成の予定リストの判定
-  //     habitListIds.concat(scheduledHabitsIds).forEach(item=>{
-  //       if(habitListIds.includes(item) && !scheduledHabitsIds.includes(item)){
-  //         console.log(item)
-  //         // 予定リストの追加処理
-  //         addScheduledHabit(userId,item,selectedDate).then((result)=>{
-  //           fetchScheduledHabit(userId,result.id).then((result)=>{
-  //             const scheduledHabit = Object.assign({id: result.id}, result.data())  as ScheduledHabit
-  //             setGlobalState({ type: ADD_SCHEDULED_HABIT, payload: {scheduledHabit: scheduledHabit}})
-  //           }).catch((error)=>{console.log(error)})
-  //         }).catch((error)=>{console.log(error)})
-  //       }
-  //     })
-  //   }
-  // }
+  // 習慣予定リストの自動追加処理
+  const setScheduledHabits = () => {
+    console.log('実行')
+    // 予定リストが1件も存在しない場合
+    if(scheduledHabitsOfSelectedDate.length === 0){
+      console.log('リストが1件もありません')
+      habitListsOfSelectedDayOfWeek.map((habitList) => {
+        const habitListCreatedAt = getYMDStr(habitList.createdAt)
+        // 選択している日付より前に作成されたHabitListがあった場合のみ予定リストを追加
+        if (habitListCreatedAt <= selectedDate){
+          console.log('作成対象のリストがあります')
+          // 予定リストの追加処理
+          addScheduledHabit(userId,habitList.id,selectedDateOfDateType).then((result) => {
+            fetchScheduledHabit(userId,result.id).then((result)=>{
+              const scheduledHabit = Object.assign({id: result.id}, result.data())  as ScheduledHabit
+              setGlobalState({ type: ADD_SCHEDULED_HABIT, payload: {scheduledHabit: scheduledHabit}})
+            }).catch((error)=>{console.log(error)})
+          }).catch((error)=>{console.log(error)})
+        }
+      })
+    } else {
+      // habitListsの配列とscheduledHabitsOfSelectedDateの配列を比較し、
+      // 未登録の予定リストが存在場合、予定リストへ追加する
+      const habitListIds:string[] = []
+      // 選択している日付より過去に作成されたHabitListのみにフィルタし、habitListsIdsへ追加
+      const filteredHabitlists = habitListsOfSelectedDayOfWeek.filter(item => getYMDStr(item.createdAt) <= selectedDate )
+      filteredHabitlists.map((list)=>{
+        habitListIds.push(list.id)
+      })
+      const scheduledHabitsIds:string[] = []
+      scheduledHabitsOfSelectedDate.map((list)=>{
+        scheduledHabitsIds.push(list.habitListId)
+      })
+      // 未作成の予定リストの判定
+      habitListIds.concat(scheduledHabitsIds).forEach(item=>{
+        if(habitListIds.includes(item) && !scheduledHabitsIds.includes(item)){
+          console.log(item)
+          // 予定リストの追加処理
+          addScheduledHabit(userId,item,selectedDateOfDateType).then((result)=>{
+            fetchScheduledHabit(userId,result.id).then((result)=>{
+              const scheduledHabit = Object.assign({id: result.id}, result.data())  as ScheduledHabit
+              setGlobalState({ type: ADD_SCHEDULED_HABIT, payload: {scheduledHabit: scheduledHabit}})
+            }).catch((error)=>{console.log(error)})
+          }).catch((error)=>{console.log(error)})
+        }
+      })
+    }
+  }
   
 
-  // useEffect(() => {
-  //   setScheduledHabits()
-  //   }, [selectedDate])
+  useEffect(() => {
+    setScheduledHabits()
+    }, [selectedDate])
 
   return (
     <div>
       <Header title="習慣リスト" hideBackBtn={true}/>
       <HabitListSelectDate selectedDate={selectedDate} handleClick={handleClickDate}/>
       {
-        scheduledHabitsOfSelectedDate.map((list,index) => { 
+        scheduledHabitsOfSelectedDate.map((list) => { 
           return (
             <HabitListItem
-              id={list.habitListId}
+              id={list.scheduledHabitId}
               habitListId={list.habitListId}
               habitName={list.habitName}
               trigger={list.trigger}
