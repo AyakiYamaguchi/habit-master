@@ -138,20 +138,26 @@ const HabitList = () => {
     <div>
       <Header title="習慣リスト" hideBackBtn={true}/>
       <HabitListSelectDate selectedDate={selectedDate} handleClick={handleClickDate}/>
-      {
-        scheduledHabitsOfSelectedDate.map((list) => { 
-          return (
-            <HabitListItem
-              id={list.scheduledHabitId}
-              habitListId={list.habitListId}
-              habitName={list.habitName}
-              trigger={list.trigger}
-              finished={list.finished}
-              handleClick={()=>clickHabitList(userId,list.scheduledHabitId,list.finished)}
-            />
+      <div>
+        { scheduledHabitsOfSelectedDate.length > 0 ? (
+            scheduledHabitsOfSelectedDate.map((list) => { 
+              return (
+                <HabitListItem
+                  id={list.scheduledHabitId}
+                  habitListId={list.habitListId}
+                  habitName={list.habitName}
+                  trigger={list.trigger}
+                  finished={list.finished}
+                  handleClick={()=>clickHabitList(userId,list.scheduledHabitId,list.finished)}
+                />
+              )
+            })
+          ) : (
+            <div className={Style.emptyHabitList}>本日予定されている習慣はありません</div>
           )
-        })
-      }
+        }
+      </div>
+      
       <div className={`${Style.addBtnWrap} ${selectedDate !== todayStr && Style.btnHide}`} >
         <Link to="/create_habitlist">
           <FloatingAddBtn />

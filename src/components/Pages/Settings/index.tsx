@@ -19,11 +19,10 @@ type User = {
 }
 
 const Settings:FC = () => {
-  const { AuthState, setAuthState } = useContext(AuthContext)
+  const { setAuthState } = useContext(AuthContext)
   const [ user, setUser ] = useState<User>()
   const getLoginInfo = () => {
     firebase.auth().onAuthStateChanged((result)=>{
-      console.log(result)
       if (result) {
         const user = {
           displayName: result.displayName,

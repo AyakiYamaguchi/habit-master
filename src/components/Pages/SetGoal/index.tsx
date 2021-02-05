@@ -5,7 +5,6 @@ import InputGoal from '../../Organisms/InputGoal';
 import Style from './SetGoal.module.scss';
 import SubmitBtn from '../../Atoms/SubmitBtn';
 import CancelBtn from '../../Atoms/CancelBtn';
-import { validateRequired } from '../../Validate';
 import {Store} from '../../../store/index';
 import { SET_GOAL } from '../../../store/index';
 
@@ -19,12 +18,12 @@ const SetGoal = () => {
     setErrorMessage('');
   }
   const handleClickSubmit = () => {
-    const errorInfo = validateRequired(goal, '目標が入力されていません')
-    if (errorInfo) {
-      setErrorMessage(errorInfo)
-    } else {
-      setGlobalState({ type: SET_GOAL , payload: { goal: goal }})
-    }
+    // const errorInfo = validateRequired(goal, '目標が入力されていません')
+    // if (errorInfo) {
+    //   setErrorMessage(errorInfo)
+    // } else {
+    //   setGlobalState({ type: SET_GOAL , payload: { goal: goal }})
+    // }
   }
   const handleClickCancel = () => {
     console.log('キャンセルボタン')
